@@ -1,0 +1,105 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot.subsystems;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.MotorIDConstants;
+import frc.robot.Constants.MotorSpeedsConstants;
+import frc.robot.Constants.PIDConstants;
+import frc.robot.Constants.PositionValueConstants;
+import frc.robot.Constants.SensorConstants;
+
+public class ShoulderSubsystem extends SubsystemBase {
+    //init stuff
+      CANSparkMax shoulderMotor;
+      SparkMaxPIDController shoulderPID;
+      RelativeEncoder shoulderEncoder;
+      DigitalInput hallEffect;
+      public double desAngle = 0;
+      public boolean spinUpAfter = false;
+  
+  public ShoulderSubsystem() {
+    //motors/encoders/pidcontroller
+      shoulderMotor = new CANSparkMax(MotorIDConstants.shoulderMotorID, MotorType.kBrushless);
+      shoulderEncoder = shoulderMotor.getEncoder();
+      shoulderPID = shoulderMotor.getPIDController();
+      hallEffect = new DigitalInput(SensorConstants.hallEffectDIOPort);
+
+    //config PID
+      shoulderPID.setFF(PIDConstants.shoulderkF);
+      shoulderPID.setP(PIDConstants.shoulderkP);
+      shoulderPID.setI(PIDConstants.shoulderkI);
+      shoulderPID.setD(PIDConstants.shoulderkD);
+
+    //config max output, safety
+      shoulderMotor.setOpenLoopRampRate(MotorSpeedsConstants.shoulderRampRate);
+      shoulderMotor.setClosedLoopRampRate(MotorSpeedsConstants.shoulderRampRate);
+      shoulderPID.setOutputRange(-MotorSpeedsConstants.shoulderClosedMaxSpeed, MotorSpeedsConstants.shoulderClosedMaxSpeed);
+     
+  }
+
+  @Override
+  public void periodic() {
+    //smartdashboard shenanigans
+    SmartDashboard.putNumber("Shoulder Encoder Value:", shoulderEncoder.getPosition());
+    if(hallEffect.get()){
+        shoulderEncoder.setPosition(0);
+    }
+  }
+
+  public void resetEncoder(){
+    shoulderEncoder.setPosition(0);
+  }
+
+  public void setHome(){
+    shoulderPID.setReference(PositionValueConstants.shoulderHomePos, CANSparkMax.ControlType.kPosition);
+  }
+
+  public void setAmpShot(){
+    shoulderPID.setReference(PositionValueConstants.shoulderAmpShotPos, CANSparkMax.ControlType.kPosition);
+  }
+
+  public void setProtShot(){
+    shoulderPID.setReference(PositionValueConstants.shoulderProtShotPos, CANSparkMax.ControlType.kPosition);
+  }
+
+  public void manual(CommandXboxController controller){
+    shoulderMotor.set(controller.getHID().getRawAxis(ControllerConstants.shoulderAxis));
+  }
+
+  public void setDesAngle(double desiredAngle){
+    desAngle = desiredAngle;
+  }
+
+  public double getDesAngle(){
+    return desAngle;
+  }
+
+  public void setAtDesAngle(){
+    shoulderPID.setReference(getDesAngle(), CANSparkMax.ControlType.kPosition);
+  }
+
+  public boolean getSpinUpAfter(){ 
+    return spinUpAfter;
+  }
+
+  public void setSpinUpAfter(boolean doesSpinUpAfter){
+    spinUpAfter = doesSpinUpAfter;
+  }
+
+  public boolean getTripped(){
+    return hallEffect.get();
+  }
+
+}
