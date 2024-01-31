@@ -9,6 +9,7 @@ import frc.robot.commands.IndexShootCommand;
 import frc.robot.commands.IndexUntilTrippedCommand;
 import frc.robot.commands.IntakeUntilTrippedCommand;
 import frc.robot.commands.SetShoulderCommand;
+import frc.robot.commands.TestFalconIntakeRunForSecs;
 import frc.robot.commands.autos.AutoBase;
 import frc.robot.commands.autos.AutonomousChooser;
 import frc.robot.subsystems.DriveSubsystem;
@@ -16,6 +17,7 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShootSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
+import frc.robot.subsystems.TestFalconIntakeSubsystem;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathCommand;
@@ -45,6 +47,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final TestFalconIntakeSubsystem m_testIntakeSubsystem = new TestFalconIntakeSubsystem();
  // private final ShootSubsystem m_shootSubsystem = new ShootSubsystem();
   //private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   //private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
@@ -88,7 +91,9 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Mode", autoChooser);
 
     autoChooser.addOption("Test Auto", m_robotDrive.getAuto("Test Auto"));
-        
+    autoChooser.addOption("Score 1 Speaker", m_robotDrive.getAuto("Score 1 Speaker"));
+    autoChooser.addOption("follow Go To Ring 1 path", AutoBuilder.followPath(PathPlannerPath.fromPathFile("Go To Ring 1")));
+    autoChooser.addOption("go to ring 1 and intake", AutoBuilder.followPath(PathPlannerPath.fromPathFile("Go To Ring 1")).andThen(new TestFalconIntakeRunForSecs(m_testIntakeSubsystem, 1.0)));    
     configureBindings();
   }
 
@@ -98,11 +103,6 @@ public class RobotContainer {
             () -> m_robotDrive.setX(),
             m_robotDrive));
 
-   /* SmartDashboard.putData("Auto Mode", autoChooser);
-    AutoBuilder.configureHolonomic(m_robotDrive::getPose, m_robotDrive::resetOdometry, m_robotDrive::getChassisSpeeds, m_robotDrive::setChassisSpeeds,
-    new HolonomicPathFollowerConfig(3, 3, new ReplanningConfig()), () -> {
-                return false;
-            }, m_robotDrive);*/
     /*new JoystickButton(m_operatorController.getHID(), ControllerConstants.indexShootButton)
         .whileTrue(new IndexShootCommand(m_indexerSubsystem, m_shootSubsystem, m_operatorController, false))
         .whileFalse(new IndexShootCommand(m_indexerSubsystem, m_shootSubsystem, m_operatorController, true));
@@ -119,68 +119,12 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    /*SendableChooser<Command> autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Mode", autoChooser);
-    AutoBuilder.configureHolonomic(m_robotDrive::getPose, m_robotDrive::resetOdometry, m_robotDrive::getChassisSpeeds, m_robotDrive::setChassisSpeeds,
-    new HolonomicPathFollowerConfig(3, 3, new ReplanningConfig()), () -> {
-                var alliance = DriverStation.getAlliance();
-                if(alliance.isPresent()){
-                    return alliance.get() == DriverStation.Alliance.Red;
-                }
-                return false;
-            }, m_robotDrive);*/
-
-        //SmartDashboard.putData("Test Auto", new PathPlannerAuto("Test Auto"));
 
     // Create config for trajectory
     //base auto command
-    PIDController thetaController = new PIDController(0.05, 0, 0.05);
-    PIDController xController = new PIDController(0.04, 0, 0.25);
-    PIDController yController = new PIDController(0.05, 0, 0.2);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-    
-    PathPlannerPath autoTrajectory = PathPlannerPath.fromPathFile("Trying My Best");
-
-    /*FollowPathCommand swerveControllerCommand2 = new FollowPathCommand(new, null, null, null, null, null, null, null)
-    (
-          autoTrajectory, m_robotDrive::getPose,  xController,  yController, 
-          thetaController, m_robotDrive::setChassisSpeeds, m_robotDrive);
-
-    // Reset odometry to the starting pose of the trajectory.
-      m_robotDrive.resetOdometry(autoTrajectory.getInitialPose());
-
-    return swerveControllerCommand2;*/
-    //return autoChooser.getSelected();
-    //return auto1;
-    PIDConstants translationalPID = new PIDConstants(0.15, 0, 0.05);
-    PIDConstants rotPID = new PIDConstants(0.4, 0, .05);
-    FollowPathHolonomic command = new FollowPathHolonomic(autoTrajectory, m_robotDrive::getPose, m_robotDrive::getChassisSpeeds, 
-            m_robotDrive::setChassisSpeeds, new HolonomicPathFollowerConfig(
-                translationalPID, rotPID, 3, 0.9, new ReplanningConfig()),
-            () -> {
-                var alliance = DriverStation.getAlliance();
-                if(alliance.isPresent()){
-                    return alliance.get() == DriverStation.Alliance.Red;
-                }
-                return false;
-            }, m_robotDrive);
-
-
-            //return command;
-
-            //return AutoBuilder.followPath(autoTrajectory);
-           /* FollowPathCommand command = new FollowPathCommand(autoTrajectory, m_robotDrive::getPose, m_robotDrive::getChassisSpeeds, 
-            m_robotDrive::setChassisSpeeds, null, new ReplanningConfig(), () -> {
-                var alliance = DriverStation.getAlliance();
-                if(alliance.isPresent()){
-                    return alliance.get() == DriverStation.Alliance.Red;
-                }
-                return false;
-            }, m_robotDrive); */
-            //return command;
 
             return autoChooser.getSelected();
-        } 
+    } 
 
   }
 

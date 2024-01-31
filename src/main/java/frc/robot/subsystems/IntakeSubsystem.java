@@ -21,6 +21,7 @@ public class IntakeSubsystem extends SubsystemBase {
       DigitalInput beamBreak;
   
   public IntakeSubsystem() {
+    //now falcons
     //motors/encoders
       intakeMotor = new CANSparkMax(MotorIDConstants.intakeMotorID, MotorType.kBrushless);
       beamBreak = new DigitalInput(SensorConstants.intakeBeamBreakDIOPort);

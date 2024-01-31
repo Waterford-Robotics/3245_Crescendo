@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.function.BooleanSupplier;
-
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathHolonomic;
@@ -15,8 +13,6 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
-import edu.wpi.first.math.estimator.PoseEstimator;
-import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -27,7 +23,6 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.utils.SwerveUtils;
@@ -80,10 +75,11 @@ public class DriveSubsystem extends SubsystemBase {
   private double m_prevTime = WPIUtilJNI.now() * 1e-6;
 
   private Rotation2d rawGyroRotation = new Rotation2d();
+  public static final PIDConstants translationalPID = new PIDConstants(0.15, 0, 0);
+  public static final PIDConstants rotationalPID = new PIDConstants(0.17, 0.05, 0);
 
-  public static final HolonomicPathFollowerConfig config = new HolonomicPathFollowerConfig(
+  public static final HolonomicPathFollowerConfig config = new HolonomicPathFollowerConfig(translationalPID, rotationalPID,
     3, DriveConstants.kWheelBase/Math.sqrt(2), new ReplanningConfig());
-
   // Odometry class for tracking robot pose
   public SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,
@@ -93,10 +89,7 @@ public class DriveSubsystem extends SubsystemBase {
           m_frontRight.getPosition(),
           m_rearLeft.getPosition(),
           m_rearRight.getPosition()
-      });
-    private SwerveDrivePoseEstimator poseEstimator = 
-        new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics, rawGyroRotation, getModulePositions(), new Pose2d());
-      
+      });      
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
@@ -105,7 +98,13 @@ public class DriveSubsystem extends SubsystemBase {
       this::setPose, 
       () -> DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates()), 
       this::runVelocity, config, 
-      () -> false,
+      () -> {
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+          return alliance.get() == DriverStation.Alliance.Red;
+        }
+        return false;
+      },
         this);
   }
 
@@ -321,7 +320,6 @@ public class DriveSubsystem extends SubsystemBase {
   }
   public void calibrateGyro(){
     //m_gyro.calibrate();
-    //deprecated i guess
   }
 
 
@@ -343,7 +341,7 @@ public class DriveSubsystem extends SubsystemBase {
     return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
-  public Command followPathCommand(String pathToFollow){
+  /*public Command followPathCommand(String pathToFollow){
     PathPlannerPath path = PathPlannerPath.fromPathFile(pathToFollow);
 
     return new FollowPathWithEvents(
@@ -359,5 +357,5 @@ public class DriveSubsystem extends SubsystemBase {
                 return false;
             }, this), path, this::getPose);
 
-  }
+  }*/
 }
