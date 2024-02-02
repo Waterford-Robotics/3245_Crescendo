@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6,
-      "y": 7.098351746561043
+      "x": 2.0,
+      "y": 7.0
     },
     "rotation": 0
   },
@@ -14,24 +14,18 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Go To Ring 1"
+            "pathName": "Please God"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Ring 1 to Speaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot Speaker"
+            "pathName": "New New Path"
           }
         }
       ]
     }
   },
-  "folder": "Score 1 Speaker",
+  "folder": "Please God Auto",
   "choreoAuto": false
 }

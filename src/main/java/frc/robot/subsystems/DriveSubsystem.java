@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.nio.file.Path;
+
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathHolonomic;
@@ -99,10 +101,10 @@ public class DriveSubsystem extends SubsystemBase {
       () -> DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates()), 
       this::runVelocity, config, 
       () -> {
-        var alliance = DriverStation.getAlliance();
+        /*var alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
           return alliance.get() == DriverStation.Alliance.Red;
-        }
+        }*/
         return false;
       },
         this);
@@ -248,6 +250,10 @@ public class DriveSubsystem extends SubsystemBase {
 
     public Command getAuto(String autoName) {
       return AutoBuilder.buildAuto(autoName);
+    }
+
+    public Command getPath(String pathName) {
+      return AutoBuilder.followPath(PathPlannerPath.fromPathFile(pathName));
     }
   /**
    * Sets the swerve ModuleStates.

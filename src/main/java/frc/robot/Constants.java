@@ -55,11 +55,16 @@ public final class Constants {
   }
 
   public static class MotorIDConstants {
-    public static final int intakeMotorID = 20;
-    public static final int shoulderMotorID = 30;
-    public static final int indexerMotorID = 0;
-    public static final int shootMotor1ID = 40;
-    public static final int shootMotor2ID = 41;
+    public static final int intakeNeoMotorID = 31;
+    public static final int intakeFalconMotorID = 32;
+    public static final int shoulder1MotorID = 11;
+    public static final int shoulder2MotorID = 12;
+    public static final int shoulder3MotorID = 13;
+    public static final int shoulder4MotorID = 14;
+
+    public static final int indexerMotorID = 23;
+    public static final int shootMotor1ID = 21;
+    public static final int shootMotor2ID = 22;
     public static final int climbMotorID = 50;
   }
 
@@ -113,14 +118,14 @@ public final class Constants {
     // SPARK MAX CAN IDs
     //TODO: set these
     public static final int kFrontLeftDrivingCanId = 8;
-    public static final int kRearLeftDrivingCanId = 6;
-    public static final int kFrontRightDrivingCanId = 4;
-    public static final int kRearRightDrivingCanId = 2;
+    public static final int kRearLeftDrivingCanId = 5;
+    public static final int kFrontRightDrivingCanId = 1;
+    public static final int kRearRightDrivingCanId = 4;
 
     public static final int kFrontLeftTurningCanId = 7;
-    public static final int kRearLeftTurningCanId = 5;
-    public static final int kFrontRightTurningCanId = 3;
-    public static final int kRearRightTurningCanId = 1;
+    public static final int kRearLeftTurningCanId = 6;
+    public static final int kFrontRightTurningCanId = 2;
+    public static final int kRearRightTurningCanId = 3;
 
     public static final boolean kGyroReversed = true;
   }

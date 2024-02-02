@@ -22,7 +22,10 @@ import frc.robot.Constants.SensorConstants;
 
 public class ShoulderSubsystem extends SubsystemBase {
     //init stuff
-      CANSparkMax shoulderMotor;
+      CANSparkMax shoulderMasterMotor;
+      CANSparkMax shoulderFollower1Motor;
+      CANSparkMax shoulderFollower2Motor;
+      CANSparkMax shoulderFollower3Motor;
       SparkMaxPIDController shoulderPID;
       RelativeEncoder shoulderEncoder;
       DigitalInput hallEffect;
@@ -31,9 +34,13 @@ public class ShoulderSubsystem extends SubsystemBase {
   
   public ShoulderSubsystem() {
     //motors/encoders/pidcontroller
-      shoulderMotor = new CANSparkMax(MotorIDConstants.shoulderMotorID, MotorType.kBrushless);
-      shoulderEncoder = shoulderMotor.getEncoder();
-      shoulderPID = shoulderMotor.getPIDController();
+      shoulderMasterMotor = new CANSparkMax(MotorIDConstants.shoulder1MotorID, MotorType.kBrushless);
+      shoulderFollower1Motor = new CANSparkMax(MotorIDConstants.shoulder2MotorID, MotorType.kBrushless);
+      shoulderFollower2Motor = new CANSparkMax(MotorIDConstants.shoulder3MotorID, MotorType.kBrushless);
+      shoulderFollower3Motor = new CANSparkMax(MotorIDConstants.shoulder4MotorID, MotorType.kBrushless);
+
+      shoulderEncoder = shoulderMasterMotor.getEncoder();
+      shoulderPID = shoulderMasterMotor.getPIDController();
       hallEffect = new DigitalInput(SensorConstants.hallEffectDIOPort);
 
     //config PID
@@ -42,9 +49,13 @@ public class ShoulderSubsystem extends SubsystemBase {
       shoulderPID.setI(PIDConstants.shoulderkI);
       shoulderPID.setD(PIDConstants.shoulderkD);
 
+      shoulderFollower1Motor.follow(shoulderMasterMotor);
+      shoulderFollower2Motor.follow(shoulderMasterMotor);
+      shoulderFollower3Motor.follow(shoulderMasterMotor);
+
     //config max output, safety
-      shoulderMotor.setOpenLoopRampRate(MotorSpeedsConstants.shoulderRampRate);
-      shoulderMotor.setClosedLoopRampRate(MotorSpeedsConstants.shoulderRampRate);
+      shoulderMasterMotor.setOpenLoopRampRate(MotorSpeedsConstants.shoulderRampRate);
+      shoulderMasterMotor.setClosedLoopRampRate(MotorSpeedsConstants.shoulderRampRate);
       shoulderPID.setOutputRange(-MotorSpeedsConstants.shoulderClosedMaxSpeed, MotorSpeedsConstants.shoulderClosedMaxSpeed);
      
   }
@@ -75,7 +86,7 @@ public class ShoulderSubsystem extends SubsystemBase {
   }
 
   public void manual(CommandXboxController controller){
-    shoulderMotor.set(controller.getHID().getRawAxis(ControllerConstants.shoulderAxis));
+    shoulderMasterMotor.set(controller.getHID().getRawAxis(ControllerConstants.shoulderAxis));
   }
 
   public void setDesAngle(double desiredAngle){

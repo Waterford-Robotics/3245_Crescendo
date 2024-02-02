@@ -40,6 +40,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -47,11 +48,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final TestFalconIntakeSubsystem m_testIntakeSubsystem = new TestFalconIntakeSubsystem();
  // private final ShootSubsystem m_shootSubsystem = new ShootSubsystem();
   //private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   //private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-  //private final ShoulderSubsystem m_shoulderSubsystem = new ShoulderSubsystem();
+  private final ShoulderSubsystem m_shoulderSubsystem = new ShoulderSubsystem();
   SendableChooser<Command> autoChooser;
   
   // controllers
@@ -85,7 +85,7 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getRightX(), ControllerConstants.kDriveDeadband),
                 true, true),
             m_robotDrive));
-
+    m_shoulderSubsystem.setDefaultCommand(new RunCommand(() -> m_shoulderSubsystem.manual(m_operatorController), m_shoulderSubsystem));
            // m_intakeSubsystem.setDefaultCommand(new RunCommand(() -> m_intakeSubsystem.manual(m_driverController), m_intakeSubsystem));
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Mode", autoChooser);
@@ -93,7 +93,8 @@ public class RobotContainer {
     autoChooser.addOption("Test Auto", m_robotDrive.getAuto("Test Auto"));
     autoChooser.addOption("Score 1 Speaker", m_robotDrive.getAuto("Score 1 Speaker"));
     autoChooser.addOption("follow Go To Ring 1 path", AutoBuilder.followPath(PathPlannerPath.fromPathFile("Go To Ring 1")));
-    autoChooser.addOption("go to ring 1 and intake", AutoBuilder.followPath(PathPlannerPath.fromPathFile("Go To Ring 1")).andThen(new TestFalconIntakeRunForSecs(m_testIntakeSubsystem, 1.0)));    
+    autoChooser.addOption("go to ring 1 and intake", AutoBuilder.followPath(PathPlannerPath.fromPathFile("Go To Ring 1")).andThen(new WaitCommand(1)).andThen(AutoBuilder.followPath(PathPlannerPath.fromPathFile("Ring 1 to Speaker")))); 
+    autoChooser.addOption("Meow", AutoBuilder.followPath(PathPlannerPath.fromPathFile("Meow")));
     configureBindings();
   }
 
@@ -123,7 +124,8 @@ public class RobotContainer {
     // Create config for trajectory
     //base auto command
 
-            return autoChooser.getSelected();
+            //return autoChooser.getSelected();
+            return AutoBuilder.followPath(PathPlannerPath.fromPathFile("Please God"));
     } 
 
   }
