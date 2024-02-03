@@ -29,11 +29,11 @@ public class SetShoulderCommand extends Command{
             m_shoulderSubsystem.setAmpShot();
         }
 
-        else if(m_angle == "protected"){
+        if(m_angle == "protected"){
             m_shoulderSubsystem.setProtShot();
         }
 
-        else if(m_angle == "home"){
+        if(m_angle == "home"){
             m_shoulderSubsystem.setHome();
         }
 

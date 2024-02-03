@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.concurrent.CancellationException;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
@@ -20,14 +22,14 @@ import frc.robot.Constants.SensorConstants;
 public class IntakeSubsystem extends SubsystemBase {
     //init stuff
       CANSparkMax intakeNeoMotor;
-      TalonFX intakeFalconMotor;
+      CANSparkMax intakeNeo2Motor;
       DigitalInput beamBreak;
   
   public IntakeSubsystem() {
     //now falcons
     //motors/encoders
       intakeNeoMotor = new CANSparkMax(MotorIDConstants.intakeNeoMotorID, MotorType.kBrushless);
-      intakeFalconMotor = new TalonFX(MotorIDConstants.intakeFalconMotorID);
+      intakeNeo2Motor = new CANSparkMax(MotorIDConstants.intakeFalconMotorID, MotorType.kBrushless);
       beamBreak = new DigitalInput(SensorConstants.intakeBeamBreakDIOPort);
     //config PID
  
@@ -41,36 +43,40 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void stop(){
-    intakeFalconMotor.set(ControlMode.PercentOutput, 0);
     intakeNeoMotor.set(0);
+    intakeNeo2Motor.set(0);
   }
 
   public void intake(){
     intakeNeoMotor.set(MotorSpeedsConstants.intakeNeoSpeed);
-    intakeFalconMotor.set(ControlMode.PercentOutput, MotorSpeedsConstants.intakeFalconSpeed);
+    intakeNeo2Motor.set(MotorSpeedsConstants.intakeNeoSpeed);
   }
 
   public void feed(){
     intakeNeoMotor.set(MotorSpeedsConstants.intakeNeoFeedSpeed);
-    intakeFalconMotor.set(ControlMode.PercentOutput, MotorSpeedsConstants.intakeFalconFeedSpeed);
+    intakeNeo2Motor.set(MotorSpeedsConstants.intakeNeoFeedSpeed);
+    //intakeFalconMotor.set(ControlMode.PercentOutput, MotorSpeedsConstants.intakeFalconFeedSpeed);
   }
 
   public void setOut(){
-    //intakeMotor.set(-MotorSpeedsConstants.intakeSpeed);
+    intakeNeoMotor.set(-MotorSpeedsConstants.intakeNeoSpeed);
   }
 
   public void manual(CommandXboxController controller){
-    if(controller.getHID().getRawAxis(ControllerConstants.intakeInAxis)>0.05){
-        intakeNeoMotor.set(MotorSpeedsConstants.intakeNeoSpeed);
-        intakeFalconMotor.set(ControlMode.PercentOutput, MotorSpeedsConstants.intakeFalconSpeed);
+    if(controller.getHID().getRawAxis(ControllerConstants.intakeTopAxis)>0.05){
+        intakeNeo2Motor.set(MotorSpeedsConstants.intakeNeoSpeed);
     }
-    else if(controller.getHID().getRawAxis(ControllerConstants.intakeOutAxis)>0.05){
+    else if(controller.getHID().getRawAxis(ControllerConstants.intakeTopAxis)<0.05){
+        intakeNeo2Motor.set(0);
+    }
+    if(controller.getHID().getRawAxis(ControllerConstants.intakeBottomAxis)>0.05){
         intakeNeoMotor.set(-MotorSpeedsConstants.intakeNeoSpeed);
-        intakeFalconMotor.set(ControlMode.PercentOutput, -MotorSpeedsConstants.intakeFalconSpeed);
     }
-    else{
+
+    else if(controller.getHID().getRawAxis(ControllerConstants.intakeBottomAxis)<0.05){
         intakeNeoMotor.set(0);
     }
+
   }
 
   public boolean getTripped(){

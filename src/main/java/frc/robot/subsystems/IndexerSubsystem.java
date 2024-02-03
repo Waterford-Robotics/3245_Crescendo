@@ -8,7 +8,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.MotorIDConstants;
 import frc.robot.Constants.MotorSpeedsConstants;
 import frc.robot.Constants.SensorConstants;
@@ -48,6 +51,15 @@ public class IndexerSubsystem extends SubsystemBase {
 
   public boolean getTripped(){
     return beamBreak.get();
+  }
+
+  public void manual(CommandXboxController controller){
+    if(controller.getHID().getRawButton(ControllerConstants.indexerButton)){
+        indexerMotor.set(-MotorSpeedsConstants.indexSpitVal);
+    }
+    else{
+        indexerMotor.set(0);
+    }
   }
 
 }

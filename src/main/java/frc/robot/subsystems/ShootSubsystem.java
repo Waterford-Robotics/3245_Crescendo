@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.CANSparkFlex;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -15,22 +17,12 @@ import frc.robot.Constants.MotorSpeedsConstants;
 
 public class ShootSubsystem extends SubsystemBase {
     //init stuff
-    TalonFX shootMotor1;
-    TalonFX shootMotor2;
-    MotorOutputConfigs motor1OutputConfigs;
-    MotorOutputConfigs motor2OutputConfigs;
+    CANSparkFlex shootMotor1;
+    CANSparkFlex shootMotor2;
   public ShootSubsystem() {
     //motors/encoders
-      shootMotor1 = new TalonFX(MotorIDConstants.shootMotor1ID);
-      shootMotor2 = new TalonFX(MotorIDConstants.shootMotor2ID);
- 
-    //config max output, safety
-      motor1OutputConfigs = new MotorOutputConfigs();
-      motor2OutputConfigs = new MotorOutputConfigs();
-      motor1OutputConfigs.withPeakForwardDutyCycle(MotorSpeedsConstants.shoot1MaxVal);
-      motor2OutputConfigs.withPeakForwardDutyCycle(MotorSpeedsConstants.shoot2MaxVal);
-      shootMotor1.getConfigurator().apply(motor1OutputConfigs);
-      shootMotor2.getConfigurator().apply(motor2OutputConfigs);
+      shootMotor1 = new CANSparkFlex(MotorIDConstants.shootMotor1ID, MotorType.kBrushless);
+      shootMotor2 = new CANSparkFlex(MotorIDConstants.shootMotor2ID, MotorType.kBrushless);
   }
 
   @Override
@@ -46,12 +38,8 @@ public class ShootSubsystem extends SubsystemBase {
 
   public void manual(CommandXboxController controller){
     if(controller.getHID().getRawButton(ControllerConstants.shootButton)){
-        shootMotor1.set(MotorSpeedsConstants.shoot1MaxVal);
-        shootMotor2.set(MotorSpeedsConstants.shoot2MaxVal);
-    }
-    else if(controller.getHID().getRawButton(ControllerConstants.shootBackButton)){
         shootMotor1.set(-MotorSpeedsConstants.shoot1MaxVal);
-        shootMotor2.set(-MotorSpeedsConstants.shoot2MaxVal);
+        shootMotor2.set(MotorSpeedsConstants.shoot2MaxVal);
     }
     else{
         shootMotor1.set(0);

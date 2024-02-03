@@ -34,6 +34,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -48,8 +49,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
- // private final ShootSubsystem m_shootSubsystem = new ShootSubsystem();
-  //private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
+  private final ShootSubsystem m_shootSubsystem = new ShootSubsystem();
+  private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShoulderSubsystem m_shoulderSubsystem = new ShoulderSubsystem();
   SendableChooser<Command> autoChooser;
@@ -85,8 +86,10 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getRightX(), ControllerConstants.kDriveDeadband),
                 true, true),
             m_robotDrive));
-    m_shoulderSubsystem.setDefaultCommand(new RunCommand(() -> m_shoulderSubsystem.manual(m_operatorController), m_shoulderSubsystem));
-    m_intakeSubsystem.setDefaultCommand(new RunCommand(() -> m_intakeSubsystem.manual(m_operatorController), m_intakeSubsystem));
+    //m_shoulderSubsystem.setDefaultCommand(new RunCommand(() -> m_shoulderSubsystem.manual(m_operatorController), m_shoulderSubsystem));
+    m_intakeSubsystem.setDefaultCommand(new RunCommand(() -> m_intakeSubsystem.manual(m_driverController), m_intakeSubsystem));
+    m_indexerSubsystem.setDefaultCommand(new RunCommand(() -> m_indexerSubsystem.manual(m_driverController), m_indexerSubsystem));
+    m_shootSubsystem.setDefaultCommand(new RunCommand(() -> m_shootSubsystem.manual(m_driverController), m_shootSubsystem));
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Mode", autoChooser);
 
@@ -102,6 +105,16 @@ public class RobotContainer {
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
+
+    new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderHomeButton).whileTrue(
+      new SetShoulderCommand(m_shoulderSubsystem, "home"));
+
+    new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderAmpButton).whileTrue(
+      new SetShoulderCommand(m_shoulderSubsystem, "amp"));
+
+    new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderProtButton).whileTrue(
+      new SetShoulderCommand(m_shoulderSubsystem, "protected"));
+
 
     /*new JoystickButton(m_operatorController.getHID(), ControllerConstants.indexShootButton)
         .whileTrue(new IndexShootCommand(m_indexerSubsystem, m_shootSubsystem, m_operatorController, false))

@@ -20,7 +20,7 @@ public final class Constants {
     public static final double kDriveDeadband = 0.15;
 
     //driver controls
-    public static final int setXValue = 1; //A
+    public static final int setXValue = 4; //Y
 
     //operator controls
     public static final int indexShootButton = 6; //Double check, we want right bumper
@@ -30,8 +30,10 @@ public final class Constants {
     //manual controls for testing, operator
     public static final int intakeInButton = 6; //right bump
     public static final int intakeOutButton = 5; //left bump
-    public static final int intakeInAxis = 3;
-    public static final int intakeOutAxis = 2;
+    public static final int intakeTopAxis = 3;
+    public static final int intakeBottomAxis = 2;
+
+    public static final int indexerButton = 5;
 
     public static final int shoulderAxis = 1; //left joy
 
@@ -41,17 +43,21 @@ public final class Constants {
     public static final int indexer45Button = 4; //Y
     public static final int indexer180Button = 6; //right bumper
 
-    public static final int shootButton = 3; //X
+    public static final int shootButton = 6; //right bumper
     public static final int shootBackButton = 2; //B
 
     public static final int climbAxis = 2; //also unsure lmao
+
+    public static final int shoulderHomeButton = 2; //B
+    public static final int shoulderAmpButton = 1; //A
+    public static final int shoulderProtButton = 3; //X
   }
 
   public static class PIDConstants {
     public static double shoulderkF = 0;
-    public static double shoulderkP = 0;
+    public static double shoulderkP = 0.15;
     public static double shoulderkI = 0;
-    public static double shoulderkD = 0;
+    public static double shoulderkD = 0.15;
   }
 
   public static class MotorIDConstants {
@@ -80,8 +86,8 @@ public final class Constants {
     public static final double intakeNeoFeedSpeed = 0.2;
     public static final double intakeFalconFeedSpeed = 0.2;
 
-    public static final double shoulderOpenMaxSpeed = 0.3;
-    public static final double shoulderClosedMaxSpeed = 0.3;
+    public static final double shoulderOpenMaxSpeed = 0.2;
+    public static final double shoulderClosedMaxSpeed = 0.5;
     public static final double shoulderRampRate = 0.5;
     public static final double shoot1MaxVal = -0.75;
     public static final double shoot2MaxVal = 1;
@@ -204,8 +210,8 @@ public final class Constants {
 
   public static class PositionValueConstants {
     public static final double shoulderHomePos = 0;
-    public static final double shoulderAmpShotPos = 0;
-    public static final double shoulderProtShotPos = 0;
+    public static final double shoulderAmpShotPos = 3.5;
+    public static final double shoulderProtShotPos = 2;
   }
   
   public static class TeleopTimeConstants {
