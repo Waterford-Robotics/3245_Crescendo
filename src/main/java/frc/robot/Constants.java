@@ -33,7 +33,7 @@ public final class Constants {
     public static final int intakeInAxis = 3;
     public static final int intakeOutAxis = 2;
 
-    public static final int shoulderAxis = 1; //unsure lmao
+    public static final int shoulderAxis = 1; //left joy
 
     public static final int indexerMaxButton = 1; //A
     public static final int indexerMinButton = 2; //B
@@ -57,9 +57,9 @@ public final class Constants {
   public static class MotorIDConstants {
     public static final int intakeNeoMotorID = 31;
     public static final int intakeFalconMotorID = 32;
-    public static final int shoulder1MotorID = 11;
+    public static final int shoulder1MotorID = 13;
     public static final int shoulder2MotorID = 12;
-    public static final int shoulder3MotorID = 13;
+    public static final int shoulder3MotorID = 11;
     public static final int shoulder4MotorID = 14;
 
     public static final int indexerMotorID = 23;
@@ -75,10 +75,12 @@ public final class Constants {
   }
 
   public static class MotorSpeedsConstants {
-    public static final double intakeSpeed = 0.9;
-    public static final double intakeFeedSpeed = 0.2;
+    public static final double intakeNeoSpeed = 0.9;
+    public static final double intakeFalconSpeed = 0.4;
+    public static final double intakeNeoFeedSpeed = 0.2;
+    public static final double intakeFalconFeedSpeed = 0.2;
 
-    public static final double shoulderOpenMaxSpeed = 0.4;
+    public static final double shoulderOpenMaxSpeed = 0.3;
     public static final double shoulderClosedMaxSpeed = 0.3;
     public static final double shoulderRampRate = 0.5;
     public static final double shoot1MaxVal = -0.75;

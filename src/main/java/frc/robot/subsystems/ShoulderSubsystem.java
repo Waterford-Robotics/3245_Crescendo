@@ -64,9 +64,9 @@ public class ShoulderSubsystem extends SubsystemBase {
   public void periodic() {
     //smartdashboard shenanigans
     SmartDashboard.putNumber("Shoulder Encoder Value:", shoulderEncoder.getPosition());
-    if(hallEffect.get()){
+    /*if(hallEffect.get()){
         shoulderEncoder.setPosition(0);
-    }
+    }*/
   }
 
   public void resetEncoder(){
