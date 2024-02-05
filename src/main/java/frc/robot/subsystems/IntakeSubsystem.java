@@ -63,19 +63,20 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void manual(CommandXboxController controller){
-    if(controller.getHID().getRawAxis(ControllerConstants.intakeTopAxis)>0.05){
+    /*if(controller.getHID().getRawAxis(ControllerConstants.intakeTopAxis)>0.05){
         intakeNeo2Motor.set(MotorSpeedsConstants.intakeNeoSpeed);
     }
-    else if(controller.getHID().getRawAxis(ControllerConstants.intakeTopAxis)<0.05){
-        intakeNeo2Motor.set(0);
+  
+    else if(controller.getHID().getRawAxis(ControllerConstants.intakeBottomAxis)>0.05){
+        intakeNeoMotor.set(MotorSpeedsConstants.intakeNeoSpeed);
+        intakeNeo2Motor.set(-MotorSpeedsConstants.intakeNeoSpeed);
     }
-    if(controller.getHID().getRawAxis(ControllerConstants.intakeBottomAxis)>0.05){
-        intakeNeoMotor.set(-MotorSpeedsConstants.intakeNeoSpeed);
-    }
-
-    else if(controller.getHID().getRawAxis(ControllerConstants.intakeBottomAxis)<0.05){
+    else{
         intakeNeoMotor.set(0);
-    }
+        intakeNeo2Motor.set(0);
+    }*/
+    intakeNeo2Motor.set(MotorSpeedsConstants.intakeNeoSpeed*controller.getHID().getRawAxis(ControllerConstants.intakeTopAxis));
+    intakeNeoMotor.set(MotorSpeedsConstants.intakeNeoSpeed*-controller.getHID().getRawAxis(ControllerConstants.intakeBottomAxis));
 
   }
 

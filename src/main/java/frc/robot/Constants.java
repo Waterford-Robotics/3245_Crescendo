@@ -90,7 +90,7 @@ public final class Constants {
     public static final double shoulderClosedMaxSpeed = 0.5;
     public static final double shoulderRampRate = 0.5;
     public static final double shoot1MaxVal = -0.75;
-    public static final double shoot2MaxVal = 1;
+    public static final double shoot2MaxVal = .75;
     public static final double indexSpitVal = 0.7;
     public static final double indexFeedVal = 0.4;
     public static final double climbMaxVal = 0.7;
