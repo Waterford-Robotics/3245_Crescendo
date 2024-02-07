@@ -61,8 +61,9 @@ public final class Constants {
   }
 
   public static class MotorIDConstants {
-    public static final int intakeNeoMotorID = 31;
-    public static final int intakeFalconMotorID = 32;
+    public static final int intakeBottomMotorID = 31;
+    public static final int intakeTop1MotorID = 32;
+    public static final int intakeTop2MotorID = 33;
     public static final int shoulder1MotorID = 13;
     public static final int shoulder2MotorID = 12;
     public static final int shoulder3MotorID = 11;
@@ -78,6 +79,7 @@ public final class Constants {
     public static final int hallEffectDIOPort = 1;
     public static final int intakeBeamBreakDIOPort = 2;
     public static final int indexBeamBreakDIOPort = 3;
+    public static final int colorSensorPort = 4;
   }
 
   public static class MotorSpeedsConstants {

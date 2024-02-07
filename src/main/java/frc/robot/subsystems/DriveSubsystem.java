@@ -77,8 +77,8 @@ public class DriveSubsystem extends SubsystemBase {
   private double m_prevTime = WPIUtilJNI.now() * 1e-6;
 
   private Rotation2d rawGyroRotation = new Rotation2d();
-  public static final PIDConstants translationalPID = new PIDConstants(0.15, 0, 0);
-  public static final PIDConstants rotationalPID = new PIDConstants(0.17, 0.05, 0);
+  public static final PIDConstants translationalPID = new PIDConstants(0.23, 0, 0);
+  public static final PIDConstants rotationalPID = new PIDConstants(0.23, 0, 0);
 
   public static final HolonomicPathFollowerConfig config = new HolonomicPathFollowerConfig(translationalPID, rotationalPID,
     3, DriveConstants.kWheelBase/Math.sqrt(2), new ReplanningConfig());
@@ -101,8 +101,8 @@ public class DriveSubsystem extends SubsystemBase {
       () -> DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates()), 
       this::runVelocity, config, 
       () -> {
-        /*var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
+        var alliance = DriverStation.getAlliance();
+        /*if (alliance.isPresent()) {
           return alliance.get() == DriverStation.Alliance.Red;
         }*/
         return false;
@@ -114,7 +114,8 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // Update the odometry in the periodic block
     m_odometry.update(
-        Rotation2d.fromDegrees(m_gyro.getYaw()),
+        Rotation2d.fromDegrees(-m_gyro.getYaw()),
+        //TODO: make above negative
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
@@ -135,7 +136,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return The pose.
    */
   public Pose2d getPose() {
-    return this.m_odometry.getPoseMeters();
+    return m_odometry.getPoseMeters();
   }
 
   public void setPose(Pose2d pose) {
@@ -147,7 +148,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @param pose The pose to which to set the odometry.
    */
   public void resetOdometry(Pose2d pose) {
-    this.m_odometry.resetPosition(
+    m_odometry.resetPosition(
         Rotation2d.fromDegrees(-m_gyro.getYaw()),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),

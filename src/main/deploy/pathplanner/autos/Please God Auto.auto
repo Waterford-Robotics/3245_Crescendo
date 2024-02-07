@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.5110352727827958,
-      "y": 5.55472336015897
+      "x": 2.0,
+      "y": 7.0
     },
-    "rotation": 0
+    "rotation": 180.0
   },
   "command": {
     "type": "sequential",
@@ -14,12 +14,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Test Path"
+            "pathName": "Please God"
           }
         }
       ]
     }
   },
-  "folder": "Test Auto",
+  "folder": null,
   "choreoAuto": false
 }

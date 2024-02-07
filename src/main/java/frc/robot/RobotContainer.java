@@ -19,6 +19,7 @@ import frc.robot.subsystems.ShootSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
 import frc.robot.subsystems.TestFalconIntakeSubsystem;
 
+import com.ctre.phoenix.platform.can.AutocacheState;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.commands.FollowPathHolonomic;
@@ -54,6 +55,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShoulderSubsystem m_shoulderSubsystem = new ShoulderSubsystem();
   SendableChooser<Command> autoChooser;
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
   
   // controllers
   CommandXboxController m_driverController = new CommandXboxController(ControllerConstants.kDriverControllerPort);
@@ -91,12 +93,28 @@ public class RobotContainer {
     m_indexerSubsystem.setDefaultCommand(new RunCommand(() -> m_indexerSubsystem.manual(m_driverController), m_indexerSubsystem));
     m_shootSubsystem.setDefaultCommand(new RunCommand(() -> m_shootSubsystem.manual(m_driverController), m_shootSubsystem));
     autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Mode", autoChooser);
+    //SmartDashboard.putData("Auto Mode", autoChooser);
+    SmartDashboard.putData("AutoMode", m_chooser);
 
-    autoChooser.addOption("Test Auto", m_robotDrive.getAuto("Test Auto"));
+  /*autoChooser.addOption("Test Auto", m_robotDrive.getAuto("Test Auto"));
     autoChooser.addOption("Score 1 Speaker", m_robotDrive.getAuto("Score 1 Speaker"));
     autoChooser.addOption("follow Go To Ring 1 path", AutoBuilder.followPath(PathPlannerPath.fromPathFile("Go To Ring 1")));
     autoChooser.addOption("go to ring 1 and intake", AutoBuilder.followPath(PathPlannerPath.fromPathFile("Go To Ring 1")).andThen(new WaitCommand(1)).andThen(AutoBuilder.followPath(PathPlannerPath.fromPathFile("Ring 1 to Speaker")))); 
+    autoChooser.addOption("Please God Auto", m_robotDrive.getAuto("Please God Auto"));
+    autoChooser.addOption("Please God Path", m_robotDrive.getPath("Please God"));
+    autoChooser.addOption("raise arm sequence", 
+        AutoBuilder.followPath(PathPlannerPath.fromPathFile("Please God"))
+        .andThen(new SetShoulderCommand(m_shoulderSubsystem, "amp"))
+        .andThen(AutoBuilder.followPath(PathPlannerPath.fromPathFile("Next Path"))
+        ));*/
+    m_chooser.addOption("Please God Auto diff", m_robotDrive.getAuto("Please God Auto"));
+    m_chooser.addOption("red test", m_robotDrive.getPath("Red Drive Straight"));
+    m_chooser.addOption("nikos thing", m_robotDrive.getPath("neeksy"));
+    m_chooser.addOption("Score 1 Speaker", m_robotDrive.getAuto("Score 1 Speaker"));
+    m_chooser.addOption("Please God Path diff", m_robotDrive.getPath("Please God").andThen
+    (
+      new SetShoulderCommand(m_shoulderSubsystem, "amp")
+    ));
     configureBindings();
   }
 
@@ -136,8 +154,13 @@ public class RobotContainer {
     // Create config for trajectory
     //base auto command
 
-            return autoChooser.getSelected();
+            return m_chooser.getSelected();
             //return AutoBuilder.followPath(PathPlannerPath.fromPathFile("Please God"));
+
+           /*return  AutoBuilder.followPath(PathPlannerPath.fromPathFile("Please God"))
+        .andThen(new SetShoulderCommand(m_shoulderSubsystem, "amp"))
+        .andThen(AutoBuilder.followPath(PathPlannerPath.fromPathFile("Next Path"))
+        );*/
     } 
 
   }

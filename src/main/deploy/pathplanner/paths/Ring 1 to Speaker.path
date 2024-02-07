@@ -16,35 +16,25 @@
     },
     {
       "anchor": {
-        "x": 1.6162826627647557,
-        "y": 6.700750495518085
-      },
-      "prevControl": {
-        "x": 1.7797763897044319,
-        "y": 6.893096056623587
-      },
-      "nextControl": {
-        "x": 1.4174820372432768,
-        "y": 6.466867406669286
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.5110352727827958,
+        "x": 1.6279768172071953,
         "y": 5.531335051274091
       },
       "prevControl": {
-        "x": 1.5695060449949956,
+        "x": 1.686447589419395,
         "y": 5.835383066777529
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "At Speaker"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0,
+      "rotationDegrees": 178.78112476515582,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -55,11 +45,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 180.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
-  "previewStartingState": null,
+  "previewStartingState": {
+    "rotation": 180.0,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }
