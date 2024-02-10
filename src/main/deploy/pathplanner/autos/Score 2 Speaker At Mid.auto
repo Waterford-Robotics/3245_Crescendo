@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.6105853807149207,
+      "y": 7.098351746561043
+    },
+    "rotation": 180.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Go To Ring 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Ring 1 to Speaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Speaker to Ring 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Ring 2 to Speaker"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

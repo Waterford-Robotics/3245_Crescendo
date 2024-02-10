@@ -25,7 +25,7 @@ public class IntakeUntilTrippedCommand extends Command{
 
     @Override
     public boolean isFinished(){
-        return m_intakeSubsystem.getTripped();
+        return m_intakeSubsystem.getBBTripped();
     }
 
 }

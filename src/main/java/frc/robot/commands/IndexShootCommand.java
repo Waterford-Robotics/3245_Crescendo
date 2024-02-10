@@ -44,7 +44,7 @@ public class IndexShootCommand extends Command{
             timer.start();
             timer.reset();
             if(timer.get()<TeleopTimeConstants.indexerShootSpinAfterTime){
-                m_indexerSubsystem.spit();
+                m_indexerSubsystem.runFast();
             }
             if(timer.get()>TeleopTimeConstants.indexerShootSpinAfterTime){
                 m_indexerSubsystem.stop();

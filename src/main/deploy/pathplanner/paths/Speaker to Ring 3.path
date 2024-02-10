@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.74601080595709,
-        "y": 5.531335051274091
+        "x": 2.0021897593652738,
+        "y": 5.4377818157345725
       },
       "isLocked": false,
       "linkedName": "At Speaker"
     },
     {
       "anchor": {
-        "x": 2.4699559370628714,
-        "y": 5.531335051274091
+        "x": 2.4582617826204314,
+        "y": 4.1046482092964185
       },
       "prevControl": {
-        "x": 2.294543620426272,
-        "y": 5.531335051274091
+        "x": 2.1776020760018726,
+        "y": 4.724438394745736
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "At Ring 2"
+      "linkedName": "At Ring 3"
     }
   ],
   "rotationTargets": [],

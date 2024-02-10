@@ -14,8 +14,10 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ColorSensorV3.RawColor;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -32,6 +34,7 @@ public class IntakeSubsystem extends SubsystemBase {
       CANSparkMax intakeTop1Motor;
       CANSparkMax intakeTop2Motor;
       DigitalInput beamBreak;
+      DigitalOutput beamBreakOut;
       ColorSensorV3 colorSensor;
       Color kOrangeTarget;
       Color detectedColor;
@@ -46,13 +49,16 @@ public class IntakeSubsystem extends SubsystemBase {
       intakeTop1Motor = new CANSparkMax(MotorIDConstants.intakeTop1MotorID, MotorType.kBrushless);
       intakeTop2Motor = new CANSparkMax(MotorIDConstants.intakeTop2MotorID, MotorType.kBrushless);
       beamBreak = new DigitalInput(SensorConstants.intakeBeamBreakDIOPort);
+      beamBreakOut = new DigitalOutput(SensorConstants.intakeBeamBreakDIOOutput);
       colorSensor = new ColorSensorV3(i2cPort);
       kOrangeTarget = new Color(255, 165, 0);
       m_colorMatcher = new ColorMatch();
- 
+      m_colorMatcher.setConfidenceThreshold(0.95);
+
       intakeTop2Motor.follow(intakeTop1Motor, true);    
 
       m_colorMatcher.addColorMatch(kOrangeTarget);
+      
   }
 
   @Override
@@ -60,16 +66,21 @@ public class IntakeSubsystem extends SubsystemBase {
     //smartdashboard shenanigans
     detectedColor = colorSensor.getColor();
     m_colorMatchResult = m_colorMatcher.matchClosestColor(detectedColor);
-    SmartDashboard.putBoolean("orange detected", getOrange());
+    SmartDashboard.putBoolean("orange detected", detectedColor.red > 0.43);
+    SmartDashboard.putBoolean("beam break tripped", !beamBreak.get());
+    SmartDashboard.putNumber("beambreak port", beamBreak.getChannel());
+    SmartDashboard.putNumber("Red", detectedColor.red);
+    SmartDashboard.putNumber("Green", detectedColor.green);
+    SmartDashboard.putNumber("Blue", detectedColor.blue);
   }
 
   public void stop(){
     intakeBottomMotor.set(0);
-    intakeTop1Motor.set(0);
+    intakeTop1Motor.set(0.3);
   }
 
   public void intake(){
-    intakeBottomMotor.set(MotorSpeedsConstants.intakeNeoSpeed);
+    intakeBottomMotor.set(-MotorSpeedsConstants.intakeNeoSpeed);
     intakeTop1Motor.set(MotorSpeedsConstants.intakeNeoSpeed);
   }
 
@@ -81,6 +92,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void setOut(){
     intakeBottomMotor.set(-MotorSpeedsConstants.intakeNeoSpeed);
+  }
+
+  public void stopBottom(){
+    intakeBottomMotor.set(0);
   }
 
   public void manual(CommandXboxController controller){
@@ -103,8 +118,13 @@ public class IntakeSubsystem extends SubsystemBase {
   public boolean getOrange(){
     return m_colorMatchResult.color == kOrangeTarget;
   }
-  public boolean getTripped(){
-    return beamBreak.get();
+
+  public boolean getOverRedThresh(){
+    return detectedColor.red > 0.5;
+  }
+
+  public boolean getBBTripped(){
+    return !beamBreak.get();
   }
 
 }

@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IndexUntilTrippedCommand extends Command{
+/*public class IndexUntilTrippedCommand extends Command{
     //instantiate stuff
     IndexerSubsystem m_indexerSubsystem;
     IntakeSubsystem m_intakeSubsystem;
@@ -36,4 +36,4 @@ public class IndexUntilTrippedCommand extends Command{
         return m_indexerSubsystem.getTripped();
     }
 
-}
+}*/

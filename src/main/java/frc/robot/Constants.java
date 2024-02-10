@@ -77,9 +77,10 @@ public final class Constants {
 
   public static class SensorConstants {
     public static final int hallEffectDIOPort = 1;
-    public static final int intakeBeamBreakDIOPort = 2;
+    public static final int intakeBeamBreakDIOPort = 8;
+    public static final int intakeBeamBreakDIOOutput = 9;
     public static final int indexBeamBreakDIOPort = 3;
-    public static final int colorSensorPort = 4;
+    public static final int colorSensorPort = 8;
   }
 
   public static class MotorSpeedsConstants {
@@ -93,8 +94,8 @@ public final class Constants {
     public static final double shoulderRampRate = 0.5;
     public static final double shoot1MaxVal = -0.75;
     public static final double shoot2MaxVal = .75;
-    public static final double indexSpitVal = 0.7;
-    public static final double indexFeedVal = 0.4;
+    public static final double indexRunFastVal = 0.7;
+    public static final double indexRunSlowVal = 0.4;
     public static final double climbMaxVal = 0.7;
   }
   
@@ -105,7 +106,7 @@ public final class Constants {
     public static final double kMaxAngularSpeed = 1.5 * Math.PI; // radians per second
 
     public static final double kDirectionSlewRate = 1.2; // radians per second
-    public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
+    public static final double kMagnitudeSlewRate = 5; // percent per second (1 = 100%)
     public static final double kRotationalSlewRate = 4.5; // percent per second (1 = 100%)
 
     // Chassis configuration
@@ -126,7 +127,6 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDs
-    //TODO: set these
     public static final int kFrontLeftDrivingCanId = 8;
     public static final int kRearLeftDrivingCanId = 5;
     public static final int kFrontRightDrivingCanId = 1;
@@ -206,7 +206,7 @@ public final class Constants {
     public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
-    public static final int kDrivingMotorCurrentLimit = 40; // amps
+    public static final int kDrivingMotorCurrentLimit = 60; // amps
     public static final int kTurningMotorCurrentLimit = 25; // amps
   }
 
@@ -217,6 +217,8 @@ public final class Constants {
   }
   
   public static class TeleopTimeConstants {
-    public static final double indexerShootSpinAfterTime = 0.5;
+    public static final double indexerShootSpinAfterTime = 0.1;
+    public static final double handoffIndexerSlowTime = 0.1;
+    public static final double handoffIndexerReverseTime = 0.2;
   }
 }

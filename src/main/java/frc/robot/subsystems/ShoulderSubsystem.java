@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -51,6 +52,8 @@ public class ShoulderSubsystem extends SubsystemBase {
       shoulderPID.setP(PIDConstants.shoulderkP);
       shoulderPID.setI(PIDConstants.shoulderkI);
       shoulderPID.setD(PIDConstants.shoulderkD);
+
+      //shoulderMasterMotor.setInverted(true);
 
       shoulderFollower1Motor.follow(shoulderMasterMotor, true);
       shoulderFollower2Motor.follow(shoulderMasterMotor, true);

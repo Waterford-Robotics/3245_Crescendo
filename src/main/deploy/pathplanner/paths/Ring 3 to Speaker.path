@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6279768172071953,
-        "y": 5.531335051274091
+        "x": 2.4582617826204314,
+        "y": 4.1046482092964185
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.74601080595709,
-        "y": 5.531335051274091
+        "x": 2.1776020760018726,
+        "y": 4.677661776975976
       },
       "isLocked": false,
-      "linkedName": "At Speaker"
+      "linkedName": "At Ring 3"
     },
     {
       "anchor": {
-        "x": 2.4699559370628714,
+        "x": 1.6279768172071953,
         "y": 5.531335051274091
       },
       "prevControl": {
-        "x": 2.294543620426272,
-        "y": 5.531335051274091
+        "x": 1.8384715971711143,
+        "y": 5.262369499097973
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "At Ring 2"
+      "linkedName": "At Speaker"
     }
   ],
   "rotationTargets": [],

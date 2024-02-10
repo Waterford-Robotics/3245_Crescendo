@@ -6,7 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.IndexShootCommand;
-import frc.robot.commands.IndexUntilTrippedCommand;
+import frc.robot.commands.IntakeHandoffCommand;
 import frc.robot.commands.IntakeUntilTrippedCommand;
 import frc.robot.commands.SetShoulderCommand;
 import frc.robot.commands.TestFalconIntakeRunForSecs;
@@ -62,6 +62,8 @@ public class RobotContainer {
   CommandXboxController m_operatorController = new CommandXboxController(ControllerConstants.kOperatorControllerPort);
 
   // commands
+  SetShoulderCommand shimmyUp = new SetShoulderCommand(m_shoulderSubsystem, "protected");
+  SetShoulderCommand shimmyDown = new SetShoulderCommand(m_shoulderSubsystem, "home");
  /* Command handoffCommandGroup = Commands.parallel(
       new IntakeUntilTrippedCommand(m_intakeSubsystem),
       new SetShoulderCommand(m_shoulderSubsystem, "home"))
@@ -89,9 +91,9 @@ public class RobotContainer {
                 true, true),
             m_robotDrive));
     //m_shoulderSubsystem.setDefaultCommand(new RunCommand(() -> m_shoulderSubsystem.manual(m_operatorController), m_shoulderSubsystem));
-    m_intakeSubsystem.setDefaultCommand(new RunCommand(() -> m_intakeSubsystem.manual(m_driverController), m_intakeSubsystem));
-    m_indexerSubsystem.setDefaultCommand(new RunCommand(() -> m_indexerSubsystem.manual(m_driverController), m_indexerSubsystem));
-    m_shootSubsystem.setDefaultCommand(new RunCommand(() -> m_shootSubsystem.manual(m_driverController), m_shootSubsystem));
+    //m_intakeSubsystem.setDefaultCommand(new RunCommand(() -> m_intakeSubsystem.manual(m_driverController), m_intakeSubsystem));
+    //m_indexerSubsystem.setDefaultCommand(new RunCommand(() -> m_indexerSubsystem.manual(m_driverController), m_indexerSubsystem));
+    //m_shootSubsystem.setDefaultCommand(new RunCommand(() -> m_shootSubsystem.manual(m_driverController), m_shootSubsystem));
     autoChooser = AutoBuilder.buildAutoChooser();
     //SmartDashboard.putData("Auto Mode", autoChooser);
     SmartDashboard.putData("AutoMode", m_chooser);
@@ -132,6 +134,14 @@ public class RobotContainer {
 
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderProtButton).whileTrue(
       new SetShoulderCommand(m_shoulderSubsystem, "protected"));
+
+    new JoystickButton(m_operatorController.getHID(), ControllerConstants.intakeInButton).whileTrue(
+      new IntakeHandoffCommand(m_intakeSubsystem, m_indexerSubsystem)
+    );
+
+    /*new JoystickButton(m_operatorController.getHID(), ControllerConstants.intakeOutButton).whileTrue(
+      new RunCommand(() -> m_indexerSubsystem.runBackSlow(), m_indexerSubsystem)
+    );*/
 
 
     /*new JoystickButton(m_operatorController.getHID(), ControllerConstants.indexShootButton)

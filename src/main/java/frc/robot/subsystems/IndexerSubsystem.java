@@ -37,29 +37,27 @@ public class IndexerSubsystem extends SubsystemBase {
     indexerMotor.set(0);
   }
 
-  public void spit(){
-    indexerMotor.set(MotorSpeedsConstants.indexSpitVal);
+  public void runFast(){
+    indexerMotor.set(-MotorSpeedsConstants.indexRunFastVal);
+  }
+  public void runSlow(){
+    indexerMotor.set(MotorSpeedsConstants.indexRunSlowVal);
   }
 
-  public void feed(){
-    indexerMotor.set(MotorSpeedsConstants.indexFeedVal);
+  public void runBackSlow(){
+    indexerMotor.set(-MotorSpeedsConstants.indexRunSlowVal);
   }
 
-  public void runBack(){
-    indexerMotor.set(-MotorSpeedsConstants.indexSpitVal);
-  }
-
-  public boolean getTripped(){
+  public boolean getBBTripped(){
     return beamBreak.get();
   }
 
   public void manual(CommandXboxController controller){
     if(controller.getHID().getRawButton(ControllerConstants.indexerButton)){
-        indexerMotor.set(-MotorSpeedsConstants.indexSpitVal);
+        indexerMotor.set(-MotorSpeedsConstants.indexRunFastVal);
     }
     else{
         indexerMotor.set(0);
     }
   }
-
 }
