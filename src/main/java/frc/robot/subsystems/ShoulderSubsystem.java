@@ -5,10 +5,12 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 
@@ -26,26 +28,25 @@ import frc.robot.Constants.SensorConstants;
 public class ShoulderSubsystem extends SubsystemBase {
     //init stuff
       CANSparkMax shoulderMasterMotor;
-      CANSparkMax shoulderFollower1Motor;
+      //CANSparkMax shoulderFollower1Motor;
       CANSparkMax shoulderFollower2Motor;
       CANSparkMax shoulderFollower3Motor;
       SparkMaxPIDController shoulderPID;
       AbsoluteEncoder shoulderEncoder;
-      DigitalInput hallEffect;
       public double desAngle = 0;
       public boolean spinUpAfter = false;
   
   public ShoulderSubsystem() {
     //motors/encoders/pidcontroller
       shoulderMasterMotor = new CANSparkMax(MotorIDConstants.shoulder1MotorID, MotorType.kBrushless);
-      shoulderFollower1Motor = new CANSparkMax(MotorIDConstants.shoulder2MotorID, MotorType.kBrushless);
+      //shoulderFollower1Motor = new CANSparkMax(MotorIDConstants.shoulder2MotorID, MotorType.kBrushless);
       shoulderFollower2Motor = new CANSparkMax(MotorIDConstants.shoulder3MotorID, MotorType.kBrushless);
       shoulderFollower3Motor = new CANSparkMax(MotorIDConstants.shoulder4MotorID, MotorType.kBrushless);
 
       shoulderEncoder = shoulderMasterMotor.getAbsoluteEncoder(Type.kDutyCycle);
       
       shoulderPID = shoulderMasterMotor.getPIDController();
-      hallEffect = new DigitalInput(SensorConstants.hallEffectDIOPort);
+
 
     //config PID
       shoulderPID.setFF(PIDConstants.shoulderkF);
@@ -53,10 +54,8 @@ public class ShoulderSubsystem extends SubsystemBase {
       shoulderPID.setI(PIDConstants.shoulderkI);
       shoulderPID.setD(PIDConstants.shoulderkD);
 
-      //shoulderMasterMotor.setInverted(true);
-
-      shoulderFollower1Motor.follow(shoulderMasterMotor, true);
-      shoulderFollower2Motor.follow(shoulderMasterMotor, true);
+      //shoulderFollower1Motor.follow(shoulderFollower2Motor);
+      shoulderFollower2Motor.follow(shoulderMasterMotor);
       shoulderFollower3Motor.follow(shoulderMasterMotor);
 
     //config max output, safety
@@ -69,6 +68,10 @@ public class ShoulderSubsystem extends SubsystemBase {
   public void periodic() {
     //smartdashboard shenanigans
     SmartDashboard.putNumber("Shoulder Encoder Value:", shoulderEncoder.getPosition());
+        SmartDashboard.putNumber("Shoulder Pos Conversion Factor:", shoulderEncoder.getPositionConversionFactor());
+
+
+
     /*if(hallEffect.get()){
         shoulderEncoder.setPosition(0);
     }*/
@@ -111,10 +114,6 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   public void setSpinUpAfter(boolean doesSpinUpAfter){
     spinUpAfter = doesSpinUpAfter;
-  }
-
-  public boolean getTripped(){
-    return hallEffect.get();
   }
 
 }

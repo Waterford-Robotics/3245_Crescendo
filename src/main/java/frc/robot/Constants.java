@@ -57,7 +57,7 @@ public final class Constants {
     public static double shoulderkF = 0;
     public static double shoulderkP = 0.15;
     public static double shoulderkI = 0;
-    public static double shoulderkD = 0.15;
+    public static double shoulderkD = 0.05;
   }
 
   public static class MotorIDConstants {
@@ -90,8 +90,8 @@ public final class Constants {
     public static final double intakeFalconFeedSpeed = 0.2;
 
     public static final double shoulderOpenMaxSpeed = 0.2;
-    public static final double shoulderClosedMaxSpeed = 0.5;
-    public static final double shoulderRampRate = 0.5;
+    public static final double shoulderClosedMaxSpeed = 0.2;
+    public static final double shoulderRampRate = 0.2;
     public static final double shoot1MaxVal = -0.75;
     public static final double shoot2MaxVal = .75;
     public static final double indexRunFastVal = 0.7;
@@ -211,8 +211,8 @@ public final class Constants {
   }
 
   public static class PositionValueConstants {
-    public static final double shoulderHomePos = 0;
-    public static final double shoulderAmpShotPos = 3.5;
+    public static final double shoulderHomePos = 0.5;
+    public static final double shoulderAmpShotPos = 3;
     public static final double shoulderProtShotPos = 2;
   }
   

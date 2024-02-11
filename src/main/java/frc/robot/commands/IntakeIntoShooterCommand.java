@@ -1,12 +1,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeUntilTrippedCommand extends Command{
+public class IntakeIntoShooterCommand extends Command{
     //instantiate stuff
     IntakeSubsystem m_intakeSubsystem;
-    public IntakeUntilTrippedCommand(IntakeSubsystem intakeSubsystem){
+    IndexerSubsystem m_indexerSubsystem;
+    public IntakeIntoShooterCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem){
         //definitions and setting parameters equal to members
         m_intakeSubsystem = intakeSubsystem;
         addRequirements(m_intakeSubsystem);
@@ -17,11 +19,13 @@ public class IntakeUntilTrippedCommand extends Command{
         
     @Override
     public void execute() {
-        m_intakeSubsystem.intake();
+        m_intakeSubsystem.stopBottom();
+        m_indexerSubsystem.runSlow();
     }
 
     @Override
-    public void end(boolean interrupted){}
+    public void end(boolean interrupted){
+    }
 
     @Override
     public boolean isFinished(){
