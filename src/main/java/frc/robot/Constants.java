@@ -21,6 +21,9 @@ public final class Constants {
 
     //driver controls
     public static final int setXValue = 4; //Y
+    public static final int intakeSeqAxis = 3; //right trig
+    public static final int spinupButton = 5; //left bump
+    public static final int shootButton = 6; //right bump
 
     //operator controls
     public static final int indexShootButton = 6; //Double check, we want right bumper
@@ -43,7 +46,7 @@ public final class Constants {
     public static final int indexer45Button = 4; //Y
     public static final int indexer180Button = 6; //right bumper
 
-    public static final int shootButton = 6; //right bumper
+    //public static final int shootButton = 6; //right bumper
     public static final int shootBackButton = 2; //B
 
     public static final int climbAxis = 2; //also unsure lmao
@@ -84,13 +87,13 @@ public final class Constants {
   }
 
   public static class MotorSpeedsConstants {
-    public static final double intakeNeoSpeed = 0.9;
+    public static final double intakeNeoSpeed = 0.7;
     public static final double intakeFalconSpeed = 0.4;
     public static final double intakeNeoFeedSpeed = 0.2;
     public static final double intakeFalconFeedSpeed = 0.2;
 
     public static final double shoulderOpenMaxSpeed = 0.2;
-    public static final double shoulderClosedMaxSpeed = 0.2;
+    public static final double shoulderClosedMaxSpeed = 1;
     public static final double shoulderRampRate = 0.2;
     public static final double shoot1MaxVal = -0.75;
     public static final double shoot2MaxVal = .75;
@@ -212,13 +215,13 @@ public final class Constants {
 
   public static class PositionValueConstants {
     public static final double shoulderHomePos = 0.5;
-    public static final double shoulderAmpShotPos = 3;
+    public static final double shoulderAmpShotPos = 3.5;
     public static final double shoulderProtShotPos = 2;
   }
   
   public static class TeleopTimeConstants {
     public static final double indexerShootSpinAfterTime = 0.1;
     public static final double handoffIndexerSlowTime = 0.1;
-    public static final double handoffIndexerReverseTime = 0.2;
+    public static final double handoffIndexerReverseTime = 0.05;
   }
 }

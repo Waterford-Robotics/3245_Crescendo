@@ -29,12 +29,13 @@ public class InShooterCommand extends Command{
         
     @Override
     public void execute() {
-        if(timer.get()<TeleopTimeConstants.handoffIndexerReverseTime){
-                m_indexerSubsystem.runBackSlow();
-            }
-            else{
+        m_intakeSubsystem.stop();
+       // if(timer.get()<TeleopTimeConstants.handoffIndexerReverseTime){
+        m_indexerSubsystem.runBackSlow();
+         //   }
+          /*  else{
                 m_indexerSubsystem.stop();
-            }
+            }*/
     }
 
     @Override
@@ -45,7 +46,7 @@ public class InShooterCommand extends Command{
 
     @Override
     public boolean isFinished(){
-        return timer.hasElapsed(TeleopTimeConstants.handoffIndexerReverseTime + 0.05);
+        return timer.hasElapsed(TeleopTimeConstants.handoffIndexerReverseTime);
     }
 
 }

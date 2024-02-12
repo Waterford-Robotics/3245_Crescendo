@@ -45,7 +45,7 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   public void runBackSlow(){
-    indexerMotor.set(-MotorSpeedsConstants.indexRunSlowVal);
+    indexerMotor.set(MotorSpeedsConstants.indexRunSlowVal);
   }
 
   public boolean getBBTripped(){
@@ -53,11 +53,12 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   public void manual(CommandXboxController controller){
-    if(controller.getHID().getRawButton(ControllerConstants.indexerButton)){
+    if(controller.getHID().getRawButton(ControllerConstants.shootButton)){
         indexerMotor.set(-MotorSpeedsConstants.indexRunFastVal);
     }
     else{
         indexerMotor.set(0);
     }
   }
+
 }

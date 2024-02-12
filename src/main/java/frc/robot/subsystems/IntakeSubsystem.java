@@ -76,7 +76,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void stop(){
     intakeBottomMotor.set(0);
-    intakeTop1Motor.set(0.3);
+    intakeTop1Motor.set(0);
   }
 
   public void intake(){
@@ -96,6 +96,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void stopBottom(){
     intakeBottomMotor.set(0);
+    intakeTop1Motor.set(MotorSpeedsConstants.intakeNeoSpeed);
   }
 
   public void manual(CommandXboxController controller){

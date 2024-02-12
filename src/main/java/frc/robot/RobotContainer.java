@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.commands.CheckOrangeTrippedCommand;
 import frc.robot.commands.InShooterCommand;
 import frc.robot.commands.IndexShootCommand;
 import frc.robot.commands.IntakeHandoffCommand;
@@ -42,6 +43,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -68,9 +70,10 @@ public class RobotContainer {
   SetShoulderCommand shimmyDown = new SetShoulderCommand(m_shoulderSubsystem, "home");
   SequentialCommandGroup handoffCommand = new SequentialCommandGroup(
     new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem),
-    new IntakeIntoShooterCommand(m_intakeSubsystem, m_indexerSubsystem),
+   /* new IntakeIntoShooterCommand(m_intakeSubsystem, m_indexerSubsystem),*/
     new InShooterCommand(m_intakeSubsystem, m_indexerSubsystem)
   );
+  IntakeHandoffCommand allInOneHandoff = new IntakeHandoffCommand(m_intakeSubsystem, m_indexerSubsystem, m_operatorController);
  /* Command handoffCommandGroup = Commands.parallel(
       new IntakeUntilTrippedCommand(m_intakeSubsystem),
       new SetShoulderCommand(m_shoulderSubsystem, "home"))
@@ -86,9 +89,7 @@ public class RobotContainer {
   public RobotContainer() {
     m_robotDrive.calibrateGyro();
     // default commands
-   /* m_shootSubsystem.setDefaultCommand(
-        new RunCommand(() -> m_shootSubsystem.manual(m_operatorController), m_shootSubsystem));*/
-    
+  
     m_robotDrive.setDefaultCommand(
         new RunCommand(
             () -> m_robotDrive.drive(
@@ -98,8 +99,8 @@ public class RobotContainer {
                 true, true),
             m_robotDrive));
     //m_shoulderSubsystem.setDefaultCommand(new RunCommand(() -> m_shoulderSubsystem.manual(m_operatorController), m_shoulderSubsystem));
-    m_intakeSubsystem.setDefaultCommand(new RunCommand(() -> m_intakeSubsystem.manual(m_driverController), m_intakeSubsystem));
-    m_indexerSubsystem.setDefaultCommand(new RunCommand(() -> m_indexerSubsystem.manual(m_driverController), m_indexerSubsystem));
+    //m_intakeSubsystem.setDefaultCommand(new RunCommand(() -> m_intakeSubsystem.manual(m_driverController), m_intakeSubsystem));
+    //m_indexerSubsystem.setDefaultCommand(new RunCommand(() -> m_indexerSubsystem.manual(m_driverController), m_indexerSubsystem));
     m_shootSubsystem.setDefaultCommand(new RunCommand(() -> m_shootSubsystem.manual(m_driverController), m_shootSubsystem));
     autoChooser = AutoBuilder.buildAutoChooser();
     //SmartDashboard.putData("Auto Mode", autoChooser);
@@ -133,6 +134,7 @@ public class RobotContainer {
             () -> m_robotDrive.setX(),
             m_robotDrive));
 
+    //shoulder
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderHomeButton).whileTrue(
       new SetShoulderCommand(m_shoulderSubsystem, "home"));
 
@@ -142,20 +144,17 @@ public class RobotContainer {
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderProtButton).whileTrue(
       new SetShoulderCommand(m_shoulderSubsystem, "protected"));
 
-      new JoystickButton(m_operatorController.getHID(), ControllerConstants.intakeInButton).whileTrue(
+    //handoff
+    new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeAxis, 0.5)).whileTrue(
       handoffCommand
     );
 
-    /*new JoystickButton(m_operatorController.getHID(), ControllerConstants.intakeOutButton).whileTrue(
-      new RunCommand(() -> m_indexerSubsystem.runBackSlow(), m_indexerSubsystem)
-    );*/
+    new JoystickButton(m_driverController.getHID(), ControllerConstants.shootButton).whileTrue(
+      new InstantCommand(() -> m_indexerSubsystem.runFast(), m_indexerSubsystem)
+    ).whileFalse(
+      new InstantCommand(() -> m_indexerSubsystem.stop(), m_indexerSubsystem)
+    );
 
-
-    /*new JoystickButton(m_operatorController.getHID(), ControllerConstants.indexShootButton)
-        .whileTrue(new IndexShootCommand(m_indexerSubsystem, m_shootSubsystem, m_operatorController, false))
-        .whileFalse(new IndexShootCommand(m_indexerSubsystem, m_shootSubsystem, m_operatorController, true));
-*/
-    //new Trigger(m_operatorController.axisGreaterThan(ControllerConstants.intakeAxis, 0.8)).whileTrue(handoffCommandGroup);
 
     /*
      * Weird stuff Niko wants:

@@ -29,7 +29,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     //init stuff
       CANSparkMax shoulderMasterMotor;
       //CANSparkMax shoulderFollower1Motor;
-      CANSparkMax shoulderFollower2Motor;
+      //CANSparkMax shoulderFollower2Motor;
       CANSparkMax shoulderFollower3Motor;
       SparkMaxPIDController shoulderPID;
       AbsoluteEncoder shoulderEncoder;
@@ -40,7 +40,7 @@ public class ShoulderSubsystem extends SubsystemBase {
     //motors/encoders/pidcontroller
       shoulderMasterMotor = new CANSparkMax(MotorIDConstants.shoulder1MotorID, MotorType.kBrushless);
       //shoulderFollower1Motor = new CANSparkMax(MotorIDConstants.shoulder2MotorID, MotorType.kBrushless);
-      shoulderFollower2Motor = new CANSparkMax(MotorIDConstants.shoulder3MotorID, MotorType.kBrushless);
+      //shoulderFollower2Motor = new CANSparkMax(MotorIDConstants.shoulder3MotorID, MotorType.kBrushless);
       shoulderFollower3Motor = new CANSparkMax(MotorIDConstants.shoulder4MotorID, MotorType.kBrushless);
 
       shoulderEncoder = shoulderMasterMotor.getAbsoluteEncoder(Type.kDutyCycle);
@@ -55,7 +55,7 @@ public class ShoulderSubsystem extends SubsystemBase {
       shoulderPID.setD(PIDConstants.shoulderkD);
 
       //shoulderFollower1Motor.follow(shoulderFollower2Motor);
-      shoulderFollower2Motor.follow(shoulderMasterMotor);
+      //shoulderFollower2Motor.follow(shoulderMasterMotor);
       shoulderFollower3Motor.follow(shoulderMasterMotor);
 
     //config max output, safety

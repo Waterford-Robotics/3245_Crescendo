@@ -37,7 +37,7 @@ public class ShootSubsystem extends SubsystemBase {
   }
 
   public void manual(CommandXboxController controller){
-    if(controller.getHID().getRawButton(ControllerConstants.shootButton)){
+    if(controller.getHID().getRawButton(ControllerConstants.spinupButton)){
         shootMotor1.set(-MotorSpeedsConstants.shoot1MaxVal);
         shootMotor2.set(MotorSpeedsConstants.shoot2MaxVal);
     }
