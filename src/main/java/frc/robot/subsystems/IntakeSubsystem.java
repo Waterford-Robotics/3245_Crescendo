@@ -58,6 +58,10 @@ public class IntakeSubsystem extends SubsystemBase {
       intakeTop2Motor.follow(intakeTop1Motor, true);    
 
       m_colorMatcher.addColorMatch(kOrangeTarget);
+
+      intakeBottomMotor.setOpenLoopRampRate(0.4);
+      intakeTop1Motor.setOpenLoopRampRate(0.4);
+      intakeTop2Motor.setOpenLoopRampRate(0.4);
       
   }
 

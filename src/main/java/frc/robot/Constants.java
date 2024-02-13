@@ -17,7 +17,7 @@ public final class Constants {
     //OI
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
-    public static final double kDriveDeadband = 0.15;
+    public static final double kDriveDeadband = 0.05;
 
     //driver controls
     public static final int setXValue = 4; //Y
@@ -105,7 +105,7 @@ public final class Constants {
   public static class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 6.6;
+    public static final double kMaxSpeedMetersPerSecond = 5.7;
     public static final double kMaxAngularSpeed = 1.5 * Math.PI; // radians per second
 
     public static final double kDirectionSlewRate = 1.2; // radians per second
@@ -209,13 +209,13 @@ public final class Constants {
     public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
-    public static final int kDrivingMotorCurrentLimit = 60; // amps
+    public static final int kDrivingMotorCurrentLimit = 40; // amps
     public static final int kTurningMotorCurrentLimit = 25; // amps
   }
 
   public static class PositionValueConstants {
     public static final double shoulderHomePos = 0.5;
-    public static final double shoulderAmpShotPos = 3.5;
+    public static final double shoulderAmpShotPos = 3.75;
     public static final double shoulderProtShotPos = 2;
   }
   
@@ -223,5 +223,10 @@ public final class Constants {
     public static final double indexerShootSpinAfterTime = 0.1;
     public static final double handoffIndexerSlowTime = 0.1;
     public static final double handoffIndexerReverseTime = 0.05;
+  }
+
+  public static class AutoTimeConstants {
+    public static final double spinUpAutoTime = 0.5;
+    public static final double indexAutoTime = 0.2;
   }
 }
