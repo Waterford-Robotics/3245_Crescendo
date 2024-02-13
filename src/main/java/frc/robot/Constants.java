@@ -22,8 +22,8 @@ public final class Constants {
     //driver controls
     public static final int setXValue = 4; //Y
     public static final int intakeSeqAxis = 3; //right trig
-    public static final int spinupButton = 5; //left bump
-    public static final int shootButton = 6; //right bump
+    public static final int spinupButton = 6; //right bump
+    public static final int shootButton = 5; //left bump
 
     //operator controls
     public static final int indexShootButton = 6; //Double check, we want right bumper

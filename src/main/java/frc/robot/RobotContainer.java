@@ -24,6 +24,7 @@ import frc.robot.subsystems.TestFalconIntakeSubsystem;
 
 import com.ctre.phoenix.platform.can.AutocacheState;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.commands.FollowPathHolonomic;
 import com.pathplanner.lib.commands.FollowPathRamsete;
@@ -73,23 +74,20 @@ public class RobotContainer {
    /* new IntakeIntoShooterCommand(m_intakeSubsystem, m_indexerSubsystem),*/
     new InShooterCommand(m_intakeSubsystem, m_indexerSubsystem)
   );
-  IntakeHandoffCommand allInOneHandoff = new IntakeHandoffCommand(m_intakeSubsystem, m_indexerSubsystem, m_operatorController);
- /* Command handoffCommandGroup = Commands.parallel(
-      new IntakeUntilTrippedCommand(m_intakeSubsystem),
-      new SetShoulderCommand(m_shoulderSubsystem, "home"))
-      .andThen(new IndexUntilTrippedCommand(m_indexerSubsystem, m_intakeSubsystem))
-      .andThen(new SetShoulderCommand(m_shoulderSubsystem, "high")); */
-
-  
+  IntakeHandoffCommand allInOneHandoff = new IntakeHandoffCommand(m_intakeSubsystem, m_indexerSubsystem, m_operatorController);  
 
   // auto routines
+  SequentialCommandGroup testSeq = new SequentialCommandGroup(
+        m_robotDrive.getPath("Speaker to Ring 1"),
+        new SetShoulderCommand(m_shoulderSubsystem, "protected")
+        //,m_robotDrive.getPath("Ring 1 to Speaker")
+  );
   //Command auto1 = new AutoBase(m_robotDrive, "DriveStraightSpin", 4, 3);
-
 
   public RobotContainer() {
     m_robotDrive.calibrateGyro();
     // default commands
-  
+    NamedCommands.registerCommand("Arm Up", new SetShoulderCommand(m_shoulderSubsystem, "protected"));
     m_robotDrive.setDefaultCommand(
         new RunCommand(
             () -> m_robotDrive.drive(
@@ -125,6 +123,8 @@ public class RobotContainer {
     (
       new SetShoulderCommand(m_shoulderSubsystem, "amp")
     ));
+    m_chooser.addOption("score 2 speaker @ speaker only drive", m_robotDrive.getAuto("Score 2 Speaker At Speaker"));
+    m_chooser.addOption("test seq", testSeq);
     configureBindings();
   }
 

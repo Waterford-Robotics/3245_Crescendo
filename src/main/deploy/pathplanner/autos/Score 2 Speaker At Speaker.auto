@@ -18,6 +18,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Arm Up"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Ring 1 to Speaker"
