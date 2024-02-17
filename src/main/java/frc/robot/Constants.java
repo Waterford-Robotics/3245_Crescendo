@@ -104,8 +104,8 @@ public final class Constants {
     public static final double shoot1RunBackVal = -0.13;
     public static final double shoot2RunBackVal = 0.13;
 
-    public static final double indexRunSuckIn = 0.5;
-    public static final double indexRunMoveBack = 0.5;
+    public static final double indexRunSuckIn = 0.45;
+    public static final double indexRunMoveBack = 0.65;
     public static final double climbMaxVal = 0.7;
   }
   
@@ -116,7 +116,7 @@ public final class Constants {
     public static final double kMaxAngularSpeed = 1.5 * Math.PI; // radians per second
 
     public static final double kDirectionSlewRate = 1.2; // radians per second
-    public static final double kMagnitudeSlewRate = 7.5; // percent per second (1 = 100%)
+    public static final double kMagnitudeSlewRate = 8.5; // percent per second (1 = 100%)
     public static final double kRotationalSlewRate = 4.5; // percent per second (1 = 100%)
 
     // Chassis configuration

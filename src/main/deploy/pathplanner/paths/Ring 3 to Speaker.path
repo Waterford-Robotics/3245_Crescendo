@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.59859163592971,
-        "y": 4.092954054853979
+        "x": 2.656405125456622,
+        "y": 4.075809931479348
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4353116621924116,
-        "y": 4.623737210003695
+        "x": 2.4931251517193234,
+        "y": 4.606593086629064
       },
       "isLocked": false,
       "linkedName": "At Ring 3"
     },
     {
       "anchor": {
-        "x": 1.5695060449949958,
-        "y": 5.55472336015897
+        "x": 1.3394571051437194,
+        "y": 5.565787618694676
       },
       "prevControl": {
-        "x": 1.9258354207574937,
-        "y": 5.354306914702823
+        "x": 1.6957864809062173,
+        "y": 5.365371173238529
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 6.0,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
