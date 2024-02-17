@@ -7,14 +7,14 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShootSubsystem;
 
-public class SpinUpShootCommand extends Command{
+public class IndexToShootCommand extends Command{
     //instantiate stuff
     ShootSubsystem m_shootSubsystem;
     IndexerSubsystem m_indexerSubsystem;
     IntakeSubsystem m_intakeSubsystem;
     Timer timer = new Timer();
 
-    public SpinUpShootCommand(ShootSubsystem shootSubsystem, IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem){
+    public IndexToShootCommand(ShootSubsystem shootSubsystem, IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem){
         //definitions and setting parameters equal to members
         m_shootSubsystem = shootSubsystem;
         m_indexerSubsystem = indexerSubsystem;
@@ -32,14 +32,11 @@ public class SpinUpShootCommand extends Command{
         
     @Override
     public void execute() {
-        if(timer.get()<AutoTimeConstants.spinUpAutoTime1){
-            m_shootSubsystem.spinUpAuto();
-        }
-        if(timer.get()>AutoTimeConstants.spinUpAutoTime1 && timer.get()<AutoTimeConstants.indexAutoTime1){
+        if(timer.get()<AutoTimeConstants.indexAutoTime2){
             m_indexerSubsystem.runFast();
             m_intakeSubsystem.intake();
         }
-        if (timer.get()>AutoTimeConstants.indexAutoTime1){
+        if (timer.get()>AutoTimeConstants.indexAutoTime2){
             m_indexerSubsystem.stop();
             m_shootSubsystem.stop();
             m_intakeSubsystem.stop();
@@ -50,11 +47,12 @@ public class SpinUpShootCommand extends Command{
     public void end(boolean interrupted){
         m_indexerSubsystem.stop();
         m_shootSubsystem.stop();
+        m_intakeSubsystem.stop();
     }
 
     @Override
     public boolean isFinished(){
-        return timer.get()>AutoTimeConstants.indexAutoTime1 + 0.05;
+        return timer.get()>AutoTimeConstants.indexAutoTime2;
     }
 
 }

@@ -59,7 +59,6 @@ public class DriveSubsystem extends SubsystemBase {
     m_frontRight,
     m_rearLeft,
     m_rearRight
-
   };
 
 
@@ -81,7 +80,7 @@ public class DriveSubsystem extends SubsystemBase {
   public static final PIDConstants rotationalPID = new PIDConstants(0.23, 0, 0);
 
   public static final HolonomicPathFollowerConfig config = new HolonomicPathFollowerConfig(translationalPID, rotationalPID,
-    3, DriveConstants.kWheelBase/Math.sqrt(2), new ReplanningConfig());
+    5.7, DriveConstants.kWheelBase/Math.sqrt(2), new ReplanningConfig());
   // Odometry class for tracking robot pose
   public SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,

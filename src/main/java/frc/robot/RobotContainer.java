@@ -7,8 +7,11 @@ package frc.robot;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.AutoInShooterCommand;
 import frc.robot.commands.InShooterCommand;
+import frc.robot.commands.IndexShootCommand;
+import frc.robot.commands.IndexToShootCommand;
 import frc.robot.commands.IntakeIndexUntilTrippedCommand;
 import frc.robot.commands.SetShoulderCommand;
+import frc.robot.commands.SpinUpAutoCommand;
 import frc.robot.commands.SpinUpShootCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -16,6 +19,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShootSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
 
+import com.fasterxml.jackson.databind.util.Named;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -70,6 +74,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("Arm Up", new SetShoulderCommand(m_shoulderSubsystem, "protected"));
     NamedCommands.registerCommand("Run Intake", autoHandoffCommand);
     NamedCommands.registerCommand("Spin Up Shoot", new SpinUpShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
+    NamedCommands.registerCommand("Spin Up", new SpinUpAutoCommand(m_shootSubsystem));
+    NamedCommands.registerCommand("Shoot", new IndexToShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
     m_robotDrive.setDefaultCommand(
         new RunCommand(
             () -> m_robotDrive.drive(
@@ -95,6 +101,7 @@ public class RobotContainer {
     m_chooser.addOption("score 4 field side", m_robotDrive.getAuto("Score 4 Field Side"));
     m_chooser.addOption("score 5??", m_robotDrive.getAuto("Score 5 Center"));
     m_chooser.addOption("score 2 midline", m_robotDrive.getAuto("Score 2 Midline"));
+    m_chooser.addOption("experimental score 4 center", m_robotDrive.getAuto("Score 4 Center Experiment"));
     m_chooser.addOption("null auto", new WaitCommand(0.05));
     configureBindings();
   }

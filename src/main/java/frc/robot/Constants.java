@@ -76,6 +76,8 @@ public final class Constants {
     public static final int shootMotor1ID = 21;
     public static final int shootMotor2ID = 22;
     public static final int climbMotorID = 50;
+
+    public static final int blinkinPort = 0;
   }
 
   public static class SensorConstants {
@@ -99,8 +101,8 @@ public final class Constants {
     public static final double shoot2MaxVal = .75;
     public static final double shoot1MaxValAuto = -0.75;
     public static final double shoot2MaxValAuto = 0.75;
-    public static final double shoot1RunBackVal = -0.1;
-    public static final double shoot2RunBackVal = 0.1;
+    public static final double shoot1RunBackVal = -0.13;
+    public static final double shoot2RunBackVal = 0.13;
 
     public static final double indexRunFastVal = 0.7;
     public static final double indexRunSlowVal = 0.4;
@@ -114,7 +116,7 @@ public final class Constants {
     public static final double kMaxAngularSpeed = 1.5 * Math.PI; // radians per second
 
     public static final double kDirectionSlewRate = 1.2; // radians per second
-    public static final double kMagnitudeSlewRate = 5; // percent per second (1 = 100%)
+    public static final double kMagnitudeSlewRate = 7.5; // percent per second (1 = 100%)
     public static final double kRotationalSlewRate = 4.5; // percent per second (1 = 100%)
 
     // Chassis configuration
@@ -228,11 +230,13 @@ public final class Constants {
     public static final double indexerShootSpinAfterTime = 0.1;
     public static final double handoffIndexerSlowTime = 0.1;
     public static final double handoffIndexerReverseTime = 0.05;
-    public static final double autoHandoffIndexerReverseTime = 0.06;
+    public static final double autoHandoffIndexerReverseTime = 0.065;
   }
 
   public static class AutoTimeConstants {
-    public static final double spinUpAutoTime = 0.7;
-    public static final double indexAutoTime = spinUpAutoTime + 0.5;
+    public static final double spinUpAutoTime1 = 0.7;
+    public static final double spinUpAutoTime2 = 0.4;
+    public static final double indexAutoTime2 = spinUpAutoTime2 + 0.3;
+    public static final double indexAutoTime1 = spinUpAutoTime1 + 0.3;
   }
 }
