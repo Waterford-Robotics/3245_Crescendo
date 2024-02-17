@@ -104,8 +104,8 @@ public final class Constants {
     public static final double shoot1RunBackVal = -0.13;
     public static final double shoot2RunBackVal = 0.13;
 
-    public static final double indexRunFastVal = 0.7;
-    public static final double indexRunSlowVal = 0.4;
+    public static final double indexRunSuckIn = 0.5;
+    public static final double indexRunMoveBack = 0.5;
     public static final double climbMaxVal = 0.7;
   }
   
@@ -230,12 +230,12 @@ public final class Constants {
     public static final double indexerShootSpinAfterTime = 0.1;
     public static final double handoffIndexerSlowTime = 0.1;
     public static final double handoffIndexerReverseTime = 0.05;
-    public static final double autoHandoffIndexerReverseTime = 0.065;
+    public static final double autoHandoffIndexerReverseTime = 0.1;
   }
 
   public static class AutoTimeConstants {
-    public static final double spinUpAutoTime1 = 0.7;
-    public static final double spinUpAutoTime2 = 0.4;
+    public static final double spinUpAutoTime1 = 0.6;
+    public static final double spinUpAutoTime2 = 0.3;
     public static final double indexAutoTime2 = spinUpAutoTime2 + 0.3;
     public static final double indexAutoTime1 = spinUpAutoTime1 + 0.3;
   }

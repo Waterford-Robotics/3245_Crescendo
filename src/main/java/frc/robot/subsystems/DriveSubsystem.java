@@ -100,10 +100,10 @@ public class DriveSubsystem extends SubsystemBase {
       () -> DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates()), 
       this::runVelocity, config, 
       () -> {
-        /*var alliance = DriverStation.getAlliance();
+        var alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
           return alliance.get() == DriverStation.Alliance.Red;
-        }*/
+        }
         return false;
       },
         this);

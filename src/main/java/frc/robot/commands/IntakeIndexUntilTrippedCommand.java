@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -35,7 +34,7 @@ public class IntakeIndexUntilTrippedCommand extends Command{
     public void end(boolean interrupted){
         m_intakeSubsystem.stop();
         m_indexerSubsystem.stop();
-        m_shootSubsystem.stop();
+        //m_shootSubsystem.stop();
     }
 
     @Override

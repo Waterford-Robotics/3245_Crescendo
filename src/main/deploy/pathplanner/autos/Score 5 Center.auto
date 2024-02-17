@@ -18,7 +18,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -37,19 +37,32 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Ring 1 to Speaker"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Ring 1 to Speaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Spin Up"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Spin Up Shoot"
+            "name": "Shoot"
           }
         },
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -68,19 +81,32 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Ring 2 to Speaker"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Ring 2 to Speaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Spin Up"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Spin Up Shoot"
+            "name": "Shoot"
           }
         },
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -99,19 +125,32 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Ring 3 to Speaker"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Ring 3 to Speaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Spin Up"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Spin Up Shoot"
+            "name": "Shoot"
           }
         },
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -130,15 +169,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Midline 1 to Speaker"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Midline 1 to Speaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Spin Up"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Spin Up Shoot"
+            "name": "Shoot"
           }
         }
       ]
