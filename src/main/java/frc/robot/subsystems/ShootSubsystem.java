@@ -32,8 +32,18 @@ public class ShootSubsystem extends SubsystemBase {
   }
 
   public void spinUp(){
-    shootMotor1.set(MotorSpeedsConstants.shoot1MaxVal);
+    shootMotor1.set(-MotorSpeedsConstants.shoot1MaxVal);
     shootMotor2.set(MotorSpeedsConstants.shoot2MaxVal);
+  }
+
+  public void driveBackward(){
+    shootMotor1.set(MotorSpeedsConstants.shoot1RunBackVal);
+    shootMotor2.set(-MotorSpeedsConstants.shoot2RunBackVal);
+  }
+
+  public void spinUpAuto(){
+    shootMotor1.set(-MotorSpeedsConstants.shoot1MaxValAuto);
+    shootMotor2.set(MotorSpeedsConstants.shoot2MaxValAuto);
   }
 
   public void manual(CommandXboxController controller){

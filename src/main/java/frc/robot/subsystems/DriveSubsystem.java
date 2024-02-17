@@ -101,8 +101,8 @@ public class DriveSubsystem extends SubsystemBase {
       () -> DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates()), 
       this::runVelocity, config, 
       () -> {
-        var alliance = DriverStation.getAlliance();
-        /*if (alliance.isPresent()) {
+        /*var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
           return alliance.get() == DriverStation.Alliance.Red;
         }*/
         return false;
@@ -347,22 +347,4 @@ public class DriveSubsystem extends SubsystemBase {
   public double getTurnRate() {
     return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
-
-  /*public Command followPathCommand(String pathToFollow){
-    PathPlannerPath path = PathPlannerPath.fromPathFile(pathToFollow);
-
-    return new FollowPathWithEvents(
-      new FollowPathHolonomic(
-        path,
-        this::getPose, this::getChassisSpeeds, 
-            this::setChassisSpeeds, new HolonomicPathFollowerConfig(3, 0.9, new ReplanningConfig()),
-            () -> {
-                var alliance = DriverStation.getAlliance();
-                if(alliance.isPresent()){
-                    return alliance.get() == DriverStation.Alliance.Red;
-                }
-                return false;
-            }, this), path, this::getPose);
-
-  }*/
 }

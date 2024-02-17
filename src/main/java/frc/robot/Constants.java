@@ -17,7 +17,7 @@ public final class Constants {
     //OI
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
-    public static final double kDriveDeadband = 0.05;
+    public static final double kDriveDeadband = 0.075;
 
     //driver controls
     public static final int setXValue = 4; //Y
@@ -58,7 +58,7 @@ public final class Constants {
 
   public static class PIDConstants {
     public static double shoulderkF = 0;
-    public static double shoulderkP = 0.15;
+    public static double shoulderkP = 0.17;
     public static double shoulderkI = 0;
     public static double shoulderkD = 0.05;
   }
@@ -93,10 +93,15 @@ public final class Constants {
     public static final double intakeFalconFeedSpeed = 0.2;
 
     public static final double shoulderOpenMaxSpeed = 0.2;
-    public static final double shoulderClosedMaxSpeed = 1;
+    public static final double shoulderClosedMaxSpeed = 0.4;
     public static final double shoulderRampRate = 0.2;
     public static final double shoot1MaxVal = -0.75;
     public static final double shoot2MaxVal = .75;
+    public static final double shoot1MaxValAuto = -0.75;
+    public static final double shoot2MaxValAuto = 0.75;
+    public static final double shoot1RunBackVal = -0.1;
+    public static final double shoot2RunBackVal = 0.1;
+
     public static final double indexRunFastVal = 0.7;
     public static final double indexRunSlowVal = 0.4;
     public static final double climbMaxVal = 0.7;
@@ -144,7 +149,7 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxSpeedMetersPerSecond = 5;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
@@ -214,19 +219,20 @@ public final class Constants {
   }
 
   public static class PositionValueConstants {
-    public static final double shoulderHomePos = 0.5;
-    public static final double shoulderAmpShotPos = 3.75;
-    public static final double shoulderProtShotPos = 2;
+    public static final double shoulderHomePos = 400;
+    public static final double shoulderAmpShotPos = 30000;
+    public static final double shoulderProtShotPos = 9000;
   }
   
   public static class TeleopTimeConstants {
     public static final double indexerShootSpinAfterTime = 0.1;
     public static final double handoffIndexerSlowTime = 0.1;
     public static final double handoffIndexerReverseTime = 0.05;
+    public static final double autoHandoffIndexerReverseTime = 0.06;
   }
 
   public static class AutoTimeConstants {
-    public static final double spinUpAutoTime = 0.5;
-    public static final double indexAutoTime = 0.2;
+    public static final double spinUpAutoTime = 0.7;
+    public static final double indexAutoTime = spinUpAutoTime + 0.5;
   }
 }

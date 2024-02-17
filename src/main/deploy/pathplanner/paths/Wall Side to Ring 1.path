@@ -3,38 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.820780570336069,
-        "y": 6.993104356579084
+        "x": 0.8093860062363999,
+        "y": 6.864468657712245
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4816500915101236,
-        "y": 7.016492665461104
+        "x": 1.4759528094505554,
+        "y": 6.993104356584141
       },
       "isLocked": false,
-      "linkedName": "At Ring 1"
+      "linkedName": "At Wall Side Speaker"
     },
     {
       "anchor": {
-        "x": 1.5695060449949958,
-        "y": 5.55472336015897
+        "x": 2.820780570336069,
+        "y": 6.993104356579084
       },
       "prevControl": {
-        "x": 1.6279768172071956,
-        "y": 5.858771375662408
+        "x": 1.9320248327057126,
+        "y": 7.028186819911461
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "At Speaker"
+      "linkedName": "At Ring 1"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0,
-      "rotationDegrees": 178.78112476515582,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -46,12 +40,12 @@
   "goalEndState": {
     "velocity": 0,
     "rotation": 180.0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": -120.96375653289232,
     "velocity": 0
   },
   "useDefaultConstraints": false

@@ -5,45 +5,24 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.commands.CheckOrangeTrippedCommand;
+import frc.robot.commands.AutoInShooterCommand;
 import frc.robot.commands.InShooterCommand;
-import frc.robot.commands.IndexShootCommand;
-import frc.robot.commands.IntakeHandoffCommand;
 import frc.robot.commands.IntakeIndexUntilTrippedCommand;
-import frc.robot.commands.IntakeIntoShooterCommand;
 import frc.robot.commands.SetShoulderCommand;
-import frc.robot.commands.TestFalconIntakeRunForSecs;
-import frc.robot.commands.autos.AutoBase;
-import frc.robot.commands.autos.AutonomousChooser;
+import frc.robot.commands.SpinUpShootCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShootSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
-import frc.robot.subsystems.TestFalconIntakeSubsystem;
 
-import com.ctre.phoenix.platform.can.AutocacheState;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.FollowPathCommand;
-import com.pathplanner.lib.commands.FollowPathHolonomic;
-import com.pathplanner.lib.commands.FollowPathRamsete;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.path.PathPlannerTrajectory;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -70,24 +49,27 @@ public class RobotContainer {
   SetShoulderCommand shimmyUp = new SetShoulderCommand(m_shoulderSubsystem, "protected");
   SetShoulderCommand shimmyDown = new SetShoulderCommand(m_shoulderSubsystem, "home");
   SequentialCommandGroup handoffCommand = new SequentialCommandGroup(
-    new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem),
+    new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem),
    /* new IntakeIntoShooterCommand(m_intakeSubsystem, m_indexerSubsystem),*/
     new InShooterCommand(m_intakeSubsystem, m_indexerSubsystem)
   );
-  IntakeHandoffCommand allInOneHandoff = new IntakeHandoffCommand(m_intakeSubsystem, m_indexerSubsystem, m_operatorController);  
+  SequentialCommandGroup autoHandoffCommand = new SequentialCommandGroup(
+    new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem),
+    new AutoInShooterCommand(m_intakeSubsystem, m_indexerSubsystem)
+  );
 
   // auto routines
   SequentialCommandGroup testSeq = new SequentialCommandGroup(
         m_robotDrive.getPath("Speaker to Ring 1"),
         new SetShoulderCommand(m_shoulderSubsystem, "protected")
-        //,m_robotDrive.getPath("Ring 1 to Speaker")
   );
-  //Command auto1 = new AutoBase(m_robotDrive, "DriveStraightSpin", 4, 3);
 
   public RobotContainer() {
     m_robotDrive.calibrateGyro();
     // default commands
     NamedCommands.registerCommand("Arm Up", new SetShoulderCommand(m_shoulderSubsystem, "protected"));
+    NamedCommands.registerCommand("Run Intake", autoHandoffCommand);
+    NamedCommands.registerCommand("Spin Up Shoot", new SpinUpShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
     m_robotDrive.setDefaultCommand(
         new RunCommand(
             () -> m_robotDrive.drive(
@@ -96,35 +78,24 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getRightX(), ControllerConstants.kDriveDeadband),
                 true, true),
             m_robotDrive));
-    //m_shoulderSubsystem.setDefaultCommand(new RunCommand(() -> m_shoulderSubsystem.manual(m_operatorController), m_shoulderSubsystem));
-    //m_intakeSubsystem.setDefaultCommand(new RunCommand(() -> m_intakeSubsystem.manual(m_driverController), m_intakeSubsystem));
-    //m_indexerSubsystem.setDefaultCommand(new RunCommand(() -> m_indexerSubsystem.manual(m_driverController), m_indexerSubsystem));
     m_shootSubsystem.setDefaultCommand(new RunCommand(() -> m_shootSubsystem.manual(m_driverController), m_shootSubsystem));
     autoChooser = AutoBuilder.buildAutoChooser();
-    //SmartDashboard.putData("Auto Mode", autoChooser);
     SmartDashboard.putData("AutoMode", m_chooser);
 
-  /*autoChooser.addOption("Test Auto", m_robotDrive.getAuto("Test Auto"));
-    autoChooser.addOption("Score 1 Speaker", m_robotDrive.getAuto("Score 1 Speaker"));
-    autoChooser.addOption("follow Go To Ring 1 path", AutoBuilder.followPath(PathPlannerPath.fromPathFile("Go To Ring 1")));
-    autoChooser.addOption("go to ring 1 and intake", AutoBuilder.followPath(PathPlannerPath.fromPathFile("Go To Ring 1")).andThen(new WaitCommand(1)).andThen(AutoBuilder.followPath(PathPlannerPath.fromPathFile("Ring 1 to Speaker")))); 
-    autoChooser.addOption("Please God Auto", m_robotDrive.getAuto("Please God Auto"));
-    autoChooser.addOption("Please God Path", m_robotDrive.getPath("Please God"));
-    autoChooser.addOption("raise arm sequence", 
-        AutoBuilder.followPath(PathPlannerPath.fromPathFile("Please God"))
-        .andThen(new SetShoulderCommand(m_shoulderSubsystem, "amp"))
-        .andThen(AutoBuilder.followPath(PathPlannerPath.fromPathFile("Next Path"))
-        ));*/
-    m_chooser.addOption("Please God Auto diff", m_robotDrive.getAuto("Please God Auto"));
-    m_chooser.addOption("red test", m_robotDrive.getPath("Red Drive Straight"));
-    m_chooser.addOption("nikos thing", m_robotDrive.getPath("neeksy"));
-    m_chooser.addOption("Score 1 Speaker", m_robotDrive.getAuto("Score 1 Speaker"));
-    m_chooser.addOption("Please God Path diff", m_robotDrive.getPath("Please God").andThen
-    (
-      new SetShoulderCommand(m_shoulderSubsystem, "amp")
-    ));
-    m_chooser.addOption("score 2 speaker @ speaker only drive", m_robotDrive.getAuto("Score 2 Speaker At Speaker"));
-    m_chooser.addOption("test seq", testSeq);
+    //auto options
+    m_chooser.addOption("Score 1 wherever", new SpinUpShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
+    m_chooser.addOption("score 2 (ring close to wall) center", m_robotDrive.getAuto("Score 2 Center"));
+    m_chooser.addOption("score 2 wall side", m_robotDrive.getAuto("Score 2 Wall Side"));
+    m_chooser.addOption("score 2 field side", m_robotDrive.getAuto("Score 2 Field Side"));
+    m_chooser.addOption("score 3 center", m_robotDrive.getAuto("Score 3 Center"));
+    m_chooser.addOption("score 3 wall side", m_robotDrive.getAuto("Score 3 Wall Side"));
+    m_chooser.addOption("score 3 field side", m_robotDrive.getAuto("Score 3 Field Side"));
+    m_chooser.addOption("score 4 center", m_robotDrive.getAuto("Score 4 Center"));
+    m_chooser.addOption("score 4 wall side", m_robotDrive.getAuto("Score 4 Wall Side"));
+    m_chooser.addOption("score 4 field side", m_robotDrive.getAuto("Score 4 Field Side"));
+    m_chooser.addOption("score 5??", m_robotDrive.getAuto("Score 5 Center"));
+    m_chooser.addOption("score 2 midline", m_robotDrive.getAuto("Score 2 Midline"));
+    m_chooser.addOption("null auto", new WaitCommand(0.05));
     configureBindings();
   }
 
@@ -144,39 +115,26 @@ public class RobotContainer {
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderProtButton).whileTrue(
       new SetShoulderCommand(m_shoulderSubsystem, "protected"));
 
+
     //handoff
     new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeAxis, 0.5)).whileTrue(
       handoffCommand
     );
 
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shootButton).whileTrue(
-      new InstantCommand(() -> m_indexerSubsystem.runFast(), m_indexerSubsystem)
+      new InstantCommand(() -> m_indexerSubsystem.runFast(), m_indexerSubsystem).alongWith(
+        new InstantCommand(() -> m_intakeSubsystem.intake(), m_intakeSubsystem)
+      )
     ).whileFalse(
-      new InstantCommand(() -> m_indexerSubsystem.stop(), m_indexerSubsystem)
+      new InstantCommand(() -> m_indexerSubsystem.stop(), m_indexerSubsystem).alongWith(
+        new InstantCommand(() -> m_intakeSubsystem.stop(), m_intakeSubsystem)
+      )
     );
 
-
-    /*
-     * Weird stuff Niko wants:
-     * A, B, X --> shoulder.setshoulderstates(each respective mode)
-     * LB: if shoulder.getspinupafter, setshouldertodesangle().sequence(whatever he wants that has no spinup)
-     *     else if !shoulder.getspinupafter, setshouldertodesangle().sequence(regular shooting sequence command)
-     * :)
-     */
   }
 
   public Command getAutonomousCommand() {
-
-    // Create config for trajectory
-    //base auto command
-
-            return m_chooser.getSelected();
-            //return AutoBuilder.followPath(PathPlannerPath.fromPathFile("Please God"));
-
-           /*return  AutoBuilder.followPath(PathPlannerPath.fromPathFile("Please God"))
-        .andThen(new SetShoulderCommand(m_shoulderSubsystem, "amp"))
-        .andThen(AutoBuilder.followPath(PathPlannerPath.fromPathFile("Next Path"))
-        );*/
+            return m_chooser.getSelected();   
     } 
 
   }

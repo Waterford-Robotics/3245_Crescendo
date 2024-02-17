@@ -3,38 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.820780570336069,
-        "y": 6.993104356579084
+        "x": 0.77430354290908,
+        "y": 4.280060525933018
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4816500915101236,
-        "y": 7.016492665461104
+        "x": 1.4174820372432766,
+        "y": 3.91754173821738
       },
       "isLocked": false,
-      "linkedName": "At Ring 1"
+      "linkedName": "At Field Side Speaker"
     },
     {
       "anchor": {
-        "x": 1.5695060449949958,
-        "y": 5.55472336015897
+        "x": 2.59859163592971,
+        "y": 4.092954054853979
       },
       "prevControl": {
-        "x": 1.6279768172071956,
-        "y": 5.858771375662408
+        "x": 2.060660531577473,
+        "y": 4.0695657459691
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "At Speaker"
+      "linkedName": "At Ring 3"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0,
-      "rotationDegrees": 178.78112476515582,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -51,7 +45,7 @@
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": 120.25643716352923,
     "velocity": 0
   },
   "useDefaultConstraints": false

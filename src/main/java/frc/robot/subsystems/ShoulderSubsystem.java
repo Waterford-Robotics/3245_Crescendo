@@ -4,6 +4,14 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
+import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkFlex;
@@ -15,6 +23,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -27,73 +36,71 @@ import frc.robot.Constants.SensorConstants;
 
 public class ShoulderSubsystem extends SubsystemBase {
     //init stuff
-      CANSparkMax shoulderMasterMotor;
-      //CANSparkMax shoulderFollower1Motor;
-      //CANSparkMax shoulderFollower2Motor;
-      CANSparkMax shoulderFollower3Motor;
-      SparkMaxPIDController shoulderPID;
-      AbsoluteEncoder shoulderEncoder;
+      TalonFX shoulderFalcon1;
+      TalonFX shoulderFalcon2;
+      TalonFX shoulderFalcon3;
+      TalonFX shoulderFalcon4;
+      TalonFXSensorCollection shoulderFalconEnc;
       public double desAngle = 0;
       public boolean spinUpAfter = false;
+    
   
   public ShoulderSubsystem() {
     //motors/encoders/pidcontroller
-      shoulderMasterMotor = new CANSparkMax(MotorIDConstants.shoulder1MotorID, MotorType.kBrushless);
-      //shoulderFollower1Motor = new CANSparkMax(MotorIDConstants.shoulder2MotorID, MotorType.kBrushless);
-      //shoulderFollower2Motor = new CANSparkMax(MotorIDConstants.shoulder3MotorID, MotorType.kBrushless);
-      shoulderFollower3Motor = new CANSparkMax(MotorIDConstants.shoulder4MotorID, MotorType.kBrushless);
-
-      shoulderEncoder = shoulderMasterMotor.getAbsoluteEncoder(Type.kDutyCycle);
       
-      shoulderPID = shoulderMasterMotor.getPIDController();
+      shoulderFalcon1 = new TalonFX(MotorIDConstants.shoulder1MotorID);
+      shoulderFalcon2 = new TalonFX(MotorIDConstants.shoulder2MotorID);
+      shoulderFalcon3 = new TalonFX(MotorIDConstants.shoulder3MotorID);
+      shoulderFalcon4 = new TalonFX(MotorIDConstants.shoulder4MotorID);
 
+      shoulderFalconEnc = new TalonFXSensorCollection(shoulderFalcon1);
 
-    //config PID
-      shoulderPID.setFF(PIDConstants.shoulderkF);
-      shoulderPID.setP(PIDConstants.shoulderkP);
-      shoulderPID.setI(PIDConstants.shoulderkI);
-      shoulderPID.setD(PIDConstants.shoulderkD);
+      shoulderFalcon1.config_kF(0, 0);
+      shoulderFalcon1.config_kP(0, PIDConstants.shoulderkP);
+      shoulderFalcon1.config_kI(0, PIDConstants.shoulderkI);
+      shoulderFalcon1.config_kD(0, PIDConstants.shoulderkD);
 
-      //shoulderFollower1Motor.follow(shoulderFollower2Motor);
-      //shoulderFollower2Motor.follow(shoulderMasterMotor);
-      shoulderFollower3Motor.follow(shoulderMasterMotor);
+      shoulderFalcon1.configClosedLoopPeakOutput(0, MotorSpeedsConstants.shoulderClosedMaxSpeed);
+      shoulderFalcon1.configPeakOutputForward(MotorSpeedsConstants.shoulderOpenMaxSpeed);
+      shoulderFalcon1.configPeakOutputReverse(-MotorSpeedsConstants.shoulderOpenMaxSpeed);
 
-    //config max output, safety
-      shoulderMasterMotor.setOpenLoopRampRate(MotorSpeedsConstants.shoulderRampRate);
-      shoulderMasterMotor.setClosedLoopRampRate(MotorSpeedsConstants.shoulderRampRate);
-      shoulderPID.setOutputRange(-MotorSpeedsConstants.shoulderClosedMaxSpeed, MotorSpeedsConstants.shoulderClosedMaxSpeed);     
+      shoulderFalcon3.setInverted(InvertType.OpposeMaster);
+      shoulderFalcon2.setInverted(InvertType.OpposeMaster);
+
+      shoulderFalcon4.follow(shoulderFalcon1);
+      shoulderFalcon2.follow(shoulderFalcon1);
+      shoulderFalcon3.follow(shoulderFalcon1);
   }
 
   @Override
   public void periodic() {
     //smartdashboard shenanigans
-    SmartDashboard.putNumber("Shoulder Encoder Value:", shoulderEncoder.getPosition());
-        SmartDashboard.putNumber("Shoulder Pos Conversion Factor:", shoulderEncoder.getPositionConversionFactor());
-
-
-
-    /*if(hallEffect.get()){
-        shoulderEncoder.setPosition(0);
-    }*/
+    SmartDashboard.putNumber("Shoulder Encoder Value:", shoulderFalconEnc.getIntegratedSensorPosition());
   }
 
   public void resetEncoder(){
   }
 
   public void setHome(){
-    shoulderPID.setReference(PositionValueConstants.shoulderHomePos, CANSparkMax.ControlType.kPosition);
+    //shoulderPID.setReference(PositionValueConstants.shoulderHomePos, CANSparkMax.ControlType.kPosition);
+    shoulderFalcon1.set(TalonFXControlMode.Position, PositionValueConstants.shoulderHomePos);
+
   }
 
   public void setAmpShot(){
-    shoulderPID.setReference(PositionValueConstants.shoulderAmpShotPos, CANSparkMax.ControlType.kPosition);
+    //shoulderPID.setReference(PositionValueConstants.shoulderAmpShotPos, CANSparkMax.ControlType.kPosition);
+    shoulderFalcon1.set(TalonFXControlMode.Position, PositionValueConstants.shoulderAmpShotPos);
   }
 
   public void setProtShot(){
-    shoulderPID.setReference(PositionValueConstants.shoulderProtShotPos, CANSparkMax.ControlType.kPosition);
+    //shoulderPID.setReference(PositionValueConstants.shoulderProtShotPos, CANSparkMax.ControlType.kPosition);
+    shoulderFalcon1.set(TalonFXControlMode.Position, PositionValueConstants.shoulderProtShotPos);
   }
 
   public void manual(CommandXboxController controller){
-    shoulderMasterMotor.set(-0.3*controller.getHID().getRawAxis(ControllerConstants.shoulderAxis));
+    //shoulderMasterMotor.set(-0.3*controller.getHID().getRawAxis(ControllerConstants.shoulderAxis));
+    shoulderFalcon1.set(TalonFXControlMode.PercentOutput, 0.3*controller.getHID().getRawAxis(ControllerConstants.shoulderAxis));
+    //shoulderFalcon1.setControl(m_voltageRequest.withOutput(12*0.3*controller.getHID().getRawAxis(ControllerConstants.shoulderAxis)));
   }
 
   public void setDesAngle(double desiredAngle){
@@ -105,7 +112,6 @@ public class ShoulderSubsystem extends SubsystemBase {
   }
 
   public void setAtDesAngle(){
-    shoulderPID.setReference(getDesAngle(), CANSparkMax.ControlType.kPosition);
   }
 
   public boolean getSpinUpAfter(){ 

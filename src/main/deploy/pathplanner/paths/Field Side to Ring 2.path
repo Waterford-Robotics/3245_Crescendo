@@ -3,47 +3,50 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.715233590009117,
-        "y": 7.0
+        "x": 0.77430354290908,
+        "y": 4.280060525933018
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.685848408733854,
-        "y": 7.0398809743488435
+        "x": 1.6162826627647557,
+        "y": 4.490555305896938
       },
       "isLocked": false,
-      "linkedName": "End Straight Path"
+      "linkedName": "At Field Side Speaker"
     },
     {
       "anchor": {
-        "x": 5.756013335388493,
-        "y": 7.0
+        "x": 2.76230979812387,
+        "y": 5.55472336015897
       },
       "prevControl": {
-        "x": 5.288247157690897,
-        "y": 7.004798511021523
+        "x": 1.6981417438618356,
+        "y": 5.718441522353128
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "At Ring 2"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 4.5,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -87.24683171710046,
+    "rotation": 180.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
-  "previewStartingState": null,
+  "previewStartingState": {
+    "rotation": 120.25643716352923,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }

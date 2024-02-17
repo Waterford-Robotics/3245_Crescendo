@@ -3,59 +3,43 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 7.0
+        "x": 1.5695060449949958,
+        "y": 5.55472336015897
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.820780570336069,
-        "y": 6.981410202136645
+        "x": 4.598292045590528,
+        "y": 6.513644024440276
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "At Speaker"
     },
     {
       "anchor": {
-        "x": 4.0,
-        "y": 7.0
+        "x": 8.153314996088682,
+        "y": 7.437482225391801
       },
       "prevControl": {
-        "x": 3.5,
-        "y": 7.0
-      },
-      "nextControl": {
-        "x": 4.5,
-        "y": 7.0
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 5.0,
-        "y": 7.0
-      },
-      "prevControl": {
-        "x": 4.492997760252618,
-        "y": 7.0
+        "x": 5.019281605518368,
+        "y": 6.5955031055373565
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "End Please God"
+      "linkedName": "At Midline 1"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
+    "maxVelocity": 4.5,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 180.0,
     "rotateFast": false
   },
   "reversed": false,
