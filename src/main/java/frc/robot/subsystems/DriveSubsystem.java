@@ -30,6 +30,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class DriveSubsystem extends SubsystemBase {
@@ -157,6 +158,7 @@ public class DriveSubsystem extends SubsystemBase {
         },
         pose);
   }
+
 
   /**
    * Method to drive the robot using joystick info.
@@ -328,6 +330,8 @@ public class DriveSubsystem extends SubsystemBase {
     //m_gyro.calibrate();
   }
 
+  public void rumble(CommandXboxController controller){
+  }
 
   /**
    * Returns the heading of the robot.

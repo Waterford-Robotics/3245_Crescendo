@@ -50,8 +50,6 @@ public class RobotContainer {
   CommandXboxController m_operatorController = new CommandXboxController(ControllerConstants.kOperatorControllerPort);
 
   // commands
-  SetShoulderCommand shimmyUp = new SetShoulderCommand(m_shoulderSubsystem, "protected");
-  SetShoulderCommand shimmyDown = new SetShoulderCommand(m_shoulderSubsystem, "home");
   SequentialCommandGroup handoffCommand = new SequentialCommandGroup(
     new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem),
    /* new IntakeIntoShooterCommand(m_intakeSubsystem, m_indexerSubsystem),*/
@@ -62,16 +60,10 @@ public class RobotContainer {
     new AutoInShooterCommand(m_intakeSubsystem, m_indexerSubsystem)
   );
 
-  // auto routines
-  SequentialCommandGroup testSeq = new SequentialCommandGroup(
-        m_robotDrive.getPath("Speaker to Ring 1"),
-        new SetShoulderCommand(m_shoulderSubsystem, "protected")
-  );
 
   public RobotContainer() {
     m_robotDrive.calibrateGyro();
     // default commands
-    NamedCommands.registerCommand("Arm Up", new SetShoulderCommand(m_shoulderSubsystem, "protected"));
     NamedCommands.registerCommand("Run Intake", autoHandoffCommand);
     NamedCommands.registerCommand("Spin Up Shoot", new SpinUpShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
     NamedCommands.registerCommand("Spin Up", new SpinUpAutoCommand(m_shootSubsystem));
@@ -90,7 +82,7 @@ public class RobotContainer {
 
     //auto options
     m_chooser.addOption("Score 1 wherever", new SpinUpShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
-    m_chooser.addOption("score 2 (ring close to wall) center", m_robotDrive.getAuto("Score 2 Center"));
+    m_chooser.addOption("score 2 center (rings closest to wall)", m_robotDrive.getAuto("Score 2 Center"));
     m_chooser.addOption("score 2 wall side", m_robotDrive.getAuto("Score 2 Wall Side"));
     m_chooser.addOption("score 2 field side", m_robotDrive.getAuto("Score 2 Field Side"));
     m_chooser.addOption("score 3 center", m_robotDrive.getAuto("Score 3 Center"));
@@ -101,8 +93,8 @@ public class RobotContainer {
     m_chooser.addOption("score 4 field side", m_robotDrive.getAuto("Score 4 Field Side"));
     m_chooser.addOption("score 5??", m_robotDrive.getAuto("Score 5 Center"));
     m_chooser.addOption("score 2 midline", m_robotDrive.getAuto("Score 2 Midline"));
-    m_chooser.addOption("experimental score 4 center", m_robotDrive.getAuto("Score 4 Center Experiment"));
     m_chooser.addOption("null auto", new WaitCommand(0.05));
+    m_chooser.addOption("score 4 center ONLY DRIVE", m_robotDrive.getAuto("Score 4 Center Only Drive"));
     configureBindings();
   }
 
@@ -113,6 +105,7 @@ public class RobotContainer {
             m_robotDrive));
 
     //shoulder
+    
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderHomeButton).whileTrue(
       new SetShoulderCommand(m_shoulderSubsystem, "home"));
 
