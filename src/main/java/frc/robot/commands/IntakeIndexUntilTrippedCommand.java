@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShootSubsystem;
@@ -11,7 +10,8 @@ public class IntakeIndexUntilTrippedCommand extends Command{
     IntakeSubsystem m_intakeSubsystem;
     IndexerSubsystem m_indexerSubsystem;
     ShootSubsystem m_shootSubsystem;
-    public IntakeIndexUntilTrippedCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, ShootSubsystem shootSubsystem){
+    public IntakeIndexUntilTrippedCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, 
+            ShootSubsystem shootSubsystem){
         //definitions and setting parameters equal to members
         m_intakeSubsystem = intakeSubsystem;
         m_indexerSubsystem = indexerSubsystem;

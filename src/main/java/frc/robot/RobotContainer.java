@@ -7,7 +7,6 @@ package frc.robot;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.AutoInShooterCommand;
 import frc.robot.commands.InShooterCommand;
-import frc.robot.commands.IndexShootCommand;
 import frc.robot.commands.IndexToShootCommand;
 import frc.robot.commands.IntakeIndexUntilTrippedCommand;
 import frc.robot.commands.SetShoulderCommand;
@@ -19,7 +18,6 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShootSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
 
-import com.fasterxml.jackson.databind.util.Named;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -53,7 +51,7 @@ public class RobotContainer {
   SequentialCommandGroup handoffCommand = new SequentialCommandGroup(
     new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem),
    /* new IntakeIntoShooterCommand(m_intakeSubsystem, m_indexerSubsystem),*/
-    new InShooterCommand(m_intakeSubsystem, m_indexerSubsystem)
+    new InShooterCommand(m_intakeSubsystem, m_indexerSubsystem, m_driverController)
   );
   SequentialCommandGroup autoHandoffCommand = new SequentialCommandGroup(
     new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem),

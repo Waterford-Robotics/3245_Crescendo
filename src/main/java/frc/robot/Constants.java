@@ -81,7 +81,7 @@ public final class Constants {
   }
 
   public static class SensorConstants {
-    public static final int hallEffectDIOPort = 1;
+    public static final int hallEffectDIOPort = 7;
     public static final int intakeBeamBreakDIOPort = 8;
     public static final int intakeBeamBreakDIOOutput = 9;
     public static final int indexBeamBreakDIOPort = 3;
@@ -221,8 +221,8 @@ public final class Constants {
   }
 
   public static class PositionValueConstants {
-    public static final double shoulderHomePos = 400;
-    public static final double shoulderAmpShotPos = 30000;
+    public static final double shoulderHomePos = 0;
+    public static final double shoulderAmpShotPos = 25000;
     public static final double shoulderProtShotPos = 9000;
   }
   

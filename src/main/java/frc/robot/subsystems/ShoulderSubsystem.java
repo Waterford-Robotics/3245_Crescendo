@@ -43,6 +43,7 @@ public class ShoulderSubsystem extends SubsystemBase {
       TalonFXSensorCollection shoulderFalconEnc;
       public double desAngle = 0;
       public boolean spinUpAfter = false;
+      DigitalInput hallEffect;
     
   
   public ShoulderSubsystem() {
@@ -70,12 +71,18 @@ public class ShoulderSubsystem extends SubsystemBase {
       shoulderFalcon4.follow(shoulderFalcon1);
       shoulderFalcon2.follow(shoulderFalcon1);
       shoulderFalcon3.follow(shoulderFalcon1);
+
+      hallEffect = new DigitalInput(SensorConstants.hallEffectDIOPort);
   }
 
   @Override
   public void periodic() {
     //smartdashboard shenanigans
     SmartDashboard.putNumber("Shoulder Encoder Value:", shoulderFalconEnc.getIntegratedSensorPosition());
+    SmartDashboard.putBoolean("hall effect tripped", !hallEffect.get());
+    if(!hallEffect.get()){
+      shoulderFalconEnc.setIntegratedSensorPosition(0.0, 15);
+    }
   }
 
   public void resetEncoder(){

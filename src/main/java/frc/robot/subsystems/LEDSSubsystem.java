@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MotorIDConstants;
 
@@ -20,22 +21,44 @@ public class LEDSSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     //smartdashboard shenanigans
-    
+    if(SmartDashboard.getBoolean("beam break tripped", false)){
+        setViolet();
+    }
   }
 
-  public void setRed(){}
+  public void setRed(){
+    blinkin.set(0.61);
+  }
 
-  public void setBlue(){}
+  public void setBlue(){
+    blinkin.set(0.87);
+  }
 
-  public void setGreen(){}
+  public void setGreen(){
+    blinkin.set(0.77);
+  }
 
-  public void setYellow(){}
+  public void setYellow(){
+    blinkin.set(0.69);
+  }
 
-  public void setPurple(){}
+  public void setViolet(){
+    blinkin.set(0.91);
+  }
 
-  public void setRainbow(){}
+  public void setRainbowPrettyyy(){
+    blinkin.set(-0.99);
+  }
 
-  public void setSparkles(){}
+  public void setTwinklesParty(){
+    blinkin.set(-0.53);
+  }
 
-  public void setStrobe(){}
+  public void setStrobe(){
+    blinkin.set(0.15);
+  }
+
+  public void setFire(){
+    blinkin.set(-0.59);
+  }
 }
