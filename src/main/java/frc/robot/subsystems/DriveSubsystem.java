@@ -4,9 +4,6 @@
 
 package frc.robot.subsystems;
 
-import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonPoseEstimator;
-
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -26,7 +23,9 @@ import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.VisionConstants;
 import frc.robot.utils.SwerveUtils;
+import frc.robot.utils.VisionDataProvider;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -65,9 +64,6 @@ public class DriveSubsystem extends SubsystemBase {
   // The gyro sensor
   private final AHRS m_gyro = new AHRS();
 
-  // The vision sensor
-  private final PhotonCamera m_camera = new PhotonCamera(DriveConstants.kCameraName);
-
   // Slew rate filter variables for controlling lateral acceleration
   private double m_currentRotation = 0.0;
   private double m_currentTranslationDir = 0.0;
@@ -79,13 +75,6 @@ public class DriveSubsystem extends SubsystemBase {
 
   private Rotation2d rawGyroRotation = new Rotation2d();
 
-  // Pose estimator classes
-  // This one updates the vision-extrapolated pose estimate
-  private PhotonPoseEstimator m_visionPoseEstimator = new PhotonPoseEstimator(DriveConstants.kAprilTagFieldLayout,
-                                                                              DriveConstants.kVisionPoseEstimationStrategy,
-                                                                              m_camera,
-                                                                              DriveConstants.kCameraPoseInRobotFrame);
-  // This one combines vision with odometry
   private SwerveDrivePoseEstimator m_poseEstimator = new SwerveDrivePoseEstimator(
       DriveConstants.kDriveKinematics,
       Rotation2d.fromDegrees(m_gyro.getYaw()),
@@ -96,6 +85,10 @@ public class DriveSubsystem extends SubsystemBase {
           m_rearRight.getPosition()
       },
       new Pose2d());  // TODO: What to do here?
+
+  private VisionDataProvider m_visionDataProvider = new VisionDataProvider(VisionConstants.kCameraName,
+                                                                           VisionConstants.kCameraPoseInRobotFrame,
+                                                                           VisionConstants.kAprilTagField);
   
   // Path following
   public static final PIDConstants translationalPID = new PIDConstants(0.23, 0, 0);
@@ -136,7 +129,7 @@ public class DriveSubsystem extends SubsystemBase {
       SmartDashboard.putNumber("navx yaw", -m_gyro.getYaw());
       SmartDashboard.putNumber("navx angle", m_gyro.getAngle());
 
-      m_visionPoseEstimator.update().ifPresent((result) -> {
+      m_visionDataProvider.getEstimatedGlobalPose(getPose()).ifPresent((result) -> {
         m_poseEstimator.addVisionMeasurement(result.estimatedPose.toPose2d(), result.timestampSeconds);
       });
 
@@ -157,11 +150,11 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   /**
-   * Get the camera attached to the robot.
-   * @return The camera.
+   * Get the vision data provider for the robot.
+   * @return The vision data provider.
    */
-  public PhotonCamera getCamera() {
-    return m_camera;
+  public VisionDataProvider getVisionDataProvider() {
+    return m_visionDataProvider;
   }
 
   /**

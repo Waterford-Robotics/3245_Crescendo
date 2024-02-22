@@ -4,11 +4,8 @@
 
 package frc.robot;
 
-import org.photonvision.PhotonPoseEstimator.PoseStrategy;
-
 import com.revrobotics.CANSparkBase.IdleMode;
 
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -153,10 +150,11 @@ public final class Constants {
     public static final int kRearRightTurningCanId = 3;
 
     public static final boolean kGyroReversed = true;
+  }
 
+  public static final class VisionConstants {
     public static final String kCameraName = "Camera_Module_v1";
-    public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
-    public static final PoseStrategy kVisionPoseEstimationStrategy = PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR;
+    public static final AprilTagFields kAprilTagField = AprilTagFields.k2024Crescendo;
     public static final Transform3d kCameraPoseInRobotFrame = new Transform3d();
   }
 
