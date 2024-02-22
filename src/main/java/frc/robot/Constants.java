@@ -95,8 +95,8 @@ public final class Constants {
     public static final double intakeFalconFeedSpeed = 0.2;
 
     public static final double shoulderOpenMaxSpeed = 0.2;
-    public static final double shoulderClosedMaxSpeed = 0.4;
-    public static final double shoulderRampRate = 0.2;
+    public static final double shoulderClosedMaxSpeed = 0.6;
+    public static final double shoulderRampRate = 0.4;
     public static final double shoot1MaxVal = -0.75;
     public static final double shoot2MaxVal = .75;
     public static final double shoot1MaxValAuto = -0.65;
@@ -116,7 +116,7 @@ public final class Constants {
     public static final double kMaxAngularSpeed = 1.5 * Math.PI; // radians per second
 
     public static final double kDirectionSlewRate = 1.2; // radians per second
-    public static final double kMagnitudeSlewRate = 7; // percent per second (1 = 100%)
+    public static final double kMagnitudeSlewRate = 12; // percent per second (1 = 100%)
     public static final double kRotationalSlewRate = 4.5; // percent per second (1 = 100%)
 
     // Chassis configuration

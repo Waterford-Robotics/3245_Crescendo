@@ -79,7 +79,7 @@ public class RobotContainer {
                 true, true),
             m_robotDrive));
     m_shootSubsystem.setDefaultCommand(new RunCommand(() -> m_shootSubsystem.manual(m_driverController), m_shootSubsystem));
-    m_ledsSubsystem.setDefaultCommand(new RunCommand(() -> m_ledsSubsystem.setRainbowPrettyyy(), m_ledsSubsystem));
+    m_ledsSubsystem.setDefaultCommand(new RunCommand(() -> m_ledsSubsystem.setTeamColor(), m_ledsSubsystem));
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("AutoMode", m_chooser);
@@ -111,13 +111,13 @@ public class RobotContainer {
     //shoulder
     
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderHomeButton).whileTrue(
-      new SetShoulderCommand(m_shoulderSubsystem, "home"));
+      new SetShoulderCommand(m_shoulderSubsystem, "home").alongWith(new RunCommand(() -> m_ledsSubsystem.setViolet(), m_ledsSubsystem)));
 
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderAmpButton).whileTrue(
-      new SetShoulderCommand(m_shoulderSubsystem, "amp"));
+      new SetShoulderCommand(m_shoulderSubsystem, "amp").alongWith(new RunCommand(() -> m_ledsSubsystem.setGreen(), m_ledsSubsystem)));
 
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderProtButton).whileTrue(
-      new SetShoulderCommand(m_shoulderSubsystem, "protected"));
+      new SetShoulderCommand(m_shoulderSubsystem, "protected").alongWith(new RunCommand(() -> m_ledsSubsystem.setYellow(), m_ledsSubsystem)));
 
 
     //handoff
