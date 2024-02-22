@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.820780570336069,
-        "y": 6.993104356579084
+        "x": 2.8005965145419762,
+        "y": 6.988475991003504
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4816500915101236,
-        "y": 7.016492665461104
+        "x": 2.3199585509241287,
+        "y": 6.344421119755589
       },
       "isLocked": false,
       "linkedName": "At Ring 1"
     },
     {
       "anchor": {
-        "x": 1.5695060449949958,
-        "y": 5.55472336015897
+        "x": 1.3202315865990055,
+        "y": 5.546562100149962
       },
       "prevControl": {
-        "x": 1.6279768172071956,
-        "y": 5.858771375662408
+        "x": 1.5413250498632154,
+        "y": 5.681140729962959
       },
       "nextControl": null,
       "isLocked": false,
@@ -38,8 +38,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.5,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 6.0,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -54,5 +54,5 @@
     "rotation": 180.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

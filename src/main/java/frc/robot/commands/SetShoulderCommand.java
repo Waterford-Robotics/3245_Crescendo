@@ -15,7 +15,6 @@ public class SetShoulderCommand extends Command{
         //definitions and setting parameters equal to members
         m_shoulderSubsystem = shoulderSubsystem;
         m_angle = angle;
-        //m_defaultController = defaultController;
         addRequirements(m_shoulderSubsystem);
     }
 

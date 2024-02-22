@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.77430354290908,
-        "y": 4.280060525933018
+        "x": 0.7050149931681604,
+        "y": 4.344967191105343
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4174820372432766,
-        "y": 3.91754173821738
+        "x": 1.348193487502357,
+        "y": 3.982448403389705
       },
       "isLocked": false,
       "linkedName": "At Field Side Speaker"
     },
     {
       "anchor": {
-        "x": 2.59859163592971,
-        "y": 4.092954054853979
+        "x": 2.656405125456622,
+        "y": 4.075809931479348
       },
       "prevControl": {
-        "x": 2.060660531577473,
-        "y": 4.0695657459691
+        "x": 2.118474021104385,
+        "y": 4.052421622594469
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.5,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 6.0,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -48,5 +48,5 @@
     "rotation": 120.25643716352923,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -11,7 +10,8 @@ public class IntakeIndexUntilTrippedCommand extends Command{
     IntakeSubsystem m_intakeSubsystem;
     IndexerSubsystem m_indexerSubsystem;
     ShootSubsystem m_shootSubsystem;
-    public IntakeIndexUntilTrippedCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, ShootSubsystem shootSubsystem){
+    public IntakeIndexUntilTrippedCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, 
+            ShootSubsystem shootSubsystem){
         //definitions and setting parameters equal to members
         m_intakeSubsystem = intakeSubsystem;
         m_indexerSubsystem = indexerSubsystem;
@@ -22,7 +22,9 @@ public class IntakeIndexUntilTrippedCommand extends Command{
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() {
+
+    }
         
     @Override
     public void execute() {
@@ -35,7 +37,7 @@ public class IntakeIndexUntilTrippedCommand extends Command{
     public void end(boolean interrupted){
         m_intakeSubsystem.stop();
         m_indexerSubsystem.stop();
-        m_shootSubsystem.stop();
+        //m_shootSubsystem.stop();
     }
 
     @Override

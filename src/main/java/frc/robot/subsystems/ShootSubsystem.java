@@ -23,6 +23,10 @@ public class ShootSubsystem extends SubsystemBase {
     //motors/encoders
       shootMotor1 = new CANSparkFlex(MotorIDConstants.shootMotor1ID, MotorType.kBrushless);
       shootMotor2 = new CANSparkFlex(MotorIDConstants.shootMotor2ID, MotorType.kBrushless);
+      shootMotor1.setOpenLoopRampRate(0.5);
+      shootMotor2.setOpenLoopRampRate(0.5);
+      shootMotor1.setSmartCurrentLimit(60);
+      shootMotor2.setSmartCurrentLimit(60);
   }
 
   @Override

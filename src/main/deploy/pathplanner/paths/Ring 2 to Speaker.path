@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5167325548326307,
-        "y": 5.55472336015897
+        "x": 2.2815075138347,
+        "y": 5.652302452145888
       },
       "isLocked": false,
       "linkedName": "At Ring 2"
     },
     {
       "anchor": {
-        "x": 1.5695060449949958,
-        "y": 5.55472336015897
+        "x": 1.3202315865990055,
+        "y": 5.546562100149962
       },
       "prevControl": {
-        "x": 2.002189759365274,
-        "y": 5.566417514601412
+        "x": 1.7816440316721391,
+        "y": 5.613851415056461
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.5,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 6.0,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -48,5 +48,5 @@
     "rotation": 180.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

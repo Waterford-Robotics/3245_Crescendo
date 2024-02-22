@@ -81,10 +81,12 @@ public final class Constants {
     public static final int shootMotor1ID = 21;
     public static final int shootMotor2ID = 22;
     public static final int climbMotorID = 50;
+
+    public static final int blinkinPort = 9;
   }
 
   public static class SensorConstants {
-    public static final int hallEffectDIOPort = 1;
+    public static final int hallEffectDIOPort = 7;
     public static final int intakeBeamBreakDIOPort = 8;
     public static final int intakeBeamBreakDIOOutput = 9;
     public static final int indexBeamBreakDIOPort = 3;
@@ -102,13 +104,13 @@ public final class Constants {
     public static final double shoulderRampRate = 0.2;
     public static final double shoot1MaxVal = -0.75;
     public static final double shoot2MaxVal = .75;
-    public static final double shoot1MaxValAuto = -0.75;
-    public static final double shoot2MaxValAuto = 0.75;
-    public static final double shoot1RunBackVal = -0.1;
-    public static final double shoot2RunBackVal = 0.1;
+    public static final double shoot1MaxValAuto = -0.65;
+    public static final double shoot2MaxValAuto = 0.65;
+    public static final double shoot1RunBackVal = -0.13;
+    public static final double shoot2RunBackVal = 0.13;
 
-    public static final double indexRunFastVal = 0.7;
-    public static final double indexRunSlowVal = 0.4;
+    public static final double indexRunSuckIn = 0.45;
+    public static final double indexRunMoveBack = 0.65;
     public static final double climbMaxVal = 0.7;
   }
   
@@ -119,7 +121,7 @@ public final class Constants {
     public static final double kMaxAngularSpeed = 1.5 * Math.PI; // radians per second
 
     public static final double kDirectionSlewRate = 1.2; // radians per second
-    public static final double kMagnitudeSlewRate = 5; // percent per second (1 = 100%)
+    public static final double kMagnitudeSlewRate = 7; // percent per second (1 = 100%)
     public static final double kRotationalSlewRate = 4.5; // percent per second (1 = 100%)
 
     // Chassis configuration
@@ -229,8 +231,8 @@ public final class Constants {
   }
 
   public static class PositionValueConstants {
-    public static final double shoulderHomePos = 400;
-    public static final double shoulderAmpShotPos = 30000;
+    public static final double shoulderHomePos = 0;
+    public static final double shoulderAmpShotPos = 25000;
     public static final double shoulderProtShotPos = 9000;
   }
   
@@ -238,11 +240,13 @@ public final class Constants {
     public static final double indexerShootSpinAfterTime = 0.1;
     public static final double handoffIndexerSlowTime = 0.1;
     public static final double handoffIndexerReverseTime = 0.05;
-    public static final double autoHandoffIndexerReverseTime = 0.06;
+    public static final double autoHandoffIndexerReverseTime = 0.1;
   }
 
   public static class AutoTimeConstants {
-    public static final double spinUpAutoTime = 0.7;
-    public static final double indexAutoTime = spinUpAutoTime + 0.5;
+    public static final double spinUpAutoTime1 = 0.6;
+    public static final double spinUpAutoTime2 = 0.6;
+    public static final double indexAutoTime2 = spinUpAutoTime2 + 0.1;
+    public static final double indexAutoTime1 = spinUpAutoTime1 + 0.1;
   }
 }

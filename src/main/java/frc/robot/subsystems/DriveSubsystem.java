@@ -23,20 +23,16 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class DriveSubsystem extends SubsystemBase {
-
-  public static final PIDConstants translationalPID = new PIDConstants(0.23, 0, 0);
-  public static final PIDConstants rotationalPID = new PIDConstants(0.23, 0, 0);
-
-  public static final HolonomicPathFollowerConfig config = new HolonomicPathFollowerConfig(translationalPID, rotationalPID,
-    3, DriveConstants.kWheelBase/Math.sqrt(2), new ReplanningConfig());
 
   // Create MAXSwerveModules
   private final MAXSwerveModule m_frontLeft = new MAXSwerveModule(
@@ -64,7 +60,6 @@ public class DriveSubsystem extends SubsystemBase {
     m_frontRight,
     m_rearLeft,
     m_rearRight
-
   };
 
   // The gyro sensor
@@ -85,10 +80,12 @@ public class DriveSubsystem extends SubsystemBase {
   private Rotation2d rawGyroRotation = new Rotation2d();
 
   // Pose estimator classes
+  // This one updates the vision-extrapolated pose estimate
   private PhotonPoseEstimator m_visionPoseEstimator = new PhotonPoseEstimator(DriveConstants.kAprilTagFieldLayout,
                                                                               DriveConstants.kVisionPoseEstimationStrategy,
                                                                               m_camera,
                                                                               DriveConstants.kCameraPoseInRobotFrame);
+  // This one combines vision with odometry
   private SwerveDrivePoseEstimator m_poseEstimator = new SwerveDrivePoseEstimator(
       DriveConstants.kDriveKinematics,
       Rotation2d.fromDegrees(m_gyro.getYaw()),
@@ -99,6 +96,13 @@ public class DriveSubsystem extends SubsystemBase {
           m_rearRight.getPosition()
       },
       new Pose2d());  // TODO: What to do here?
+  
+  // Path following
+  public static final PIDConstants translationalPID = new PIDConstants(0.23, 0, 0);
+  public static final PIDConstants rotationalPID = new PIDConstants(0.23, 0, 0);
+
+  public static final HolonomicPathFollowerConfig config = new HolonomicPathFollowerConfig(translationalPID, rotationalPID,
+    3, DriveConstants.kWheelBase/Math.sqrt(2), new ReplanningConfig());
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
@@ -108,10 +112,10 @@ public class DriveSubsystem extends SubsystemBase {
       () -> DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates()), 
       this::runVelocity, config, 
       () -> {
-        /*var alliance = DriverStation.getAlliance();
+        var alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
           return alliance.get() == DriverStation.Alliance.Red;
-        }*/
+        }
         return false;
       },
         this);
@@ -176,6 +180,7 @@ public class DriveSubsystem extends SubsystemBase {
         },
         pose);
   }
+
 
   /**
    * Method to drive the robot using joystick info.
@@ -347,6 +352,8 @@ public class DriveSubsystem extends SubsystemBase {
     //m_gyro.calibrate();
   }
 
+  public void rumble(CommandXboxController controller){
+  }
 
   /**
    * Returns the heading of the robot.

@@ -12,12 +12,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Spin Up Shoot"
-          }
-        },
-        {
           "type": "deadline",
           "data": {
             "commands": [
@@ -25,12 +19,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "Center to Ring 1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Run Intake"
                 }
               }
             ]
@@ -45,20 +33,8 @@
                 "data": {
                   "pathName": "Ring 1 to Speaker"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Spin Up"
-                }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
           }
         },
         {
@@ -69,12 +45,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "Speaker to Ring 2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Run Intake"
                 }
               }
             ]
@@ -89,20 +59,34 @@
                 "data": {
                   "pathName": "Ring 2 to Speaker"
                 }
-              },
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "Spin Up"
+                  "pathName": "Center to Ring 3"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Shoot"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Ring 3 to Speaker"
+                }
+              }
+            ]
           }
         }
       ]

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7050149931681604,
-      "y": 4.344967191105343
+      "x": 0.7146277524405176,
+      "y": 6.757769768466938
     },
-    "rotation": 121.32869286780415
+    "rotation": -118.07248693585295
   },
   "command": {
     "type": "sequential",
@@ -18,13 +18,13 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Field Side to Ring 3"
+                  "pathName": "Wall Side to Ring 1"
                 }
               },
               {
@@ -37,28 +37,15 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Ring 3 to Speaker"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Spin Up"
-                }
-              }
-            ]
+            "pathName": "Ring 1 to Speaker"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Spin Up Shoot"
           }
         }
       ]

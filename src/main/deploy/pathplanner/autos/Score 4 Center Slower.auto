@@ -18,7 +18,7 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -37,32 +37,19 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Ring 1 to Speaker"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Spin Up"
-                }
-              }
-            ]
+            "pathName": "Ring 1 to Speaker"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Spin Up Shoot"
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -81,28 +68,46 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Ring 2 to Speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Spin Up Shoot"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Ring 2 to Speaker"
+                  "pathName": "Center to Ring 3"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Spin Up"
+                  "name": "Run Intake"
                 }
               }
             ]
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Ring 3 to Speaker"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Spin Up Shoot"
           }
         }
       ]

@@ -5,7 +5,7 @@
       "x": 0.7050149931681604,
       "y": 4.344967191105343
     },
-    "rotation": 121.32869286780415
+    "rotation": 121.3286928678041
   },
   "command": {
     "type": "sequential",
@@ -18,7 +18,7 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -37,28 +37,15 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Ring 3 to Speaker"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Spin Up"
-                }
-              }
-            ]
+            "pathName": "Ring 3 to Speaker"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Spin Up Shoot"
           }
         }
       ]
