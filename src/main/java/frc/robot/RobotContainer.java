@@ -9,12 +9,14 @@ import frc.robot.commands.AutoInShooterCommand;
 import frc.robot.commands.InShooterCommand;
 import frc.robot.commands.IndexToShootCommand;
 import frc.robot.commands.IntakeIndexUntilTrippedCommand;
+import frc.robot.commands.RumbleForSecsCommand;
 import frc.robot.commands.SetShoulderCommand;
 import frc.robot.commands.SpinUpAutoCommand;
 import frc.robot.commands.SpinUpShootCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSSubsystem;
 import frc.robot.subsystems.ShootSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
 
@@ -40,6 +42,7 @@ public class RobotContainer {
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShoulderSubsystem m_shoulderSubsystem = new ShoulderSubsystem();
+  private final LEDSSubsystem m_ledsSubsystem = new LEDSSubsystem();
   SendableChooser<Command> autoChooser;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   
@@ -50,8 +53,8 @@ public class RobotContainer {
   // commands
   SequentialCommandGroup handoffCommand = new SequentialCommandGroup(
     new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem),
-   /* new IntakeIntoShooterCommand(m_intakeSubsystem, m_indexerSubsystem),*/
-    new InShooterCommand(m_intakeSubsystem, m_indexerSubsystem, m_driverController)
+    new RumbleForSecsCommand(1, m_driverController).alongWith(
+    new InShooterCommand(m_intakeSubsystem, m_indexerSubsystem))
   );
   SequentialCommandGroup autoHandoffCommand = new SequentialCommandGroup(
     new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem),
@@ -61,11 +64,12 @@ public class RobotContainer {
 
   public RobotContainer() {
     m_robotDrive.calibrateGyro();
-    // default commands
+    // named commands configuration
     NamedCommands.registerCommand("Run Intake", autoHandoffCommand);
     NamedCommands.registerCommand("Spin Up Shoot", new SpinUpShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
     NamedCommands.registerCommand("Spin Up", new SpinUpAutoCommand(m_shootSubsystem));
     NamedCommands.registerCommand("Shoot", new IndexToShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
+    // default commands
     m_robotDrive.setDefaultCommand(
         new RunCommand(
             () -> m_robotDrive.drive(
@@ -75,6 +79,8 @@ public class RobotContainer {
                 true, true),
             m_robotDrive));
     m_shootSubsystem.setDefaultCommand(new RunCommand(() -> m_shootSubsystem.manual(m_driverController), m_shootSubsystem));
+    m_ledsSubsystem.setDefaultCommand(new RunCommand(() -> m_ledsSubsystem.setRainbowPrettyyy(), m_ledsSubsystem));
+
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("AutoMode", m_chooser);
 

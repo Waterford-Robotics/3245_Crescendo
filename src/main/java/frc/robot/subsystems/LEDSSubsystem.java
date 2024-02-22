@@ -22,7 +22,7 @@ public class LEDSSubsystem extends SubsystemBase {
   public void periodic() {
     //smartdashboard shenanigans
     if(SmartDashboard.getBoolean("beam break tripped", false)){
-        setViolet();
+        setStrobe();
     }
   }
 
@@ -60,5 +60,8 @@ public class LEDSSubsystem extends SubsystemBase {
 
   public void setFire(){
     blinkin.set(-0.59);
+  }
+  public void turnOff(){
+    blinkin.set(0);
   }
 }

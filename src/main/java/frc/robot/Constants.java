@@ -77,7 +77,7 @@ public final class Constants {
     public static final int shootMotor2ID = 22;
     public static final int climbMotorID = 50;
 
-    public static final int blinkinPort = 0;
+    public static final int blinkinPort = 9;
   }
 
   public static class SensorConstants {
@@ -116,7 +116,7 @@ public final class Constants {
     public static final double kMaxAngularSpeed = 1.5 * Math.PI; // radians per second
 
     public static final double kDirectionSlewRate = 1.2; // radians per second
-    public static final double kMagnitudeSlewRate = 4.5; // percent per second (1 = 100%)
+    public static final double kMagnitudeSlewRate = 7; // percent per second (1 = 100%)
     public static final double kRotationalSlewRate = 4.5; // percent per second (1 = 100%)
 
     // Chassis configuration

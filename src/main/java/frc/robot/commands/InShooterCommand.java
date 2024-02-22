@@ -12,14 +12,12 @@ public class InShooterCommand extends Command{
     //instantiate stuff
     IntakeSubsystem m_intakeSubsystem;
     IndexerSubsystem m_indexerSubsystem;
-    CommandXboxController m_controller;
     Timer timer = new Timer();
 
-    public InShooterCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, CommandXboxController controller){
+    public InShooterCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem){
         //definitions and setting parameters equal to members
         m_intakeSubsystem = intakeSubsystem;
         m_indexerSubsystem = indexerSubsystem;
-        m_controller = controller;
         addRequirements(m_intakeSubsystem);
         addRequirements(m_indexerSubsystem);
     }
@@ -29,14 +27,10 @@ public class InShooterCommand extends Command{
         timer.start();
         timer.reset();
         m_intakeSubsystem.stop();
-        m_controller.getHID().setRumble(RumbleType.kBothRumble, 0.5);
     }
         
     @Override
     public void execute() {
-        if(timer.get()>0.15){
-            m_controller.getHID().setRumble(RumbleType.kBothRumble, 0);
-        }
         m_intakeSubsystem.stop();
         m_indexerSubsystem.runBackSlow();
     }
@@ -45,7 +39,6 @@ public class InShooterCommand extends Command{
     public void end(boolean interrupted){
         m_indexerSubsystem.stop();
         m_intakeSubsystem.stop();
-        m_controller.getHID().setRumble(RumbleType.kBothRumble, 0);
     }
 
     @Override
