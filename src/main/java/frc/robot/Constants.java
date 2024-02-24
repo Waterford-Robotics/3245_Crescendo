@@ -115,9 +115,9 @@ public final class Constants {
     public static final double kMaxSpeedMetersPerSecond = 5.7;
     public static final double kMaxAngularSpeed = 1.5 * Math.PI; // radians per second
 
-    public static final double kDirectionSlewRate = 1.2; // radians per second
-    public static final double kMagnitudeSlewRate = 12; // percent per second (1 = 100%)
-    public static final double kRotationalSlewRate = 4.5; // percent per second (1 = 100%)
+    public static final double kDirectionSlewRate = 4*Math.PI; // radians per second
+    public static final double kMagnitudeSlewRate = 10; // percent per second (1 = 100%)
+    public static final double kRotationalSlewRate = 5.5; // percent per second (1 = 100%)
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(23.5);

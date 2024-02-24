@@ -25,6 +25,9 @@ public class LEDSSubsystem extends SubsystemBase {
     if(SmartDashboard.getBoolean("beam break tripped", false)){
         setStrobe();
     }
+    else{
+      setTeamColor();
+    }
   }
 
   public void setRed(){
