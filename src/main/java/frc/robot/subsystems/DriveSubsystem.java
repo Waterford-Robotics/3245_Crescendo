@@ -84,7 +84,7 @@ public class DriveSubsystem extends SubsystemBase {
           m_rearLeft.getPosition(),
           m_rearRight.getPosition()
       },
-      new Pose2d());  // TODO: What to do here?
+      new Pose2d());
 
   private VisionDataProvider m_visionDataProvider = new VisionDataProvider(VisionConstants.kCameraName,
                                                                            VisionConstants.kCameraPoseInRobotFrame,
