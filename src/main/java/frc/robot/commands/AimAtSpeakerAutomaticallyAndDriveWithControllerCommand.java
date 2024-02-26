@@ -76,7 +76,7 @@ public class AimAtSpeakerAutomaticallyAndDriveWithControllerCommand extends Comm
   @Override
   public void execute() {
     // Determine the relative angle and distance of the Speaker.
-    AngleDistancePair relativePoseEstimates = getRelativeMeasurementFromSeenTarget().orElseGet(this::getRelativeMeasurementFromRobotPose);
+    AngleDistancePair relativePoseEstimates = getRelativeMeasurementFromRobotPose();
     
     // Drive the robot. Linear movement is determined by controller input, but angular movement is determined by the
     // relative angle of the target.
@@ -105,6 +105,7 @@ public class AimAtSpeakerAutomaticallyAndDriveWithControllerCommand extends Comm
    * @return An Optional wrapping an AngleDistancePair containing the angle and distance information, or empty if that
    *    information could not be determined.
    */
+  @SuppressWarnings("unused")  // Not currently used due to implementation error
   private Optional<AngleDistancePair> getRelativeMeasurementFromSeenTarget() {
     Optional<PhotonTrackedTarget> target = m_drivetrain.getVisionDataProvider().getTargets().stream()
       .filter(x -> x.getFiducialId() == m_fiducialId)
@@ -117,6 +118,7 @@ public class AimAtSpeakerAutomaticallyAndDriveWithControllerCommand extends Comm
       Pose3d tagPose = visionDataProvider.getFieldLayout().getTagPose(m_fiducialId)
           .orElseThrow(() -> new IllegalArgumentException("The tag you requested (ID " + m_fiducialId + ") is not on the field"));
 
+      // TODO: Adjust the distance estimate using information about the camera's position on the robot
       return Optional.of(new AngleDistancePair(seenTarget.getYaw(),
                                                PhotonUtils.calculateDistanceToTargetMeters(robotToCameraTransform.getZ(),
                                                                                            tagPose.getZ(),

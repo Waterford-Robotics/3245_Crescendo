@@ -155,7 +155,7 @@ public final class Constants {
   public static final class VisionConstants {
     public static final String kCameraName = "Camera_Module_v1";
     public static final AprilTagFields kAprilTagField = AprilTagFields.k2024Crescendo;
-    public static final Transform3d kCameraPoseInRobotFrame = new Transform3d();
+    public static final Transform3d kRobotToCameraTransform = new Transform3d();  // TODO: Measure this value
   }
 
   public static final class AutoConstants {

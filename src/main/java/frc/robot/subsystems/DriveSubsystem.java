@@ -87,7 +87,7 @@ public class DriveSubsystem extends SubsystemBase {
       new Pose2d());
 
   private VisionDataProvider m_visionDataProvider = new VisionDataProvider(VisionConstants.kCameraName,
-                                                                           VisionConstants.kCameraPoseInRobotFrame,
+                                                                           VisionConstants.kRobotToCameraTransform,
                                                                            VisionConstants.kAprilTagField);
   
   // Path following
