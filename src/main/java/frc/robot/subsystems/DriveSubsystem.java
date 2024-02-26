@@ -75,6 +75,13 @@ public class DriveSubsystem extends SubsystemBase {
 
   private Rotation2d rawGyroRotation = new Rotation2d();
 
+  // Path following
+  public static final PIDConstants translationalPID = new PIDConstants(0.23, 0, 0);
+  public static final PIDConstants rotationalPID = new PIDConstants(0.23, 0, 0);
+
+  public static final HolonomicPathFollowerConfig config = new HolonomicPathFollowerConfig(translationalPID, rotationalPID,
+    3, DriveConstants.kWheelBase/Math.sqrt(2), new ReplanningConfig());
+
   private SwerveDrivePoseEstimator m_poseEstimator = new SwerveDrivePoseEstimator(
       DriveConstants.kDriveKinematics,
       Rotation2d.fromDegrees(m_gyro.getYaw()),
@@ -89,13 +96,6 @@ public class DriveSubsystem extends SubsystemBase {
   private VisionDataProvider m_visionDataProvider = new VisionDataProvider(VisionConstants.kCameraName,
                                                                            VisionConstants.kRobotToCameraTransform,
                                                                            VisionConstants.kAprilTagField);
-  
-  // Path following
-  public static final PIDConstants translationalPID = new PIDConstants(0.23, 0, 0);
-  public static final PIDConstants rotationalPID = new PIDConstants(0.23, 0, 0);
-
-  public static final HolonomicPathFollowerConfig config = new HolonomicPathFollowerConfig(translationalPID, rotationalPID,
-    3, DriveConstants.kWheelBase/Math.sqrt(2), new ReplanningConfig());
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
