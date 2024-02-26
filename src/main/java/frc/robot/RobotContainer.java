@@ -110,13 +110,13 @@ public class RobotContainer {
 
     //shoulder
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderHomeButton).whileTrue(
-      new SetShoulderCommand(m_shoulderSubsystem, "home").alongWith(new RunCommand(() -> m_ledsSubsystem.setTeamColor(), m_ledsSubsystem)));
+      new SetShoulderCommand(m_shoulderSubsystem, "home"));
 
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderAmpButton).whileTrue(
-      new SetShoulderCommand(m_shoulderSubsystem, "amp").alongWith(new RunCommand(() -> m_ledsSubsystem.setGreen(), m_ledsSubsystem)));
+      new SetShoulderCommand(m_shoulderSubsystem, "amp"));
 
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderProtButton).whileTrue(
-      new SetShoulderCommand(m_shoulderSubsystem, "protected").alongWith(new RunCommand(() -> m_ledsSubsystem.setYellow(), m_ledsSubsystem)));
+      new SetShoulderCommand(m_shoulderSubsystem, "protected"));
 
 
     //handoff
