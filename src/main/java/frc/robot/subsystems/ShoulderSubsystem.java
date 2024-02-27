@@ -90,6 +90,10 @@ public class ShoulderSubsystem extends SubsystemBase {
     shoulderFalcon1.set(TalonFXControlMode.Position, PositionValueConstants.shoulderProtShotPos);
   }
 
+  public void setClimb(){
+    shoulderFalcon1.set(TalonFXControlMode.Position, PositionValueConstants.shoulderClimbPos);
+  }
+
   public void manual(CommandXboxController controller){
     //shoulderMasterMotor.set(-0.3*controller.getHID().getRawAxis(ControllerConstants.shoulderAxis));
     shoulderFalcon1.set(TalonFXControlMode.PercentOutput, 0.3*controller.getHID().getRawAxis(ControllerConstants.shoulderAxis));
@@ -113,6 +117,10 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   public void setSpinUpAfter(boolean doesSpinUpAfter){
     spinUpAfter = doesSpinUpAfter;
+  }
+
+  public void stop(){
+    shoulderFalcon1.set(TalonFXControlMode.PercentOutput, 0);
   }
 
 }

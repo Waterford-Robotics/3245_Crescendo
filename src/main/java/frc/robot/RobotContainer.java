@@ -96,17 +96,17 @@ public class RobotContainer {
     m_chooser.addOption("score 4 wall side", m_robotDrive.getAuto("Score 4 Wall Side"));
     m_chooser.addOption("score 4 field side", m_robotDrive.getAuto("Score 4 Field Side"));
     m_chooser.addOption("score 5??", m_robotDrive.getAuto("Score 5 Center"));
-    m_chooser.addOption("score 2 midline", m_robotDrive.getAuto("Score 2 Midline"));
+    //m_chooser.addOption("score 2 midline", m_robotDrive.getAuto("Score 2 Midline"));
     m_chooser.addOption("null auto", new WaitCommand(0.05));
     m_chooser.addOption("score 4 center ONLY DRIVE", m_robotDrive.getAuto("Score 4 Center Only Drive"));
     configureBindings();
   }
 
   private void configureBindings() {
-    new JoystickButton(m_driverController.getHID(), ControllerConstants.setXValue)
+    /*new JoystickButton(m_driverController.getHID(), ControllerConstants.setXValue)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
-            m_robotDrive));
+            m_robotDrive));*/
 
     //shoulder
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderHomeButton).whileTrue(
@@ -117,6 +117,9 @@ public class RobotContainer {
 
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderProtButton).whileTrue(
       new SetShoulderCommand(m_shoulderSubsystem, "protected"));
+
+    new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderClimbButton).whileTrue(
+      new SetShoulderCommand(m_shoulderSubsystem, "climb"));
 
 
     //handoff

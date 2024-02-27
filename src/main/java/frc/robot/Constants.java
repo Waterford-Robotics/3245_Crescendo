@@ -54,6 +54,7 @@ public final class Constants {
     public static final int shoulderHomeButton = 2; //B
     public static final int shoulderAmpButton = 1; //A
     public static final int shoulderProtButton = 3; //X
+    public static final int shoulderClimbButton = 4; //Y
   }
 
   public static class PIDConstants {
@@ -95,7 +96,7 @@ public final class Constants {
     public static final double intakeFalconFeedSpeed = 0.2;
 
     public static final double shoulderOpenMaxSpeed = 0.2;
-    public static final double shoulderClosedMaxSpeed = 0.6;
+    public static final double shoulderClosedMaxSpeed = 0.57;
     public static final double shoulderRampRate = 0.4;
     public static final double shoot1MaxVal = -0.75;
     public static final double shoot2MaxVal = .75;
@@ -119,7 +120,6 @@ public final class Constants {
     public static final double kDirectionSlewRate = 4*Math.PI; // radians per second
     public static final double kMagnitudeSlewRate = 10; // percent per second (1 = 100%)
     public static final double kRotationalSlewRate = 5.5; // percent per second (1 = 100%)
-
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(23.5);
     // Distance between centers of right and left wheels on robot
@@ -225,6 +225,7 @@ public final class Constants {
     public static final double shoulderHomePos = 0;
     public static final double shoulderAmpShotPos = 25000;
     public static final double shoulderProtShotPos = 9000;
+    public static final double shoulderClimbPos = 30000;
   }
   
   public static class TeleopTimeConstants {
