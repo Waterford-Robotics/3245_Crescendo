@@ -101,6 +101,8 @@ public class DriveSubsystem extends SubsystemBase {
                                                                            VisionConstants.kRobotToCameraTransform,
                                                                            VisionConstants.kAprilTagField);
 
+  private boolean m_usingVision = true;
+
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
     AutoBuilder.configureHolonomic(
@@ -132,10 +134,12 @@ public class DriveSubsystem extends SubsystemBase {
         });
       SmartDashboard.putNumber("navx yaw", -m_gyro.getYaw());
       SmartDashboard.putNumber("navx angle", m_gyro.getAngle());
-
-      m_visionDataProvider.getEstimatedGlobalPose(getPose()).ifPresent((result) -> {
-        m_poseEstimator.addVisionMeasurement(result.estimatedPose.toPose2d(), result.timestampSeconds);
-      });
+      
+      if (m_usingVision) {
+        m_visionDataProvider.getEstimatedGlobalPose(getPose()).ifPresent((result) -> {
+          m_poseEstimator.addVisionMeasurement(result.estimatedPose.toPose2d(), result.timestampSeconds);
+        });
+      }
 
       rawGyroRotation = m_gyro.getRotation2d();
   }
@@ -159,6 +163,14 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public VisionDataProvider getVisionDataProvider() {
     return m_visionDataProvider;
+  }
+
+  public boolean isUsingVision() {
+    return m_usingVision;
+  }
+
+  public void setUsingVision(boolean usingVision) {
+    m_usingVision = usingVision;
   }
 
   /**

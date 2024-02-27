@@ -141,5 +141,13 @@ public class RobotContainer {
             return m_chooser.getSelected();   
     } 
 
+  public void autonomousInit() {
+    m_robotDrive.setUsingVision(false);
+  }
+
+  public void teleopInit() {
+    m_robotDrive.setUsingVision(true);
+  }
+
   }
 
