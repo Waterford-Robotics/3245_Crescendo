@@ -9,6 +9,7 @@ import frc.robot.commands.AutoInShooterCommand;
 import frc.robot.commands.InShooterCommand;
 import frc.robot.commands.IndexToShootCommand;
 import frc.robot.commands.IntakeIndexUntilTrippedCommand;
+import frc.robot.commands.LEDSCommand;
 import frc.robot.commands.RumbleForSecsCommand;
 import frc.robot.commands.SetShoulderCommand;
 import frc.robot.commands.SpinUpAutoCommand;
@@ -79,7 +80,6 @@ public class RobotContainer {
                 true, true),
             m_robotDrive));
     m_shootSubsystem.setDefaultCommand(new RunCommand(() -> m_shootSubsystem.manual(m_driverController), m_shootSubsystem));
-    m_ledsSubsystem.setDefaultCommand(new RunCommand(() -> m_ledsSubsystem.setRainbowPrettyyy(), m_ledsSubsystem));
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("AutoMode", m_chooser);
@@ -109,7 +109,6 @@ public class RobotContainer {
             m_robotDrive));
 
     //shoulder
-    
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderHomeButton).whileTrue(
       new SetShoulderCommand(m_shoulderSubsystem, "home"));
 

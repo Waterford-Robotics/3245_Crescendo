@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,7 +23,10 @@ public class LEDSSubsystem extends SubsystemBase {
   public void periodic() {
     //smartdashboard shenanigans
     if(SmartDashboard.getBoolean("beam break tripped", false)){
-        setStrobe();
+        setHotPink();
+    }
+    else{
+      setTeamColor();
     }
   }
 
@@ -61,7 +65,22 @@ public class LEDSSubsystem extends SubsystemBase {
   public void setFire(){
     blinkin.set(-0.59);
   }
+
+  public void setHotPink(){
+    blinkin.set(0.57);
+  }
+
   public void turnOff(){
     blinkin.set(0);
+  }
+
+  public void setTeamColor(){
+    var alliance = DriverStation.getAlliance();
+    if (alliance.get() == DriverStation.Alliance.Red) {
+          setRed();
+        }
+    if(alliance.get() == DriverStation.Alliance.Blue){
+          setBlue();
+        }
   }
 }

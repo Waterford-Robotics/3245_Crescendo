@@ -98,8 +98,8 @@ public final class Constants {
     public static final double intakeFalconFeedSpeed = 0.2;
 
     public static final double shoulderOpenMaxSpeed = 0.2;
-    public static final double shoulderClosedMaxSpeed = 0.4;
-    public static final double shoulderRampRate = 0.2;
+    public static final double shoulderClosedMaxSpeed = 0.6;
+    public static final double shoulderRampRate = 0.4;
     public static final double shoot1MaxVal = -0.75;
     public static final double shoot2MaxVal = .75;
     public static final double shoot1MaxValAuto = -0.65;
@@ -115,12 +115,13 @@ public final class Constants {
   public static class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 5.7;
+    
+    public static final double kMaxSpeedMetersPerSecond = 5.7; //max is 5.74 W/ votrexes -Neeks
     public static final double kMaxAngularSpeed = 1.5 * Math.PI; // radians per second
 
-    public static final double kDirectionSlewRate = 1.2; // radians per second
-    public static final double kMagnitudeSlewRate = 7; // percent per second (1 = 100%)
-    public static final double kRotationalSlewRate = 4.5; // percent per second (1 = 100%)
+    public static final double kDirectionSlewRate = 4*Math.PI; // radians per second
+    public static final double kMagnitudeSlewRate = 10; // percent per second (1 = 100%)
+    public static final double kRotationalSlewRate = 5.5; // percent per second (1 = 100%)
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(23.5);

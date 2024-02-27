@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.IntakeSubsystem;
 
 public class RumbleForSecsCommand extends Command{
+    //for S E C S ... not what you're thinking 
     //instantiate stuff
     double m_targetSecs;
     CommandXboxController m_controller;
