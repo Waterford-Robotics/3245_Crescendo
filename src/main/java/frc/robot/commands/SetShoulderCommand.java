@@ -35,10 +35,6 @@ public class SetShoulderCommand extends Command{
         if(m_angle == "home"){
             m_shoulderSubsystem.setHome();
         }
-        
-        if(m_angle == "climb"){
-            m_shoulderSubsystem.setClimb();
-        }
 
         /*else{
             new RunCommand(() -> m_shoulderSubsystem.manual(m_defaultController), m_shoulderSubsystem);
