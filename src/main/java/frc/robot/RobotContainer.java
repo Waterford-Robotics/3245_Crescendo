@@ -25,7 +25,6 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -143,7 +142,6 @@ public class RobotContainer {
 
   public void autonomousInit() {
     m_robotDrive.setUsingVision(false);
-    m_robotDrive.resetOdometry(new Pose2d());
   }
 
   public void teleopInit() {
