@@ -96,7 +96,7 @@ public class RobotContainer {
     m_chooser.addOption("score 4 wall side", m_robotDrive.getAuto("Score 4 Wall Side"));
     m_chooser.addOption("score 4 field side", m_robotDrive.getAuto("Score 4 Field Side"));
     m_chooser.addOption("score 5??", m_robotDrive.getAuto("Score 5 Center"));
-    m_chooser.addOption("score 2 midline", m_robotDrive.getAuto("Score 2 Midline"));
+    //m_chooser.addOption("score 2 midline", m_robotDrive.getAuto("Score 2 Midline"));
     m_chooser.addOption("null auto", new WaitCommand(0.05));
     m_chooser.addOption("score 4 center ONLY DRIVE", m_robotDrive.getAuto("Score 4 Center Only Drive"));
     configureBindings();
@@ -139,14 +139,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
             return m_chooser.getSelected();   
     } 
-
-  public void autonomousInit() {
-    m_robotDrive.setUsingVision(false);
-  }
-
-  public void teleopInit() {
-    m_robotDrive.setUsingVision(true);
-  }
 
   }
 

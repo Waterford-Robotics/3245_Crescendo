@@ -6,9 +6,6 @@ package frc.robot;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 
-import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -152,17 +149,6 @@ public final class Constants {
     public static final int kRearRightTurningCanId = 3;
 
     public static final boolean kGyroReversed = true;
-  }
-
-  public static final class VisionConstants {
-    public static final String kCameraName = "Camera_Module_v1";
-    public static final AprilTagFields kAprilTagField = AprilTagFields.k2024Crescendo;
-    public static final Transform3d kRobotToCameraTransform = new Transform3d(Units.inchesToMeters(11.969),
-                                                                              Units.inchesToMeters( 5.000),
-                                                                              Units.inchesToMeters( 9.321),
-                                                                              new Rotation3d(0,
-                                                                                             Units.degreesToRadians(30),
-                                                                                             0));
   }
 
   public static final class AutoConstants {
