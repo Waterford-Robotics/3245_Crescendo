@@ -95,7 +95,7 @@ public final class Constants {
     public static final double intakeFalconFeedSpeed = 0.2;
 
     public static final double shoulderOpenMaxSpeed = 0.2;
-    public static final double shoulderClosedMaxSpeed = 0.6;
+    public static final double shoulderClosedMaxSpeed = 0.4;
     public static final double shoulderRampRate = 0.4;
     public static final double shoot1MaxVal = -0.75;
     public static final double shoot2MaxVal = .75;
@@ -118,7 +118,7 @@ public final class Constants {
 
     public static final double kDirectionSlewRate = 4*Math.PI; // radians per second
     public static final double kMagnitudeSlewRate = 10; // percent per second (1 = 100%)
-    public static final double kRotationalSlewRate = 5.5; // percent per second (1 = 100%)
+    public static final double kRotationalSlewRate = 6; // percent per second (1 = 100%)
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(23.5);
@@ -152,7 +152,7 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 5;
+    public static final double kMaxSpeedMetersPerSecond = 5.74;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
@@ -217,14 +217,14 @@ public final class Constants {
     public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
-    public static final int kDrivingMotorCurrentLimit = 40; // amps
+    public static final int kDrivingMotorCurrentLimit = 60; // amps
     public static final int kTurningMotorCurrentLimit = 25; // amps
   }
 
   public static class PositionValueConstants {
     public static final double shoulderHomePos = 0;
     public static final double shoulderAmpShotPos = 25000;
-    public static final double shoulderProtShotPos = 9000;
+    public static final double shoulderProtShotPos = 7000;
   }
   
   public static class TeleopTimeConstants {

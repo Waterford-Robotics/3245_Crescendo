@@ -76,11 +76,13 @@ public class LEDSSubsystem extends SubsystemBase {
 
   public void setTeamColor(){
     var alliance = DriverStation.getAlliance();
-    if (alliance.get() == DriverStation.Alliance.Red) {
+    if(alliance.isPresent()){
+      if(alliance.get() == DriverStation.Alliance.Red) {
           setRed();
         }
-    if(alliance.get() == DriverStation.Alliance.Blue){
+      else if(alliance.get() == DriverStation.Alliance.Blue){
           setBlue();
         }
+    }
   }
 }

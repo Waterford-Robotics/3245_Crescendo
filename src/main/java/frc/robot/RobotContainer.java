@@ -25,6 +25,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -99,6 +100,8 @@ public class RobotContainer {
     //m_chooser.addOption("score 2 midline", m_robotDrive.getAuto("Score 2 Midline"));
     m_chooser.addOption("null auto", new WaitCommand(0.05));
     m_chooser.addOption("score 4 center ONLY DRIVE", m_robotDrive.getAuto("Score 4 Center Only Drive"));
+
+    SmartDashboard.putData(new InstantCommand(() -> m_robotDrive.resetOdometry(new Pose2d())));
     configureBindings();
   }
 

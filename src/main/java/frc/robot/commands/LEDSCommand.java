@@ -25,7 +25,7 @@ public class LEDSCommand extends Command{
     @Override
     public void execute() {
         if(m_intakeSubsystem.getBBTripped()){
-            m_ledsSubsystem.setStrobe();
+            m_ledsSubsystem.setHotPink();
         }
         else{
             m_ledsSubsystem.setTeamColor();
