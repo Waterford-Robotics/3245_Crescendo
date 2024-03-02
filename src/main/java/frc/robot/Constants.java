@@ -224,7 +224,7 @@ public final class Constants {
   public static class PositionValueConstants {
     public static final double shoulderHomePos = 0;
     public static final double shoulderAmpShotPos = 25000;
-    public static final double shoulderProtShotPos = 7000;
+    public static final double shoulderProtShotPos = 9000;
   }
   
   public static class TeleopTimeConstants {
@@ -236,7 +236,7 @@ public final class Constants {
 
   public static class AutoTimeConstants {
     public static final double spinUpAutoTime1 = 0.6;
-    public static final double spinUpAutoTime2 = 0.6;
+    public static final double spinUpAutoTime2 = 0.8;
     public static final double indexAutoTime2 = spinUpAutoTime2 + 0.1;
     public static final double indexAutoTime1 = spinUpAutoTime1 + 0.1;
   }

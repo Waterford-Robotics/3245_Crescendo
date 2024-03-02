@@ -44,7 +44,6 @@ public class RobotContainer {
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShoulderSubsystem m_shoulderSubsystem = new ShoulderSubsystem();
-  private final LEDSSubsystem m_ledsSubsystem = new LEDSSubsystem();
   SendableChooser<Command> autoChooser;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   
@@ -87,19 +86,29 @@ public class RobotContainer {
 
     //auto options
     m_chooser.addOption("Score 1 wherever", new SpinUpShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
-    m_chooser.addOption("score 2 center (rings closest to wall)", m_robotDrive.getAuto("Score 2 Center"));
-    m_chooser.addOption("score 2 wall side", m_robotDrive.getAuto("Score 2 Wall Side"));
-    m_chooser.addOption("score 2 field side", m_robotDrive.getAuto("Score 2 Field Side"));
-    m_chooser.addOption("score 3 center", m_robotDrive.getAuto("Score 3 Center"));
-    m_chooser.addOption("score 3 wall side", m_robotDrive.getAuto("Score 3 Wall Side"));
-    m_chooser.addOption("score 3 field side", m_robotDrive.getAuto("Score 3 Field Side"));
-    m_chooser.addOption("score 4 center", m_robotDrive.getAuto("Score 4 Center"));
-    m_chooser.addOption("score 4 wall side", m_robotDrive.getAuto("Score 4 Wall Side"));
-    m_chooser.addOption("score 4 field side", m_robotDrive.getAuto("Score 4 Field Side"));
-    m_chooser.addOption("score 5??", m_robotDrive.getAuto("Score 5 Center"));
-    //m_chooser.addOption("score 2 midline", m_robotDrive.getAuto("Score 2 Midline"));
+
+    m_chooser.addOption("score 2 center (amp)", m_robotDrive.getAuto("Score 2 Center"));
+    m_chooser.addOption("score 2 center (middle)", m_robotDrive.getAuto("Score 2 Center Middle Note"));
+    m_chooser.addOption("score 2 center (source)", m_robotDrive.getAuto("Score 2 Center Source Note"));
+    m_chooser.addOption("score 2 wall side (amp)", m_robotDrive.getAuto("Score 2 Wall Side"));
+    m_chooser.addOption("score 2 field side (source)", m_robotDrive.getAuto("Score 2 Field Side"));
+
+    m_chooser.addOption("score 3 center (amp, middle)", m_robotDrive.getAuto("Score 3 Center"));
+    m_chooser.addOption("score 3 wall side (amp, middle)", m_robotDrive.getAuto("Score 3 Wall Side"));
+    m_chooser.addOption("score 3 field side (source, middle)", m_robotDrive.getAuto("Score 3 Field Side"));
+
+    m_chooser.addOption("score 4 center (amp, middle, source)", m_robotDrive.getAuto("Score 4 Center"));
+    m_chooser.addOption("score 4 center (source, middle, amp)", m_robotDrive.getAuto("Score 4 Center Inverted"));
+    m_chooser.addOption("score 4 center start middle note (middle, amp, source)", 
+        m_robotDrive.getAuto("Score 4 Center Start Middle Note"));
+    m_chooser.addOption("score 4 center start middle note (middle, source, amp)", 
+        m_robotDrive.getAuto("Score 4 Center Start Middle Note Inverted"));
+
+    m_chooser.addOption("score 4 wall side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Wall Side"));
+    m_chooser.addOption("score 4 field side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Field Side"));
+
+    m_chooser.addOption("score 5?? (lmao)", m_robotDrive.getAuto("Score 5 Center"));
     m_chooser.addOption("null auto", new WaitCommand(0.05));
-    m_chooser.addOption("score 4 center ONLY DRIVE", m_robotDrive.getAuto("Score 4 Center Only Drive"));
 
     SmartDashboard.putData(new InstantCommand(() -> m_robotDrive.resetOdometry(new Pose2d())));
     configureBindings();

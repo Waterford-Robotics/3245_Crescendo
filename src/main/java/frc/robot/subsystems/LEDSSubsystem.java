@@ -28,6 +28,9 @@ public class LEDSSubsystem extends SubsystemBase {
     else{
       setTeamColor();
     }
+    /*if(DriverStation.isDisabled()){
+      turnOff();
+    }*/
   }
 
   public void setRed(){
