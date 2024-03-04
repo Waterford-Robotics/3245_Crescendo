@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
+import org.photonvision.PhotonUtils;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
@@ -24,9 +25,11 @@ public class VisionDataProvider {
 
   private PhotonCamera m_camera;
   private PhotonPoseEstimator m_poseEstimator;
+  private double m_poseAmbiguityThreshold = 1;
+  private double m_poseDistanceThresholdMeters = Double.POSITIVE_INFINITY;
   
   /**
-   * Creates a new VisionDataProvider.
+   * Creates a new VisionDataProvider. No poses are rejected due to significant ambiguity.
    * 
    * @param cameraName The name of the camera.
    * @param robotToCameraTransform The 3D transform from the robot's center to the camera.
@@ -39,7 +42,7 @@ public class VisionDataProvider {
   }
 
   /**
-   * Creates a new VisionDataProvider.
+   * Creates a new VisionDataProvider. No poses are rejected due to significant ambiguity.
    * 
    * @param cameraName The name of the camera.
    * @param robotToCameraTransform The 3D transform from the robot's center to the camera.
@@ -98,14 +101,77 @@ public class VisionDataProvider {
   }
 
   /**
+   * Get the maximum average pose ambiguity for each of the reference fiducials before the pose is rejected.
+   * @return A value between 0 and 1, which is the ambiguity threshold.
+   */
+  public double getPoseAmbiguityThreshold() {
+    return m_poseAmbiguityThreshold;
+  }
+
+  /**
+   * Set the maximum average pose ambiguity for each of the reference fiducials before the pose is rejected.
+   * @param poseAmbiguityThreshold A value between 0 and 1, which is the ambiguity threshold.
+   */
+  public void setPoseAmbiguityThreshold(double poseAmbiguityThreshold) {
+    if (poseAmbiguityThreshold < 0 || poseAmbiguityThreshold > 1) {
+      throw new IllegalArgumentException("Pose ambiguity threshold must be between 0 and 1");
+    }
+    m_poseAmbiguityThreshold = poseAmbiguityThreshold;
+  }
+
+  /**
+   * Get the maximum distance (in meters) to the previous pose before the estimate is rejected.
+   * @return A value greater than or equal to 0, which is the distance threshold in meters.
+   */
+  public double getPoseDistanceThreshold() {
+    return m_poseDistanceThresholdMeters;
+  }
+
+  /**
+   * Set the maximum distance (in meters) to the previous pose before the estimate is rejected.
+   * @param poseDistanceThresholdMeters A value greater than or equal to 0, which is the distance threshold in meters.
+   */
+  public void setPoseDistanceThreshold(double poseDistanceThresholdMeters) {
+    if (poseDistanceThresholdMeters < 0) {
+      throw new IllegalArgumentException("Pose distance threshold must be at least 0");
+    }
+    m_poseDistanceThresholdMeters = poseDistanceThresholdMeters;
+  }
+
+  /**
    * Get the estimated global pose of the robot using the vision data, if it exists, using the previous pose to help
-   * refine the estimate. If the vision system can't estimate a robot pose when this is called, the result will be
-   * empty.
+   * refine the estimate. If the vision system can't estimate a robot pose when this is called, the pose has too large
+   * of an average ambiguity or too large of a distance away from the previous estimate, the result will be empty.
    * @param previousEstimatedRobotPose The previously-estimated robot pose.
-   * @return The newly estimated robot pose if an estimate could be made, otherwise Optional.empty().
+   * @return The newly estimated robot pose if a good estimate could be made, otherwise Optional.empty().
    */
   public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d previousEstimatedRobotPose) {
     m_poseEstimator.setReferencePose(previousEstimatedRobotPose);
-    return m_poseEstimator.update();
+    Optional<EstimatedRobotPose> estimate = m_poseEstimator.update();
+    if (estimate.isPresent()) {
+      double ambiguity = estimate.get().targetsUsed.stream()
+          .mapToDouble(target -> target.getPoseAmbiguity())
+          .map((amb) -> {
+            // Invalid data values are changed to an ambiguity of 1
+            if (amb < 0) {
+              return 1;
+            } else {
+              return amb;
+            }
+          })
+          .average()
+          .getAsDouble();
+      if (ambiguity <= m_poseAmbiguityThreshold) {
+        if (PhotonUtils.getDistanceToPose(previousEstimatedRobotPose, estimate.get().estimatedPose.toPose2d()) <= m_poseDistanceThresholdMeters) {
+          return estimate;
+        } else {
+          return Optional.empty();
+        }
+      } else {
+        return Optional.empty();
+      }
+    } else {
+      return Optional.empty();
+    }
   }
 }
