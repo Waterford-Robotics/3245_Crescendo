@@ -89,7 +89,7 @@ public class DriveSubsystem extends SubsystemBase {
     5.7, DriveConstants.kWheelBase/Math.sqrt(2), new ReplanningConfig());
   
   // Pose estimator class for tracking robot pose
-  public SwerveDrivePoseEstimator m_poseEstimator = new SwerveDrivePoseEstimator(
+  private SwerveDrivePoseEstimator m_poseEstimator = new SwerveDrivePoseEstimator(
       DriveConstants.kDriveKinematics,
       Rotation2d.fromDegrees(m_gyro.getYaw()),
       new SwerveModulePosition[] {

@@ -72,6 +72,10 @@ public final class Constants {
     public static double flipoutkP = 0.1;
     public static double flipoutkI = 0;
     public static double flipoutkD = 0.05;
+
+    public static final double kAutomaticTurningP = 0.01;
+    public static final double kAutomaticTurningI = 0;
+    public static final double kAutomaticTurningD = 0;
   }
 
   public static class MotorIDConstants {
