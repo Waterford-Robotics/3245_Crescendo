@@ -113,6 +113,9 @@ public class DriveSubsystem extends SubsystemBase {
         return false;
       },
         this);
+
+    m_visionDataProvider.setPoseAmbiguityThreshold(VisionConstants.kPoseAmbiguityThreshold);
+    m_visionDataProvider.setPoseDistanceThreshold(VisionConstants.kPoseDistanceThresholdMeters);
   }
 
   @Override
