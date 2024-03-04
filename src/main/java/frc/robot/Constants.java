@@ -64,6 +64,10 @@ public final class Constants {
     public static double shoulderkP = 0.17;
     public static double shoulderkI = 0;
     public static double shoulderkD = 0.05;
+
+    public static final double kAutomaticTurningP = 0.01;
+    public static final double kAutomaticTurningI = 0;
+    public static final double kAutomaticTurningD = 0;
   }
 
   public static class MotorIDConstants {
