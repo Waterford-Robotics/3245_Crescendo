@@ -140,7 +140,7 @@ public class RobotContainer {
 
 
 
-    SmartDashboard.putData(new InstantCommand(() -> m_robotDrive.resetOdometry(new Pose2d())));
+    SmartDashboard.putData(new InstantCommand(() -> m_robotDrive.resetEstimator(new Pose2d())));
     configureBindings();
   }
 
