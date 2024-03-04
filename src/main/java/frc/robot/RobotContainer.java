@@ -119,7 +119,7 @@ public class RobotContainer {
     m_chooser.addOption("score 5?? (lmao)", m_robotDrive.getAuto("Score 5 Center"));
     m_chooser.addOption("null auto", new WaitCommand(0.05));
 
-    SmartDashboard.putData(new InstantCommand(() -> m_robotDrive.resetOdometry(new Pose2d())));
+    SmartDashboard.putData(new InstantCommand(() -> m_robotDrive.resetEstimator(new Pose2d())));
     configureBindings();
   }
 
