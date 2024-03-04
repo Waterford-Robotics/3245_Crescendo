@@ -274,6 +274,9 @@ public final class Constants {
                                                                                              Units.degreesToRadians(-30),
                                                                                              0));
     public static final AprilTagFields kAprilTagField = AprilTagFields.k2024Crescendo;
+
+    public static final double kPoseAmbiguityThreshold = 0.4;
+    public static final double kPoseDistanceThresholdMeters = 1.0;
   }
 
 }
