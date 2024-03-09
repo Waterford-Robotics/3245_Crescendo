@@ -41,22 +41,28 @@ public class TurnToFiducialAndDriveWithControllerCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_turnController.setPID(Preferences.getDouble(PreferenceKeys.kAutomaticTurningP, PIDConstants.kDefaultAutomaticTurningP),
+                            Preferences.getDouble(PreferenceKeys.kAutomaticTurningI, PIDConstants.kDefaultAutomaticTurningI),
+                            Preferences.getDouble(PreferenceKeys.kAutomaticTurningD, PIDConstants.kDefaultAutomaticTurningD));
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double angleErrorDegrees = getError();
 
-    m_drivetrain.drive(-MathUtil.applyDeadband(m_manualController.getLeftY(), ControllerConstants.kDriveDeadband),
-                       -MathUtil.applyDeadband(m_manualController.getLeftX(), ControllerConstants.kDriveDeadband),
+    m_drivetrain.drive(-MathUtil.applyDeadband(-m_manualController.getLeftY(), ControllerConstants.kDriveDeadband),
+                       -MathUtil.applyDeadband(-m_manualController.getLeftX(), ControllerConstants.kDriveDeadband),
                        m_turnController.calculate(angleErrorDegrees),
                        true, true);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_drivetrain.drive(0, 0, 0, false, false);
+  }
 
   // Returns true when the command should end.
   @Override
