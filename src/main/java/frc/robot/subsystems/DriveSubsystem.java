@@ -4,6 +4,10 @@
 
 package frc.robot.subsystems;
 
+import java.util.Optional;
+
+import org.photonvision.EstimatedRobotPose;
+
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -22,6 +26,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.VisionConstants;
@@ -98,6 +103,8 @@ public class DriveSubsystem extends SubsystemBase {
   private Alliance m_alliance = Alliance.Blue;
   private boolean m_usingVision = true;
 
+  private Field2d m_field = new Field2d();
+
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
     AutoBuilder.configureHolonomic(
@@ -132,8 +139,15 @@ public class DriveSubsystem extends SubsystemBase {
         });
     
     if (m_usingVision) {
-      m_visionDataProvider.getEstimatedGlobalPose(getPose()).ifPresent((estimate) -> {
-        m_poseEstimator.addVisionMeasurement(estimate.estimatedPose.toPose2d(), estimate.timestampSeconds);
+      Optional<EstimatedRobotPose> estimate;
+      if (DriverStation.isDisabled()) {
+        estimate = m_visionDataProvider.getEstimatedGlobalPoseWithoutFiltering(getPose());
+      } else {
+        estimate = m_visionDataProvider.getEstimatedGlobalPose(getPose());
+      }
+      estimate.ifPresent((e) -> {
+        SmartDashboard.putString("Robot pose (3D)", e.estimatedPose.toString());
+        m_poseEstimator.addVisionMeasurement(e.estimatedPose.toPose2d(), e.timestampSeconds);
       });
     }
     SmartDashboard.putNumber("NavX yaw", -m_gyro.getYaw());
@@ -141,6 +155,8 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Actual heading", getHeading().getDegrees());
 
     rawGyroRotation = m_gyro.getRotation2d();
+    m_field.setRobotPose(getPose());
+    SmartDashboard.putData("Field", m_field);
   }
 
   /**
@@ -267,13 +283,14 @@ public class DriveSubsystem extends SubsystemBase {
     ChassisSpeeds chassisSpeeds;
     if (fieldRelative) {
       Rotation2d heading;
+      // These are switched because the drive command is completely reversed
       switch (DriverStation.getAlliance().orElse(m_alliance)) {
         case Red:
-          heading = getHeading().rotateBy(Rotation2d.fromDegrees(180));
+          heading = getHeading();
           break;
         case Blue:
         default:
-          heading = getHeading();
+          heading = getHeading().rotateBy(Rotation2d.fromDegrees(180));
           break;
       }
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, heading);
