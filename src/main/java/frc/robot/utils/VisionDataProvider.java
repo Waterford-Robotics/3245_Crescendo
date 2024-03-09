@@ -25,8 +25,10 @@ public class VisionDataProvider {
 
   private PhotonCamera m_camera;
   private PhotonPoseEstimator m_poseEstimator;
+
   private double m_poseAmbiguityThreshold = 1;
   private double m_poseDistanceThresholdMeters = Double.POSITIVE_INFINITY;
+  private boolean m_usingFiltering = true;
   
   /**
    * Creates a new VisionDataProvider. No poses are rejected due to significant ambiguity.
@@ -38,7 +40,7 @@ public class VisionDataProvider {
   public VisionDataProvider(String cameraName, Transform3d robotToCameraTransform, AprilTagFields field) {
     m_camera = new PhotonCamera(cameraName);
     m_poseEstimator = new PhotonPoseEstimator(field.loadAprilTagLayoutField(), PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_camera, robotToCameraTransform);
-    m_poseEstimator.setMultiTagFallbackStrategy(PoseStrategy.CLOSEST_TO_REFERENCE_POSE);
+    m_poseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
   }
 
   /**
@@ -51,7 +53,7 @@ public class VisionDataProvider {
   public VisionDataProvider(String cameraName, Transform3d robotToCameraTransform, AprilTagFieldLayout field) {
     m_camera = new PhotonCamera(cameraName);
     m_poseEstimator = new PhotonPoseEstimator(field, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_camera, robotToCameraTransform);
-    m_poseEstimator.setMultiTagFallbackStrategy(PoseStrategy.CLOSEST_TO_REFERENCE_POSE);
+    m_poseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
   }
 
   /**
@@ -139,15 +141,34 @@ public class VisionDataProvider {
   }
 
   /**
+   * Return true if the vision data provider is filtering the robot pose; false otherwise.
+   */
+  public boolean usingFiltering() {
+    return m_usingFiltering;
+  }
+
+  /**
+   * Set whether the vision data provider should filter robot poses.
+   * @param useFiltering Whether the vision data provider should filter robot poses.
+   */
+  public void setUseFiltering(boolean useFiltering) {
+    m_usingFiltering = useFiltering;
+  }
+
+  /**
    * Get the estimated global pose of the robot using the vision data, if it exists, using the previous pose to help
-   * refine the estimate. If the vision system can't estimate a robot pose when this is called, the pose has too large
-   * of an average ambiguity or too large of a distance away from the previous estimate, the result will be empty.
+   * refine the estimate. If the vision system can't estimate a robot pose when this is called, the result will be empty.
+   * If the pose has too large of an average ambiguity or too large of a distance away from the previous estimate and
+   * filtering is enabled, the result will also be empty.
    * @param previousEstimatedRobotPose The previously-estimated robot pose.
    * @return The newly estimated robot pose if a good estimate could be made, otherwise Optional.empty().
    */
   public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d previousEstimatedRobotPose) {
     m_poseEstimator.setReferencePose(previousEstimatedRobotPose);
     Optional<EstimatedRobotPose> estimate = m_poseEstimator.update();
+    if (!m_usingFiltering) {
+      return estimate;
+    }
     if (estimate.isPresent()) {
       double ambiguity = estimate.get().targetsUsed.stream()
           .mapToDouble(target -> target.getPoseAmbiguity())
@@ -173,5 +194,18 @@ public class VisionDataProvider {
     } else {
       return Optional.empty();
     }
+  }
+
+  /**
+   * Get the estimated global pose of the robot using the vision data, if it exists, using the previous pose to help
+   * refine the estimate. If the vision system can't estimate a robot pose when this is called, the result will be empty.
+   * If the pose has too large of an average ambiguity or too large of a distance away from the previous estimate and
+   * filtering is enabled, the result will also be empty.
+   * @param previousEstimatedRobotPose The previously-estimated robot pose.
+   * @return The newly estimated robot pose if a good estimate could be made, otherwise Optional.empty().
+   */
+  public Optional<EstimatedRobotPose> getEstimatedGlobalPoseWithoutFiltering(Pose2d previousEstimatedRobotPose) {
+    m_poseEstimator.setReferencePose(previousEstimatedRobotPose);
+    return m_poseEstimator.update();
   }
 }
