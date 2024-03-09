@@ -141,6 +141,14 @@ public class RobotContainer {
 
 
     SmartDashboard.putData(new InstantCommand(() -> m_robotDrive.resetEstimator(new Pose2d())));
+    
+    // Button for disabling filtering
+    SmartDashboard.putData("Disable vision filtering for 1 second",
+                           Commands.sequence(
+                             m_robotDrive.runOnce(() -> m_robotDrive.getVisionDataProvider().setUseFiltering(false)),
+                             Commands.waitSeconds(1),
+                             m_robotDrive.runOnce(() -> m_robotDrive.getVisionDataProvider().setUseFiltering(true))
+                           ));
     configureBindings();
   }
 
