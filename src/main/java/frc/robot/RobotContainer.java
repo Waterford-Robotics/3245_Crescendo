@@ -5,6 +5,8 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.PreferenceKeys;
+import frc.robot.Constants.VisionConstants;
 import frc.robot.commands.AutoInShooterCommand;
 import frc.robot.commands.InShooterCommand;
 import frc.robot.commands.IndexToShootCommand;
@@ -14,6 +16,7 @@ import frc.robot.commands.RumbleForSecsCommand;
 import frc.robot.commands.SetShoulderCommand;
 import frc.robot.commands.SpinUpAutoCommand;
 import frc.robot.commands.SpinUpShootCommand;
+import frc.robot.commands.vision.TurnToSpeakerAndDriveWithControllerCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -23,9 +26,11 @@ import frc.robot.subsystems.ShoulderSubsystem;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.util.PIDConstants;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -120,14 +125,18 @@ public class RobotContainer {
                              Commands.waitSeconds(1),
                              m_robotDrive.runOnce(() -> m_robotDrive.getVisionDataProvider().setUseFiltering(true))
                            ));
+
+    // Initialize some PID-tuning preferences
+    Preferences.initDouble(PreferenceKeys.kAutomaticTurningP, frc.robot.Constants.PIDConstants.kDefaultAutomaticTurningP);
+    Preferences.initDouble(PreferenceKeys.kAutomaticTurningI, frc.robot.Constants.PIDConstants.kDefaultAutomaticTurningI);
+    Preferences.initDouble(PreferenceKeys.kAutomaticTurningD, frc.robot.Constants.PIDConstants.kDefaultAutomaticTurningD);
+    
     configureBindings();
   }
 
   private void configureBindings() {
-    new JoystickButton(m_driverController.getHID(), ControllerConstants.setXValue)
-        .whileTrue(new RunCommand(
-            () -> m_robotDrive.setX(),
-            m_robotDrive));
+    new JoystickButton(m_driverController.getHID(), ControllerConstants.kVisionTurnButton)
+        .whileTrue(new TurnToSpeakerAndDriveWithControllerCommand(m_robotDrive, m_driverController.getHID()));
 
     //shoulder
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderHomeButton).whileTrue(

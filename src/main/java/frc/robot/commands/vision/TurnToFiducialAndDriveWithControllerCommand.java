@@ -9,10 +9,12 @@ import org.photonvision.PhotonUtils;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.PIDConstants;
+import frc.robot.Constants.PreferenceKeys;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class TurnToFiducialAndDriveWithControllerCommand extends Command {
@@ -20,9 +22,7 @@ public class TurnToFiducialAndDriveWithControllerCommand extends Command {
   private final DriveSubsystem m_drivetrain;
 
   private final XboxController m_manualController;
-  private final PIDController m_turnController = new PIDController(PIDConstants.kAutomaticTurningP,
-                                                                   PIDConstants.kAutomaticTurningI,
-                                                                   PIDConstants.kAutomaticTurningD);
+  private final PIDController m_turnController;
 
   protected int m_fiducialId;
 
@@ -33,6 +33,10 @@ public class TurnToFiducialAndDriveWithControllerCommand extends Command {
     m_drivetrain = drivetrain;
     m_manualController = controller;
     m_fiducialId = fiducialId;
+
+    m_turnController = new PIDController(Preferences.getDouble(PreferenceKeys.kAutomaticTurningP, PIDConstants.kDefaultAutomaticTurningP),
+                                         Preferences.getDouble(PreferenceKeys.kAutomaticTurningI, PIDConstants.kDefaultAutomaticTurningI),
+                                         Preferences.getDouble(PreferenceKeys.kAutomaticTurningD, PIDConstants.kDefaultAutomaticTurningD));
   }
 
   // Called when the command is initially scheduled.
