@@ -23,7 +23,7 @@ public final class Constants {
     public static final double kDriveDeadband = 0.075;
 
     //driver controls
-    public static final int setXValue = 4; //Y
+    public static final int kVisionTurnButton = 4; //Y
     public static final int intakeSeqAxis = 3; //right trig
     public static final int spinupButton = 6; //right bump
     public static final int shootButton = 5; //left bump
@@ -73,9 +73,9 @@ public final class Constants {
     public static double flipoutkI = 0;
     public static double flipoutkD = 0.05;
 
-    public static final double kAutomaticTurningP = 0.01;
-    public static final double kAutomaticTurningI = 0;
-    public static final double kAutomaticTurningD = 0;
+    public static final double kDefaultAutomaticTurningP = 0.01;
+    public static final double kDefaultAutomaticTurningI = 0;
+    public static final double kDefaultAutomaticTurningD = 0;
   }
 
   public static class MotorIDConstants {
@@ -281,6 +281,12 @@ public final class Constants {
 
     public static final double kPoseAmbiguityThreshold = 0.4;
     public static final double kPoseDistanceThresholdMeters = 1.0;
+  }
+
+  public static final class PreferenceKeys {
+    public static final String kAutomaticTurningP = "VisionTurningP";
+    public static final String kAutomaticTurningI = "VisionTurningI";
+    public static final String kAutomaticTurningD = "VisionTurningD";
   }
 
 }
