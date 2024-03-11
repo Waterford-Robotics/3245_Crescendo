@@ -9,13 +9,13 @@ import frc.robot.commands.AutoInShooterCommand;
 import frc.robot.commands.InShooterCommand;
 import frc.robot.commands.IndexToShootCommand;
 import frc.robot.commands.IntakeIndexUntilTrippedCommand;
-import frc.robot.commands.LEDSCommand;
 import frc.robot.commands.RumbleForSecsCommand;
 import frc.robot.commands.SetShoulderCommand;
 import frc.robot.commands.SpinUpAutoCommand;
 import frc.robot.commands.SpinUpShootCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.IntakeFlipoutSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSSubsystem;
 import frc.robot.subsystems.ShootSubsystem;
@@ -44,6 +44,8 @@ public class RobotContainer {
   private final IndexerSubsystem m_indexerSubsystem = new IndexerSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShoulderSubsystem m_shoulderSubsystem = new ShoulderSubsystem();
+  private final LEDSSubsystem m_ledsSubsystem = new LEDSSubsystem();
+  private final IntakeFlipoutSubsystem m_flipoutSubsystem = new IntakeFlipoutSubsystem();
   SendableChooser<Command> autoChooser;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   
@@ -80,6 +82,7 @@ public class RobotContainer {
                 true, true),
             m_robotDrive));
     m_shootSubsystem.setDefaultCommand(new RunCommand(() -> m_shootSubsystem.manual(m_driverController), m_shootSubsystem));
+    m_flipoutSubsystem.setDefaultCommand(new RunCommand(() -> m_flipoutSubsystem.manual(m_operatorController), m_flipoutSubsystem));
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("AutoMode", m_chooser);
@@ -153,4 +156,3 @@ public class RobotContainer {
     } 
 
   }
-

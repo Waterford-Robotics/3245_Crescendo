@@ -4,10 +4,16 @@
 
 package frc.robot.subsystems;
 
+import javax.print.CancelablePrintJob;
+
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.WPI_CANCoder;
+import com.ctre.phoenix6.hardware.CANcoder;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,6 +33,7 @@ public class ShoulderSubsystem extends SubsystemBase {
       TalonFX shoulderFalcon3;
       TalonFX shoulderFalcon4;
       TalonFXSensorCollection shoulderFalconEnc;
+      CANCoder canCoder; 
       public double desAngle = 0;
       public boolean spinUpAfter = false;
       DigitalInput hallEffect;
@@ -41,6 +48,9 @@ public class ShoulderSubsystem extends SubsystemBase {
       shoulderFalcon4 = new TalonFX(MotorIDConstants.shoulder4MotorID);
 
       shoulderFalconEnc = new TalonFXSensorCollection(shoulderFalcon1);
+      canCoder = new CANCoder(50);
+      shoulderFalcon1.configSelectedFeedbackSensor(TalonFXFeedbackDevice.RemoteSensor0, 0, 15);
+      shoulderFalcon1.configRemoteFeedbackFilter(canCoder, 0);
 
       shoulderFalcon1.config_kF(0, 0);
       shoulderFalcon1.config_kP(0, PIDConstants.shoulderkP);
@@ -67,7 +77,8 @@ public class ShoulderSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shoulder Encoder Value:", shoulderFalconEnc.getIntegratedSensorPosition());
     SmartDashboard.putBoolean("hall effect tripped", !hallEffect.get());
     if(!hallEffect.get()){
-      shoulderFalconEnc.setIntegratedSensorPosition(0.0, 15);
+      //shoulderFalconEnc.setIntegratedSensorPosition(0.0, 15);
+      shoulderFalcon1.setSelectedSensorPosition(0, 0, 15);
     }
   }
 

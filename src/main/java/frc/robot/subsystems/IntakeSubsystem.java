@@ -4,21 +4,11 @@
 
 package frc.robot.subsystems;
 
-import java.util.concurrent.CancellationException;
-
-import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ColorMatch;
-import com.revrobotics.ColorMatchResult;
-import com.revrobotics.ColorSensorV3;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.ColorSensorV3.RawColor;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ControllerConstants;

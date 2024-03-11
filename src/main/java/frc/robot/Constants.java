@@ -35,6 +35,8 @@ public final class Constants {
     public static final int intakeOutButton = 5; //left bump
     public static final int intakeTopAxis = 3;
     public static final int intakeBottomAxis = 2;
+    
+    public static final int flipOutManualAxis = 1; //left joy
 
     public static final int indexerButton = 5;
 
@@ -61,12 +63,19 @@ public final class Constants {
     public static double shoulderkP = 0.17;
     public static double shoulderkI = 0;
     public static double shoulderkD = 0.05;
+
+    public static double flipoutkF = 0;
+    public static double flipoutkP = 0.15;
+    public static double flipoutkI = 0;
+    public static double flipoutkD = 0;
   }
 
   public static class MotorIDConstants {
     public static final int intakeBottomMotorID = 31;
     public static final int intakeTop1MotorID = 32;
     public static final int intakeTop2MotorID = 33;
+    public static final int intakeFlipoutMotorID = 34;
+
     public static final int shoulder1MotorID = 13;
     public static final int shoulder2MotorID = 12;
     public static final int shoulder3MotorID = 11;
@@ -93,6 +102,10 @@ public final class Constants {
     public static final double intakeFalconSpeed = 0.4;
     public static final double intakeNeoFeedSpeed = 0.2;
     public static final double intakeFalconFeedSpeed = 0.2;
+
+    public static final double flipOutClosedMaxSpeed = 0.4;
+    public static final double flipoutOpenMaxSpeed = 0.4;
+    public static final double flipOutRamp = 0.6;
 
     public static final double shoulderOpenMaxSpeed = 0.2;
     public static final double shoulderClosedMaxSpeed = 0.4;
@@ -225,6 +238,9 @@ public final class Constants {
     public static final double shoulderHomePos = 0;
     public static final double shoulderAmpShotPos = 25000;
     public static final double shoulderProtShotPos = 9000;
+
+    public static final double flipoutOutPos = 0;
+    public static final double flipoutInPos = 0;
   }
   
   public static class TeleopTimeConstants {
