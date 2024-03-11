@@ -4,16 +4,12 @@
 
 package frc.robot.subsystems;
 
-import javax.print.CancelablePrintJob;
-
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.sensors.WPI_CANCoder;
-import com.ctre.phoenix6.hardware.CANcoder;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -48,7 +44,7 @@ public class ShoulderSubsystem extends SubsystemBase {
       shoulderFalcon4 = new TalonFX(MotorIDConstants.shoulder4MotorID);
 
       shoulderFalconEnc = new TalonFXSensorCollection(shoulderFalcon1);
-      canCoder = new CANCoder(50);
+      canCoder = new CANCoder(MotorIDConstants.shoulderCANCoderID);
       shoulderFalcon1.configSelectedFeedbackSensor(TalonFXFeedbackDevice.RemoteSensor0, 0, 15);
       shoulderFalcon1.configRemoteFeedbackFilter(canCoder, 0);
 

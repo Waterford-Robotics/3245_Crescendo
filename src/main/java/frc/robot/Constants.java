@@ -87,6 +87,8 @@ public final class Constants {
     public static final int climbMotorID = 50;
 
     public static final int blinkinPort = 9;
+
+    public static final int shoulderCANCoderID = 15;
   }
 
   public static class SensorConstants {
