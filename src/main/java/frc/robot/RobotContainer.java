@@ -10,6 +10,7 @@ import frc.robot.commands.InShooterCommand;
 import frc.robot.commands.IndexToShootCommand;
 import frc.robot.commands.IntakeIndexUntilTrippedCommand;
 import frc.robot.commands.RumbleForSecsCommand;
+import frc.robot.commands.SetFlipoutCommand;
 import frc.robot.commands.SetShoulderCommand;
 import frc.robot.commands.SpinUpAutoCommand;
 import frc.robot.commands.SpinUpShootCommand;
@@ -55,12 +56,12 @@ public class RobotContainer {
 
   // commands
   SequentialCommandGroup handoffCommand = new SequentialCommandGroup(
-    new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem),
+    new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem, m_flipoutSubsystem),
     new RumbleForSecsCommand(1, m_driverController).alongWith(
     new InShooterCommand(m_intakeSubsystem, m_indexerSubsystem))
   );
   SequentialCommandGroup autoHandoffCommand = new SequentialCommandGroup(
-    new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem),
+    new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem, m_flipoutSubsystem),
     new AutoInShooterCommand(m_intakeSubsystem, m_indexerSubsystem)
   );
 
@@ -135,19 +136,23 @@ public class RobotContainer {
 
 
     //handoff
-    new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeAxis, 0.5)).whileTrue(
-      handoffCommand
-    );
+    new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeAxis, 0.5))
+      .whileTrue(handoffCommand);
 
-    new JoystickButton(m_driverController.getHID(), ControllerConstants.shootButton).whileTrue(
-      new InstantCommand(() -> m_indexerSubsystem.runFast(), m_indexerSubsystem).alongWith(
-        new InstantCommand(() -> m_intakeSubsystem.intake(), m_intakeSubsystem)
-      )
-    ).whileFalse(
-      new InstantCommand(() -> m_indexerSubsystem.stop(), m_indexerSubsystem).alongWith(
-        new InstantCommand(() -> m_intakeSubsystem.stop(), m_intakeSubsystem)
-      )
-    );
+    new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeFlipoutAxis, 0.5))
+      .onTrue(new SetFlipoutCommand(m_flipoutSubsystem, "out"))
+      .onFalse(new SetFlipoutCommand(m_flipoutSubsystem, "in"));
+
+    new JoystickButton(m_driverController.getHID(), ControllerConstants.shootButton)
+      .whileTrue(
+        new InstantCommand(() -> m_indexerSubsystem.runFast(), m_indexerSubsystem)
+        .alongWith(
+          new InstantCommand(() -> m_intakeSubsystem.intake(), m_intakeSubsystem)))
+      .whileFalse(
+        new InstantCommand(() -> m_indexerSubsystem.stop(), m_indexerSubsystem)
+        .alongWith(
+          new InstantCommand(() -> m_intakeSubsystem.stop(), m_intakeSubsystem)
+      ));
 
   }
 

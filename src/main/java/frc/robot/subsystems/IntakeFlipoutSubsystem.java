@@ -5,6 +5,10 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants.PIDConstants;
+
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -22,6 +26,7 @@ import frc.robot.Constants.PositionValueConstants;
 public class IntakeFlipoutSubsystem extends SubsystemBase {
     //init stuff
     CANSparkFlex flipOut;
+    TalonFX flipOutRun;
     RelativeEncoder flipOutEncoder;
     SparkPIDController flipoutPID;
     
@@ -29,6 +34,7 @@ public class IntakeFlipoutSubsystem extends SubsystemBase {
     //now falcons
     //motors/encoders
     flipOut = new CANSparkFlex(MotorIDConstants.intakeFlipoutMotorID, MotorType.kBrushless);
+    flipOutRun = new TalonFX(MotorIDConstants.intakeRunExtended);
     flipOutEncoder = flipOut.getEncoder();
     flipoutPID = flipOut.getPIDController();
     flipoutPID.setFeedbackDevice(flipOutEncoder);
@@ -42,6 +48,8 @@ public class IntakeFlipoutSubsystem extends SubsystemBase {
     
     flipOut.setClosedLoopRampRate(MotorSpeedsConstants.flipOutRamp);
     flipOut.setOpenLoopRampRate(MotorSpeedsConstants.flipOutRamp);
+
+    flipOut.setInverted(true);
   }
 
   @Override
@@ -49,11 +57,6 @@ public class IntakeFlipoutSubsystem extends SubsystemBase {
     //smartdashboard shenanigans
     SmartDashboard.putNumber("flipout encoder value:", flipOutEncoder.getPosition());
   }
-
-  public void stop(){
-    flipOut.set(0);
-  }
-
 
   public void setOut(){
     flipoutPID.setReference(PositionValueConstants.flipoutOutPos, ControlType.kPosition);
@@ -65,6 +68,20 @@ public class IntakeFlipoutSubsystem extends SubsystemBase {
 
   public void manual(CommandXboxController controller){
     flipOut.set(MotorSpeedsConstants.flipoutOpenMaxSpeed * controller.getRawAxis(ControllerConstants.flipOutManualAxis));
+    if(controller.getHID().getRawButton(ControllerConstants.flipOutRunButton)){
+      run();
+    }
+    else{
+      stop();
+    }
+  }
+
+  public void run(){
+    flipOutRun.set(TalonFXControlMode.PercentOutput, MotorSpeedsConstants.flipOutRunSpeed);
+  }
+
+  public void stop(){
+    flipOutRun.set(TalonFXControlMode.PercentOutput, 0);
   }
 
 }

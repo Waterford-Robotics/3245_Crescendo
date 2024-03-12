@@ -25,10 +25,10 @@ public final class Constants {
     public static final int spinupButton = 6; //right bump
     public static final int shootButton = 5; //left bump
 
-    //operator controls
     public static final int indexShootButton = 6; //Double check, we want right bumper
     public static final int indexShootStopButton = 5; // double check, we want left bumper
-    public static final int intakeAxis = 3;
+    public static final int intakeAxis = 3; //right trigger
+    public static final int intakeFlipoutAxis = 2; //left trigger
 
     //manual controls for testing, operator
     public static final int intakeInButton = 6; //right bump
@@ -37,6 +37,7 @@ public final class Constants {
     public static final int intakeBottomAxis = 2;
     
     public static final int flipOutManualAxis = 1; //left joy
+    public static final int flipOutRunButton = 1; //A
 
     public static final int indexerButton = 5;
 
@@ -75,6 +76,7 @@ public final class Constants {
     public static final int intakeTop1MotorID = 32;
     public static final int intakeTop2MotorID = 33;
     public static final int intakeFlipoutMotorID = 34;
+    public static final int intakeRunExtended = 35;
 
     public static final int shoulder1MotorID = 13;
     public static final int shoulder2MotorID = 12;
@@ -108,6 +110,7 @@ public final class Constants {
     public static final double flipOutClosedMaxSpeed = 0.4;
     public static final double flipoutOpenMaxSpeed = 0.4;
     public static final double flipOutRamp = 0.6;
+    public static final double flipOutRunSpeed = -0.9;
 
     public static final double shoulderOpenMaxSpeed = 0.2;
     public static final double shoulderClosedMaxSpeed = 0.4;
