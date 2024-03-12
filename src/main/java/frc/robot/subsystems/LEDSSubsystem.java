@@ -26,7 +26,7 @@ public class LEDSSubsystem extends SubsystemBase {
         setHotPink();
     }
     else{
-      setTeamColor();
+      setTeamColorTwinkles();
     }
     /*if(DriverStation.isDisabled()){
       turnOff();
@@ -77,6 +77,14 @@ public class LEDSSubsystem extends SubsystemBase {
     blinkin.set(0);
   }
 
+  public void setTwinklesLavaParty(){
+    blinkin.set(-0.49);
+  }
+
+  public void setTwinklesOceanParty(){
+    blinkin.set(-0.51);
+  }
+
   public void setTeamColor(){
     var alliance = DriverStation.getAlliance();
     if(alliance.isPresent()){
@@ -85,6 +93,18 @@ public class LEDSSubsystem extends SubsystemBase {
         }
       else if(alliance.get() == DriverStation.Alliance.Blue){
           setBlue();
+        }
+    }
+  }
+
+   public void setTeamColorTwinkles(){
+    var alliance = DriverStation.getAlliance();
+    if(alliance.isPresent()){
+      if(alliance.get() == DriverStation.Alliance.Red) {
+          setTwinklesLavaParty();
+        }
+      else if(alliance.get() == DriverStation.Alliance.Blue){
+          setTwinklesOceanParty();
         }
     }
   }
