@@ -241,8 +241,8 @@ public final class Constants {
 
   public static class PositionValueConstants {
     public static final double shoulderHomePos = 0;
-    public static final double shoulderAmpShotPos = 0.65;
-    public static final double shoulderProtShotPos = 0.22;
+    public static final double shoulderAmpShotPos = 0.65; //perfect DO NOT CHANGE
+    public static final double shoulderProtShotPos = 0.2;
 
     public static final double flipoutOutPos = 15.5;
     public static final double flipoutInPos = 2;
