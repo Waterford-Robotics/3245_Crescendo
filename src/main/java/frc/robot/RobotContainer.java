@@ -30,6 +30,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -56,19 +57,21 @@ public class RobotContainer {
 
   // commands
   SequentialCommandGroup handoffCommand = new SequentialCommandGroup(
-    new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem, m_flipoutSubsystem),
+    new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem),
     new RumbleForSecsCommand(1, m_driverController).alongWith(
     new InShooterCommand(m_intakeSubsystem, m_indexerSubsystem))
   );
   SequentialCommandGroup autoHandoffCommand = new SequentialCommandGroup(
-    new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem, m_flipoutSubsystem),
+    new IntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem, m_shootSubsystem),
     new AutoInShooterCommand(m_intakeSubsystem, m_indexerSubsystem)
   );
 
 
   public RobotContainer() {
     m_robotDrive.calibrateGyro();
+    m_shoulderSubsystem.resetEncoder();
     // named commands configuration
+    NamedCommands.registerCommand("Flipout", new SetFlipoutCommand(m_flipoutSubsystem, "out"));
     NamedCommands.registerCommand("Run Intake", autoHandoffCommand);
     NamedCommands.registerCommand("Spin Up Shoot", new SpinUpShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
     NamedCommands.registerCommand("Spin Up", new SpinUpAutoCommand(m_shootSubsystem));
@@ -83,7 +86,7 @@ public class RobotContainer {
                 true, true),
             m_robotDrive));
     m_shootSubsystem.setDefaultCommand(new RunCommand(() -> m_shootSubsystem.manual(m_driverController), m_shootSubsystem));
-    m_flipoutSubsystem.setDefaultCommand(new RunCommand(() -> m_flipoutSubsystem.manual(m_operatorController), m_flipoutSubsystem));
+    //m_flipoutSubsystem.setDefaultCommand(new RunCommand(() -> m_flipoutSubsystem.manual(m_operatorController), m_flipoutSubsystem));
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("AutoMode", m_chooser);
@@ -107,6 +110,8 @@ public class RobotContainer {
         m_robotDrive.getAuto("Score 4 Center Start Middle Note"));
     m_chooser.addOption("score 4 center start middle note (middle, source, amp)", 
         m_robotDrive.getAuto("Score 4 Center Start Middle Note Inverted"));
+    m_chooser.addOption("score 4 center (amp, middle, source) flipout", m_robotDrive.getAuto("Score 4 Center Flipout"));
+
 
     m_chooser.addOption("score 4 wall side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Wall Side"));
     m_chooser.addOption("score 4 field side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Field Side"));
@@ -139,9 +144,14 @@ public class RobotContainer {
     new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeAxis, 0.5))
       .whileTrue(handoffCommand);
 
+    //flipout
+    /*new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeFlipoutAxis, 0.5))
+      .toggleOnTrue(new SetFlipoutCommand(m_flipoutSubsystem, "out"))
+      .toggleOnFalse(new SetFlipoutCommand(m_flipoutSubsystem, "in"));
+*/
     new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeFlipoutAxis, 0.5))
-      .onTrue(new SetFlipoutCommand(m_flipoutSubsystem, "out"))
-      .onFalse(new SetFlipoutCommand(m_flipoutSubsystem, "in"));
+      .toggleOnTrue(Commands.startEnd(m_flipoutSubsystem::setOut, m_flipoutSubsystem::setIn,
+         m_flipoutSubsystem));
 
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shootButton)
       .whileTrue(

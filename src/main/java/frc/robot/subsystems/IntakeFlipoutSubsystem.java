@@ -26,7 +26,7 @@ import frc.robot.Constants.PositionValueConstants;
 public class IntakeFlipoutSubsystem extends SubsystemBase {
     //init stuff
     CANSparkFlex flipOut;
-    TalonFX flipOutRun;
+    //TalonFX flipOutRun;
     RelativeEncoder flipOutEncoder;
     SparkPIDController flipoutPID;
     
@@ -34,7 +34,7 @@ public class IntakeFlipoutSubsystem extends SubsystemBase {
     //now falcons
     //motors/encoders
     flipOut = new CANSparkFlex(MotorIDConstants.intakeFlipoutMotorID, MotorType.kBrushless);
-    flipOutRun = new TalonFX(MotorIDConstants.intakeRunExtended);
+    //flipOutRun = new TalonFX(MotorIDConstants.intakeRunExtended);
     flipOutEncoder = flipOut.getEncoder();
     flipoutPID = flipOut.getPIDController();
     flipoutPID.setFeedbackDevice(flipOutEncoder);
@@ -77,11 +77,11 @@ public class IntakeFlipoutSubsystem extends SubsystemBase {
   }
 
   public void run(){
-    flipOutRun.set(TalonFXControlMode.PercentOutput, MotorSpeedsConstants.flipOutRunSpeed);
+    //flipOutRun.set(TalonFXControlMode.PercentOutput, MotorSpeedsConstants.flipOutRunSpeed);
   }
 
   public void stop(){
-    flipOutRun.set(TalonFXControlMode.PercentOutput, 0);
+    //flipOutRun.set(TalonFXControlMode.PercentOutput, 0);
   }
 
 }

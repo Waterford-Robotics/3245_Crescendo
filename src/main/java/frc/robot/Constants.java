@@ -61,14 +61,14 @@ public final class Constants {
 
   public static class PIDConstants {
     public static double shoulderkF = 0;
-    public static double shoulderkP = 0.17;
+    public static double shoulderkP = 0.95;
     public static double shoulderkI = 0;
-    public static double shoulderkD = 0.05;
+    public static double shoulderkD = 0.0;
 
     public static double flipoutkF = 0;
-    public static double flipoutkP = 0.15;
+    public static double flipoutkP = 0.1;
     public static double flipoutkI = 0;
-    public static double flipoutkD = 0;
+    public static double flipoutkD = 0.05;
   }
 
   public static class MotorIDConstants {
@@ -107,9 +107,9 @@ public final class Constants {
     public static final double intakeNeoFeedSpeed = 0.2;
     public static final double intakeFalconFeedSpeed = 0.2;
 
-    public static final double flipOutClosedMaxSpeed = 0.4;
+    public static final double flipOutClosedMaxSpeed = 0.95;
     public static final double flipoutOpenMaxSpeed = 0.4;
-    public static final double flipOutRamp = 0.6;
+    public static final double flipOutRamp = 0.15;
     public static final double flipOutRunSpeed = -0.9;
 
     public static final double shoulderOpenMaxSpeed = 0.2;
@@ -241,11 +241,11 @@ public final class Constants {
 
   public static class PositionValueConstants {
     public static final double shoulderHomePos = 0;
-    public static final double shoulderAmpShotPos = 25000;
-    public static final double shoulderProtShotPos = 9000;
+    public static final double shoulderAmpShotPos = 0.65;
+    public static final double shoulderProtShotPos = 0.22;
 
-    public static final double flipoutOutPos = 0;
-    public static final double flipoutInPos = 0;
+    public static final double flipoutOutPos = 15.5;
+    public static final double flipoutInPos = 2;
   }
   
   public static class TeleopTimeConstants {

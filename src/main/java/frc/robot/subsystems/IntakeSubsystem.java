@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -22,6 +24,7 @@ public class IntakeSubsystem extends SubsystemBase {
       CANSparkMax intakeTop1Motor;
       CANSparkMax intakeTop2Motor;
       DigitalInput beamBreak;
+      TalonFX flipoutRun;
     
   public IntakeSubsystem() {
     //now falcons
@@ -29,6 +32,7 @@ public class IntakeSubsystem extends SubsystemBase {
       intakeBottomMotor = new CANSparkMax(MotorIDConstants.intakeBottomMotorID, MotorType.kBrushless);
       intakeTop1Motor = new CANSparkMax(MotorIDConstants.intakeTop1MotorID, MotorType.kBrushless);
       intakeTop2Motor = new CANSparkMax(MotorIDConstants.intakeTop2MotorID, MotorType.kBrushless);
+      flipoutRun = new TalonFX(MotorIDConstants.intakeRunExtended);
       beamBreak = new DigitalInput(SensorConstants.intakeBeamBreakDIOPort);
 
       intakeTop2Motor.follow(intakeTop1Motor, true);    
@@ -48,11 +52,13 @@ public class IntakeSubsystem extends SubsystemBase {
   public void stop(){
     intakeBottomMotor.set(0);
     intakeTop1Motor.set(0);
+    flipoutRun.set(TalonFXControlMode.PercentOutput, 0);
   }
 
   public void intake(){
     intakeBottomMotor.set(-MotorSpeedsConstants.intakeNeoSpeed);
     intakeTop1Motor.set(MotorSpeedsConstants.intakeNeoSpeed);
+    flipoutRun.set(TalonFXControlMode.PercentOutput, MotorSpeedsConstants.flipOutRunSpeed);
   }
 
   public void feed(){

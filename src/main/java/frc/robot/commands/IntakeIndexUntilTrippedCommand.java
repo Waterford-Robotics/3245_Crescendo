@@ -11,18 +11,15 @@ public class IntakeIndexUntilTrippedCommand extends Command{
     IntakeSubsystem m_intakeSubsystem;
     IndexerSubsystem m_indexerSubsystem;
     ShootSubsystem m_shootSubsystem;
-    IntakeFlipoutSubsystem m_flipoutSubsystem;
     public IntakeIndexUntilTrippedCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, 
-            ShootSubsystem shootSubsystem, IntakeFlipoutSubsystem flipoutSubsystem){
+            ShootSubsystem shootSubsystem){
         //definitions and setting parameters equal to members
         m_intakeSubsystem = intakeSubsystem;
         m_indexerSubsystem = indexerSubsystem;
         m_shootSubsystem = shootSubsystem;
-        m_flipoutSubsystem = flipoutSubsystem;
         addRequirements(m_intakeSubsystem);
         addRequirements(m_indexerSubsystem);
         addRequirements(m_shootSubsystem);
-        addRequirements(m_flipoutSubsystem);
     }
 
     @Override
@@ -35,14 +32,12 @@ public class IntakeIndexUntilTrippedCommand extends Command{
         m_intakeSubsystem.intake();
         m_indexerSubsystem.runFast();
         m_shootSubsystem.driveBackward();
-        m_flipoutSubsystem.run();
     }
 
     @Override
     public void end(boolean interrupted){
         m_intakeSubsystem.stop();
         m_indexerSubsystem.stop();
-        m_flipoutSubsystem.stop();
     }
 
     @Override

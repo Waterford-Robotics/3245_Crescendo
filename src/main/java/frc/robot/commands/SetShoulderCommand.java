@@ -19,7 +19,8 @@ public class SetShoulderCommand extends Command{
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() {
+    }
         
     @Override
     public void execute() {
