@@ -1,8 +1,8 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubsystem;
-import frc.robot.subsystems.IntakeFlipoutSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShootSubsystem;
 
@@ -29,7 +29,10 @@ public class IntakeIndexUntilTrippedCommand extends Command{
         
     @Override
     public void execute() {
-        m_intakeSubsystem.intake();
+        if(SmartDashboard.getBoolean("retracted", false)){
+            m_intakeSubsystem.stopFlipoutRun();
+        }
+        else{m_intakeSubsystem.intake();}
         m_indexerSubsystem.runFast();
         m_shootSubsystem.driveBackward();
     }

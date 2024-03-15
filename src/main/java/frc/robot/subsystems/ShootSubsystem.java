@@ -28,10 +28,7 @@ public class ShootSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    //smartdashboard shenanigans
-    
-  }
+  public void periodic() {}
 
   public void spinUp(){
     shootMotor1.set(-MotorSpeedsConstants.shoot1MaxVal);

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7146277524405176,
-        "y": 6.757769768466938
+        "x": 0.6924444618120005,
+        "y": 6.689056341075646
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.381194555654673,
-        "y": 6.886405467338833
+        "x": 1.3590112650261559,
+        "y": 6.817692039947541
       },
       "isLocked": false,
       "linkedName": "At Wall Side Speaker"
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 6.0,
-    "maxAcceleration": 3.3,
+    "maxVelocity": 5.7,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

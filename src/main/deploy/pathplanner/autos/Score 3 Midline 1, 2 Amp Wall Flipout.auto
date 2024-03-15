@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3010060680542916,
-      "y": 5.55472336015897
+      "x": 0.6924444618120005,
+      "y": 6.689056341075646
     },
-    "rotation": 180.0
+    "rotation": -120.65396541784679
   },
   "command": {
     "type": "sequential",
@@ -30,7 +30,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center to Ring 1"
+                  "pathName": "Wall Side to Ring 1"
                 }
               },
               {
@@ -49,7 +49,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Ring 1 to Speaker 2"
+                  "pathName": "Ring 1 to Wall Side"
                 }
               },
               {
@@ -74,7 +74,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Speaker to Ring 2"
+                  "pathName": "Amp Side to Midline 1"
                 }
               },
               {
@@ -93,7 +93,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Ring 2 to Speaker"
+                  "pathName": "Midline 1 to Amp Side"
                 }
               },
               {
@@ -118,7 +118,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center to Ring 3"
+                  "pathName": "Amp Side to Midline 2"
                 }
               },
               {
@@ -137,7 +137,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Ring 3 to Speaker"
+                  "pathName": "Midline 2 to Amp Side"
                 }
               },
               {

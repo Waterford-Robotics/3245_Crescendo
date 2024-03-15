@@ -73,7 +73,7 @@ public class DriveSubsystem extends SubsystemBase {
   private double m_prevTime = WPIUtilJNI.now() * 1e-6;
 
   private Rotation2d rawGyroRotation = new Rotation2d();
-  public static final PIDConstants translationalPID = new PIDConstants(0.23, 0, 0);
+  public static final PIDConstants translationalPID = new PIDConstants(0.824, 0.95, 0.15);
   public static final PIDConstants rotationalPID = new PIDConstants(0.23, 0, 0);
 
   public static final HolonomicPathFollowerConfig config = new HolonomicPathFollowerConfig(translationalPID, rotationalPID,

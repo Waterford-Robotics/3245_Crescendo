@@ -47,6 +47,11 @@ public class IntakeSubsystem extends SubsystemBase {
   public void periodic() {
     //smartdashboard shenanigans
     SmartDashboard.putBoolean("beam break tripped", !beamBreak.get());
+
+    //when flipout intake retracted, intake wheels on flipout will not run
+    if(SmartDashboard.getBoolean("retracted", false)){
+      stopFlipoutRun();
+    }
   }
 
   public void stop(){
@@ -82,6 +87,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public boolean getBBTripped(){
     return !beamBreak.get();
+  }
+
+  public void stopFlipoutRun(){
+    flipoutRun.set(TalonFXControlMode.PercentOutput, 0);
   }
 
 }
