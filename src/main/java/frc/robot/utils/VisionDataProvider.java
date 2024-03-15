@@ -132,6 +132,8 @@ public class VisionDataProvider {
    */
   public Optional<LimelightHelpers.PoseEstimate> getEstimatedGlobalPose(Pose2d previousEstimatedRobotPose) {
     LimelightHelpers.PoseEstimate estimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(m_limelightName);
+    // Limelight's system returns the origin instead of null when it can't find a pose. Fortunately the origin is an
+    // invalid pose.
     if (estimate.pose.getTranslation().getDistance(new Translation2d()) < 0.01
         || m_usingFiltering && (
             estimate.avgTagArea < m_averageTagAreaThreshold
@@ -152,6 +154,8 @@ public class VisionDataProvider {
    */
   public Optional<LimelightHelpers.PoseEstimate> getEstimatedGlobalPoseWithoutFiltering(Pose2d previousEstimatedRobotPose) {
     LimelightHelpers.PoseEstimate estimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(m_limelightName);
+    // Limelight's system returns the origin instead of null when it can't find a pose. Fortunately the origin is an
+    // invalid pose.
     if (estimate.pose.getTranslation().getDistance(new Translation2d()) < 0.01) {
       return Optional.empty();
     } else {
