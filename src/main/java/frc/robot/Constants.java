@@ -76,10 +76,6 @@ public final class Constants {
     public static final double kDefaultAutomaticTurningP = 0.02;
     public static final double kDefaultAutomaticTurningI = 0;
     public static final double kDefaultAutomaticTurningD = 0.00145;
-
-    public static final double kDefaultAutomaticTurningP = 0.02;
-    public static final double kDefaultAutomaticTurningI = 0;
-    public static final double kDefaultAutomaticTurningD = 0.00145;
   }
 
   public static class MotorIDConstants {
