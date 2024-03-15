@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.8772255530459545,
-        "y": 8.689934382210685
+        "x": 4.224079103426387,
+        "y": 7.753224395343341
       },
       "isLocked": false,
       "linkedName": "At Wall Side Speaker"
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -117.53647087886083,
+    "rotation": -119.3577535427912,
     "velocity": 0
   },
   "useDefaultConstraints": true

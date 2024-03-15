@@ -29,10 +29,7 @@ public class IntakeIndexUntilTrippedCommand extends Command{
         
     @Override
     public void execute() {
-        if(SmartDashboard.getBoolean("retracted", false)){
-            m_intakeSubsystem.stopFlipoutRun();
-        }
-        else{m_intakeSubsystem.intake();}
+        m_intakeSubsystem.intake();
         m_indexerSubsystem.runFast();
         m_shootSubsystem.driveBackward();
     }
