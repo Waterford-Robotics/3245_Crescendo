@@ -4,64 +4,41 @@
 
 package frc.robot.utils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.photonvision.EstimatedRobotPose;
-import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonPoseEstimator;
-import org.photonvision.PhotonUtils;
-import org.photonvision.PhotonPoseEstimator.PoseStrategy;
-import org.photonvision.targeting.PhotonPipelineResult;
-import org.photonvision.targeting.PhotonTrackedTarget;
-
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
+import frc.robot.utils.LimelightHelpers.LimelightResults;
 
-/** A VisionDataProvider provides vision data from a PhotonVision camera. */
+/** A VisionDataProvider provides vision data from a Limelight camera. */
 public class VisionDataProvider {
 
-  private PhotonCamera m_camera;
-  private PhotonPoseEstimator m_poseEstimator;
+  private final String m_limelightName;
 
-  private double m_poseAmbiguityThreshold = 1;
+  private double m_averageTagAreaThreshold = 0;
+  private double m_averageTagDistanceThresholdMeters = Double.POSITIVE_INFINITY;
   private double m_poseDistanceThresholdMeters = Double.POSITIVE_INFINITY;
   private boolean m_usingFiltering = true;
   
   /**
-   * Creates a new VisionDataProvider. No poses are rejected due to significant ambiguity.
+   * Creates a new VisionDataProvider.
    * 
    * @param cameraName The name of the camera.
    * @param robotToCameraTransform The 3D transform from the robot's center to the camera.
    * @param field The AprilTag field layout.
    */
-  public VisionDataProvider(String cameraName, Transform3d robotToCameraTransform, AprilTagFields field) {
-    m_camera = new PhotonCamera(cameraName);
-    m_poseEstimator = new PhotonPoseEstimator(field.loadAprilTagLayoutField(), PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_camera, robotToCameraTransform);
-    m_poseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
+  public VisionDataProvider(String cameraName) {
+    m_limelightName = cameraName;
   }
 
   /**
-   * Creates a new VisionDataProvider. No poses are rejected due to significant ambiguity.
-   * 
-   * @param cameraName The name of the camera.
-   * @param robotToCameraTransform The 3D transform from the robot's center to the camera.
-   * @param field The AprilTag field layout.
+   * Gets the name of the Limelight providing the vision data.
+   * @return The name of the Limelight.
    */
-  public VisionDataProvider(String cameraName, Transform3d robotToCameraTransform, AprilTagFieldLayout field) {
-    m_camera = new PhotonCamera(cameraName);
-    m_poseEstimator = new PhotonPoseEstimator(field, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_camera, robotToCameraTransform);
-    m_poseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
-  }
-
-  /**
-   * Gets the camera providing the vision data.
-   * @return The camera.
-   */
-  public PhotonCamera getCamera() {
-    return m_camera;
+  public String getCameraName() {
+    return m_limelightName;
   }
 
   /**
@@ -69,56 +46,47 @@ public class VisionDataProvider {
    * update to guarantee the fetched targets are from the same vision snapshot.
    * @return A list of the targets the camera currently sees.
    */
-  public List<PhotonTrackedTarget> getTargets() {
-    PhotonPipelineResult result = m_camera.getLatestResult();
-    if (result.hasTargets()) {
-      return result.getTargets();
-    } else {
-      return List.of();
+  public List<LimelightHelpers.LimelightTarget_Fiducial> getTargets() {
+    LimelightResults result = LimelightHelpers.getLatestResults(m_limelightName);
+    return Arrays.asList(result.targetingResults.targets_Fiducials);
+  }
+
+  /**
+   * Get the minimum average area-of-image-consumed for each of the reference fiducials before the pose is rejected.
+   * @return A value between 0 and 1, which is the area threshold.
+   */
+  public double getFiducialAreaThreshold() {
+    return m_averageTagAreaThreshold;
+  }
+
+  /**
+   * Set the minimum average area-of-image-consumed for each of the reference fiducials before the pose is rejected.
+   * @param fiducialAreaThreshold A value between 0 and 1, which is the area threshold.
+   */
+  public void setFiducialAreaThreshold(double fiducialAreaThreshold) {
+    if (fiducialAreaThreshold < 0 || fiducialAreaThreshold > 1) {
+      throw new IllegalArgumentException("Fiducial area threshold must be between 0 and 1");
     }
+    m_averageTagAreaThreshold = fiducialAreaThreshold;
   }
 
   /**
-   * Gets the transform from the robot's center to the camera.
-   * @return A {@link Transform3d} representing the transform from the robot's center to the camera.
+   * Get the maximum average distance each of the reference fiducials before the pose is rejected.
+   * @return The maximum average distance to each of the reference fiducials in meters.
    */
-  public Transform3d getRobotToCameraTransform() {
-    return m_poseEstimator.getRobotToCameraTransform();
+  public double getFiducialDistanceThreshold() {
+    return m_averageTagDistanceThresholdMeters;
   }
 
   /**
-   * Sets the transform from the robot's center to the camera.
-   * @param robotToCameraTransform The new robot-to-camera transform.
+   * Set the maximum average distance each of the reference fiducials before the pose is rejected.
+   * @param fiducialAreaThreshold The maximum average distance to each of the reference fiducials in meters.
    */
-  public void setRobotToCameraTransform(Transform3d robotToCameraTransform) {
-    m_poseEstimator.setRobotToCameraTransform(robotToCameraTransform);
-  }
-
-  /**
-   * Get the field layout of the AprilTags being used to estimate the robot's pose.
-   * @return An {@link AprilTagFieldLayout} representing the layout of the AprilTags.
-   */
-  public AprilTagFieldLayout getFieldLayout() {
-    return m_poseEstimator.getFieldTags();
-  }
-
-  /**
-   * Get the maximum average pose ambiguity for each of the reference fiducials before the pose is rejected.
-   * @return A value between 0 and 1, which is the ambiguity threshold.
-   */
-  public double getPoseAmbiguityThreshold() {
-    return m_poseAmbiguityThreshold;
-  }
-
-  /**
-   * Set the maximum average pose ambiguity for each of the reference fiducials before the pose is rejected.
-   * @param poseAmbiguityThreshold A value between 0 and 1, which is the ambiguity threshold.
-   */
-  public void setPoseAmbiguityThreshold(double poseAmbiguityThreshold) {
-    if (poseAmbiguityThreshold < 0 || poseAmbiguityThreshold > 1) {
-      throw new IllegalArgumentException("Pose ambiguity threshold must be between 0 and 1");
+  public void setFiducialDistanceThreshold(double fiducialDistanceThreshold) {
+    if (fiducialDistanceThreshold < 0) {
+      throw new IllegalArgumentException("Fiducial distance threshold must be non-negative");
     }
-    m_poseAmbiguityThreshold = poseAmbiguityThreshold;
+    m_averageTagDistanceThresholdMeters = fiducialDistanceThreshold;
   }
 
   /**
@@ -157,55 +125,37 @@ public class VisionDataProvider {
 
   /**
    * Get the estimated global pose of the robot using the vision data, if it exists, using the previous pose to help
-   * refine the estimate. If the vision system can't estimate a robot pose when this is called, the result will be empty.
-   * If the pose has too large of an average ambiguity or too large of a distance away from the previous estimate and
-   * filtering is enabled, the result will also be empty.
+   * refine the estimate. If the vision system can't estimate a robot pose when this is called or filtering is enabled
+   * and the filter conditions are not met, the result will be empty.
    * @param previousEstimatedRobotPose The previously-estimated robot pose.
    * @return The newly estimated robot pose if a good estimate could be made, otherwise Optional.empty().
    */
-  public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d previousEstimatedRobotPose) {
-    m_poseEstimator.setReferencePose(previousEstimatedRobotPose);
-    Optional<EstimatedRobotPose> estimate = m_poseEstimator.update();
-    if (!m_usingFiltering) {
-      return estimate;
-    }
-    if (estimate.isPresent()) {
-      double ambiguity = estimate.get().targetsUsed.stream()
-          .mapToDouble(target -> target.getPoseAmbiguity())
-          .map((amb) -> {
-            // Invalid data values are changed to an ambiguity of 1
-            if (amb < 0) {
-              return 1;
-            } else {
-              return amb;
-            }
-          })
-          .average()
-          .getAsDouble();
-      if (ambiguity <= m_poseAmbiguityThreshold) {
-        if (PhotonUtils.getDistanceToPose(previousEstimatedRobotPose, estimate.get().estimatedPose.toPose2d()) <= m_poseDistanceThresholdMeters) {
-          return estimate;
-        } else {
-          return Optional.empty();
-        }
-      } else {
-        return Optional.empty();
-      }
-    } else {
+  public Optional<LimelightHelpers.PoseEstimate> getEstimatedGlobalPose(Pose2d previousEstimatedRobotPose) {
+    LimelightHelpers.PoseEstimate estimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(m_limelightName);
+    if (estimate.pose.getTranslation().getDistance(new Translation2d()) < 0.01
+        || m_usingFiltering && (
+            estimate.avgTagArea < m_averageTagAreaThreshold
+            || estimate.avgTagDist > m_averageTagDistanceThresholdMeters
+            || estimate.pose.getTranslation().getDistance(
+                previousEstimatedRobotPose.getTranslation()) > m_poseDistanceThresholdMeters)) {
       return Optional.empty();
+    } else {
+      return Optional.of(estimate);
     }
   }
 
   /**
    * Get the estimated global pose of the robot using the vision data, if it exists, using the previous pose to help
    * refine the estimate. If the vision system can't estimate a robot pose when this is called, the result will be empty.
-   * If the pose has too large of an average ambiguity or too large of a distance away from the previous estimate and
-   * filtering is enabled, the result will also be empty.
    * @param previousEstimatedRobotPose The previously-estimated robot pose.
    * @return The newly estimated robot pose if a good estimate could be made, otherwise Optional.empty().
    */
-  public Optional<EstimatedRobotPose> getEstimatedGlobalPoseWithoutFiltering(Pose2d previousEstimatedRobotPose) {
-    m_poseEstimator.setReferencePose(previousEstimatedRobotPose);
-    return m_poseEstimator.update();
+  public Optional<LimelightHelpers.PoseEstimate> getEstimatedGlobalPoseWithoutFiltering(Pose2d previousEstimatedRobotPose) {
+    LimelightHelpers.PoseEstimate estimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(m_limelightName);
+    if (estimate.pose.getTranslation().getDistance(new Translation2d()) < 0.01) {
+      return Optional.empty();
+    } else {
+      return Optional.of(estimate);
+    }
   }
 }

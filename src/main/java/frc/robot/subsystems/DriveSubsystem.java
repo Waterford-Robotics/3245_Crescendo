@@ -6,8 +6,6 @@ package frc.robot.subsystems;
 
 import java.util.Optional;
 
-import org.photonvision.EstimatedRobotPose;
-
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -30,6 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.VisionConstants;
+import frc.robot.utils.LimelightHelpers;
 import frc.robot.utils.SwerveUtils;
 import frc.robot.utils.VisionDataProvider;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -70,7 +69,7 @@ public class DriveSubsystem extends SubsystemBase {
   // The gyro sensor
   private final AHRS m_gyro = new AHRS();
 
-  private final VisionDataProvider m_visionDataProvider = new VisionDataProvider(VisionConstants.kCameraName, VisionConstants.kRobotToCameraTransform, VisionConstants.kAprilTagField);
+  private final VisionDataProvider m_visionDataProvider = new VisionDataProvider(VisionConstants.kCameraName);
 
   // Slew rate filter variables for controlling lateral acceleration
   private double m_currentRotation = 0.0;
@@ -121,7 +120,8 @@ public class DriveSubsystem extends SubsystemBase {
       },
         this);
 
-    m_visionDataProvider.setPoseAmbiguityThreshold(VisionConstants.kPoseAmbiguityThreshold);
+    m_visionDataProvider.setFiducialAreaThreshold(VisionConstants.kFiducialAreaThreshold);
+    m_visionDataProvider.setFiducialDistanceThreshold(VisionConstants.kFiducialDistanceThreshold);
     m_visionDataProvider.setPoseDistanceThreshold(VisionConstants.kPoseDistanceThresholdMeters);
   }
 
@@ -139,15 +139,15 @@ public class DriveSubsystem extends SubsystemBase {
         });
     
     if (m_usingVision) {
-      Optional<EstimatedRobotPose> estimate;
+      Optional<LimelightHelpers.PoseEstimate> estimate;
       if (DriverStation.isDisabled()) {
         estimate = m_visionDataProvider.getEstimatedGlobalPoseWithoutFiltering(getPose());
       } else {
         estimate = m_visionDataProvider.getEstimatedGlobalPose(getPose());
       }
       estimate.ifPresent((e) -> {
-        SmartDashboard.putString("Robot pose (3D)", e.estimatedPose.toString());
-        m_poseEstimator.addVisionMeasurement(e.estimatedPose.toPose2d(), e.timestampSeconds);
+        SmartDashboard.putString("Robot pose (2D)", e.pose.toString());
+        m_poseEstimator.addVisionMeasurement(e.pose, e.timestampSeconds);
       });
     }
     SmartDashboard.putNumber("NavX yaw", -m_gyro.getYaw());
