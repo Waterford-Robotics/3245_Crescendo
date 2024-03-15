@@ -23,7 +23,6 @@ import frc.robot.subsystems.LEDSSubsystem;
 import frc.robot.subsystems.ShootSubsystem;
 import frc.robot.subsystems.ShoulderSubsystem;
 
-import com.fasterxml.jackson.core.sym.Name;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -119,7 +118,7 @@ public class RobotContainer {
         m_chooser.addOption("score 4 field side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Field Side"));
 
         m_chooser.addOption("score 5?? (lmao)", m_robotDrive.getAuto("Score 5 Center"));
-        m_chooser.addOption("score 5?? (lmao) flipout", m_robotDrive.getAuto("Score 5 Center Flipout"));
+        m_chooser.addOption("score 5 flipout", m_robotDrive.getAuto("Score 5 Center Flipout"));
 
         m_chooser.addOption("score 4 (amp, middle, midline 1)", m_robotDrive.getAuto("Score 3 Midline 1 Center Flipout"));
         m_chooser.addOption("score 4 (amp, middle, midline 2)", m_robotDrive.getAuto("Score 3 Midline 2 Center Flipout"));

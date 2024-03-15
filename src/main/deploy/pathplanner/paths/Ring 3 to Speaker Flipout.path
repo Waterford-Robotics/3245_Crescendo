@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3239288017037572,
-        "y": 5.55472336015897
+        "x": 2.4231793192931113,
+        "y": 4.057871591526659
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4104436351549696,
-        "y": 4.776089859098057
+        "x": 2.1732475782118303,
+        "y": 4.682700944229861
       },
       "isLocked": false,
-      "linkedName": "At Speaker"
+      "linkedName": "At Ring 3 Flipout"
     },
     {
       "anchor": {
-        "x": 2.6453682536994707,
-        "y": 4.081259900411539
+        "x": 1.3239288017037572,
+        "y": 5.55472336015897
       },
       "prevControl": {
-        "x": 1.8571219933662004,
-        "y": 4.004357826232684
+        "x": 1.8033891338437944,
+        "y": 5.168816263558454
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "At Ring 3"
+      "linkedName": "At Speaker"
     }
   ],
   "rotationTargets": [],
