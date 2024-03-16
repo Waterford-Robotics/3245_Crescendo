@@ -26,7 +26,7 @@ public class LEDSSubsystem extends SubsystemBase {
         setHotPink();
     }
     else{
-      setTeamColorTwinkles();
+      setTeamColor();
     }
   }
 

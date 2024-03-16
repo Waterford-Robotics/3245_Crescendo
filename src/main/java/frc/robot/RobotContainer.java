@@ -8,8 +8,10 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.PreferenceKeys;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.commands.AutoInShooterCommand;
+import frc.robot.commands.AutoIntakeIndexUntilTrippedCommand;
 import frc.robot.commands.InShooterCommand;
 import frc.robot.commands.IndexToShootCommand;
+import frc.robot.commands.IntakeForSecsCommand;
 import frc.robot.commands.IntakeIndexUntilTrippedCommand;
 import frc.robot.commands.RumbleForSecsCommand;
 import frc.robot.commands.SetFlipoutCommand;
@@ -71,6 +73,11 @@ public class RobotContainer {
     new AutoInShooterCommand(m_intakeSubsystem, m_indexerSubsystem)
   );
 
+  SequentialCommandGroup autoHandoffCommand2 = new SequentialCommandGroup(
+    new AutoIntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem),
+    new AutoInShooterCommand(m_intakeSubsystem, m_indexerSubsystem)
+  );
+
 
   public RobotContainer() {
     m_robotDrive.calibrateGyro();
@@ -78,6 +85,8 @@ public class RobotContainer {
     // named commands configuration
     NamedCommands.registerCommand("Flipout", new SetFlipoutCommand(m_flipoutSubsystem, "out"));
     NamedCommands.registerCommand("Run Intake", autoHandoffCommand);
+    //NamedCommands.registerCommand("Intake 0.5", new IntakeForSecsCommand(m_intakeSubsystem, 0.9));
+    NamedCommands.registerCommand("Intake 0.5", autoHandoffCommand2);
     NamedCommands.registerCommand("Spin Up Shoot", new SpinUpShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
     NamedCommands.registerCommand("Spin Up", new SpinUpAutoCommand(m_shootSubsystem));
     NamedCommands.registerCommand("Shoot", new IndexToShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
@@ -91,38 +100,50 @@ public class RobotContainer {
                 true, true),
             m_robotDrive));
     m_shootSubsystem.setDefaultCommand(new RunCommand(() -> m_shootSubsystem.manual(m_driverController), m_shootSubsystem));
-    //m_flipoutSubsystem.setDefaultCommand(new RunCommand(() -> m_flipoutSubsystem.manual(m_operatorController), m_flipoutSubsystem));
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("AutoMode", m_chooser);
 
     //auto options
-    m_chooser.addOption("Score 1 wherever", new SpinUpShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
+        m_chooser.addOption("Score 1 wherever", new SpinUpShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
 
-    m_chooser.addOption("score 2 center (amp)", m_robotDrive.getAuto("Score 2 Center"));
-    m_chooser.addOption("score 2 center (middle)", m_robotDrive.getAuto("Score 2 Center Middle Note"));
-    m_chooser.addOption("score 2 center (source)", m_robotDrive.getAuto("Score 2 Center Source Note"));
-    m_chooser.addOption("score 2 wall side (amp)", m_robotDrive.getAuto("Score 2 Wall Side"));
-    m_chooser.addOption("score 2 field side (source)", m_robotDrive.getAuto("Score 2 Field Side"));
+        m_chooser.addOption("score 2 center (amp)", m_robotDrive.getAuto("Score 2 Center"));
+        m_chooser.addOption("score 2 center (middle)", m_robotDrive.getAuto("Score 2 Center Middle Note"));
+        m_chooser.addOption("score 2 center (source)", m_robotDrive.getAuto("Score 2 Center Source Note"));
+        m_chooser.addOption("score 2 wall side (amp)", m_robotDrive.getAuto("Score 2 Wall Side"));
+        m_chooser.addOption("score 2 field side (source)", m_robotDrive.getAuto("Score 2 Field Side"));
 
-    m_chooser.addOption("score 3 center (amp, middle)", m_robotDrive.getAuto("Score 3 Center"));
-    m_chooser.addOption("score 3 wall side (amp, middle)", m_robotDrive.getAuto("Score 3 Wall Side"));
-    m_chooser.addOption("score 3 field side (source, middle)", m_robotDrive.getAuto("Score 3 Field Side"));
+        m_chooser.addOption("score 3 center (amp, middle)", m_robotDrive.getAuto("Score 3 Center"));
+        m_chooser.addOption("score 3 wall side (amp, middle)", m_robotDrive.getAuto("Score 3 Wall Side"));
+        m_chooser.addOption("score 3 field side (source, middle)", m_robotDrive.getAuto("Score 3 Field Side"));
 
-    m_chooser.addOption("score 4 center (amp, middle, source)", m_robotDrive.getAuto("Score 4 Center"));
-    m_chooser.addOption("score 4 center (source, middle, amp)", m_robotDrive.getAuto("Score 4 Center Inverted"));
-    m_chooser.addOption("score 4 center start middle note (middle, amp, source)", 
-        m_robotDrive.getAuto("Score 4 Center Start Middle Note"));
-    m_chooser.addOption("score 4 center start middle note (middle, source, amp)", 
-        m_robotDrive.getAuto("Score 4 Center Start Middle Note Inverted"));
-    m_chooser.addOption("score 4 center (amp, middle, source) flipout", m_robotDrive.getAuto("Score 4 Center Flipout"));
+        m_chooser.addOption("score 4 center (amp, middle, source)", m_robotDrive.getAuto("Score 4 Center"));
+        m_chooser.addOption("score 4 center (source, middle, amp)", m_robotDrive.getAuto("Score 4 Center Inverted"));
+        m_chooser.addOption("score 4 center start middle note (middle, amp, source)", 
+            m_robotDrive.getAuto("Score 4 Center Start Middle Note"));
+        m_chooser.addOption("score 4 center start middle note (middle, source, amp)", 
+            m_robotDrive.getAuto("Score 4 Center Start Middle Note Inverted"));
+        m_chooser.addOption("score 4 center (amp, middle, source) flipout", m_robotDrive.getAuto("Score 4 Center Flipout"));
 
 
-    m_chooser.addOption("score 4 wall side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Wall Side"));
-    m_chooser.addOption("score 4 field side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Field Side"));
+        m_chooser.addOption("score 4 wall side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Wall Side"));
+        m_chooser.addOption("score 4 field side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Field Side"));
 
-    m_chooser.addOption("score 5?? (lmao)", m_robotDrive.getAuto("Score 5 Center"));
-    m_chooser.addOption("null auto", new WaitCommand(0.05));
+        m_chooser.addOption("score 5?? (lmao)", m_robotDrive.getAuto("Score 5 Center"));
+        m_chooser.addOption("score 5 flipout, midline amp side", m_robotDrive.getAuto("Score 5 Center Flipout Midline 1"));
+        m_chooser.addOption("score 5 flipout, midline 2nd from amp side",
+            m_robotDrive.getAuto("Score 5 Center Flipout Midline 2"));
+        m_chooser.addOption("score 5 flipout, midline middle", m_robotDrive.getAuto("Score 5 Center Flipout Midline 3"));
+
+
+        m_chooser.addOption("score 4 (amp, middle, midline 1)", m_robotDrive.getAuto("Score 3 Midline 1 Center Flipout"));
+        m_chooser.addOption("score 4 (amp, middle, midline 2)", m_robotDrive.getAuto("Score 3 Midline 2 Center Flipout"));
+        m_chooser.addOption("score 4 ampside 1, 2 midline (subwoof side)", m_robotDrive.getAuto("Score 3 Midline 1, 2 Amp Wall Flipout"));
+
+        m_chooser.addOption("null auto", new WaitCommand(0.05));
+
+
+
 
     SmartDashboard.putData(new InstantCommand(() -> m_robotDrive.resetEstimator(new Pose2d())));
     
@@ -146,7 +167,7 @@ public class RobotContainer {
     new JoystickButton(m_driverController.getHID(), ControllerConstants.kVisionTurnButton)
         .whileTrue(new TurnToSpeakerAndDriveWithControllerCommand(m_robotDrive, m_driverController.getHID()));
 
-    //shoulder
+    //shoulder presets
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderHomeButton).whileTrue(
       new SetShoulderCommand(m_shoulderSubsystem, "home"));
 
@@ -157,15 +178,12 @@ public class RobotContainer {
       new SetShoulderCommand(m_shoulderSubsystem, "protected"));
 
 
+
     //handoff
     new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeAxis, 0.5))
       .whileTrue(handoffCommand);
 
     //flipout
-    /*new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeFlipoutAxis, 0.5))
-      .toggleOnTrue(new SetFlipoutCommand(m_flipoutSubsystem, "out"))
-      .toggleOnFalse(new SetFlipoutCommand(m_flipoutSubsystem, "in"));
-*/
     new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeFlipoutAxis, 0.5))
       .toggleOnTrue(Commands.startEnd(m_flipoutSubsystem::setOut, m_flipoutSubsystem::setIn,
          m_flipoutSubsystem));
@@ -184,7 +202,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-            return m_chooser.getSelected();   
+      return m_chooser.getSelected();   
     } 
 
   }

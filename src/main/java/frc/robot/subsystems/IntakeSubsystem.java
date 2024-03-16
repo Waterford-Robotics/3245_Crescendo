@@ -61,6 +61,10 @@ public class IntakeSubsystem extends SubsystemBase {
     flipoutRun.set(TalonFXControlMode.PercentOutput, MotorSpeedsConstants.flipOutRunSpeed);
   }
 
+  public void intakeWithoutFlipout(){
+    intakeBottomMotor.set(-MotorSpeedsConstants.intakeNeoSpeed);
+    intakeTop1Motor.set(MotorSpeedsConstants.intakeNeoSpeed);  }
+
   public void feed(){
     intakeBottomMotor.set(MotorSpeedsConstants.intakeNeoFeedSpeed);
     intakeTop1Motor.set(MotorSpeedsConstants.intakeNeoFeedSpeed);
@@ -82,6 +86,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public boolean getBBTripped(){
     return !beamBreak.get();
+  }
+
+  public void stopFlipoutRun(){
+    flipoutRun.set(TalonFXControlMode.PercentOutput, 0);
   }
 
 }

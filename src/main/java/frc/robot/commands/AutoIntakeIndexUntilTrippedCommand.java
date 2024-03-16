@@ -6,20 +6,16 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShootSubsystem;
 
-public class IntakeIndexUntilTrippedCommand extends Command{
+public class AutoIntakeIndexUntilTrippedCommand extends Command{
     //instantiate stuff
     IntakeSubsystem m_intakeSubsystem;
     IndexerSubsystem m_indexerSubsystem;
-    ShootSubsystem m_shootSubsystem;
-    public IntakeIndexUntilTrippedCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, 
-            ShootSubsystem shootSubsystem){
+    public AutoIntakeIndexUntilTrippedCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem){
         //definitions and setting parameters equal to members
         m_intakeSubsystem = intakeSubsystem;
         m_indexerSubsystem = indexerSubsystem;
-        m_shootSubsystem = shootSubsystem;
         addRequirements(m_intakeSubsystem);
         addRequirements(m_indexerSubsystem);
-        addRequirements(m_shootSubsystem);
     }
 
     @Override
@@ -31,7 +27,6 @@ public class IntakeIndexUntilTrippedCommand extends Command{
     public void execute() {
         m_intakeSubsystem.intake();
         m_indexerSubsystem.runFast();
-        m_shootSubsystem.driveBackward();
     }
 
     @Override
