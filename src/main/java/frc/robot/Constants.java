@@ -282,7 +282,7 @@ public final class Constants {
 
     public static final double kFiducialAreaThreshold = 0.02;
     public static final double kFiducialDistanceThreshold = 4;
-    public static final double kPoseDistanceThresholdMeters = 1.0;
+    public static final double kPoseDistanceThresholdMeters = 4;
   }
 
   public static final class PreferenceKeys {

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.utils.LimelightHelpers.LimelightResults;
 
 /** A VisionDataProvider provides vision data from a Limelight camera. */

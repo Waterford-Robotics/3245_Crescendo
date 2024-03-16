@@ -15,6 +15,7 @@ import frc.robot.Constants.PIDConstants;
 import frc.robot.Constants.PreferenceKeys;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.utils.MathUtils;
 
 public class TurnToFiducialAndDriveWithControllerCommand extends Command {
 
@@ -75,6 +76,6 @@ public class TurnToFiducialAndDriveWithControllerCommand extends Command {
         .orElseThrow(() -> new IllegalArgumentException("The tag you requested (ID " + m_fiducialId + ") is not on the field"))
         .toPose2d();
 
-    return -targetPose.relativeTo(robotPose).getRotation().getDegrees();
+    return -MathUtils.getYawToPose(robotPose, targetPose);
   }
 }
