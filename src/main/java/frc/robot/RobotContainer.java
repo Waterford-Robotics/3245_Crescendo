@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.AutoInShooterCommand;
+import frc.robot.commands.AutoIntakeIndexUntilTrippedCommand;
 import frc.robot.commands.InShooterCommand;
 import frc.robot.commands.IndexToShootCommand;
 import frc.robot.commands.IntakeForSecsCommand;
@@ -67,6 +68,11 @@ public class RobotContainer {
     new AutoInShooterCommand(m_intakeSubsystem, m_indexerSubsystem)
   );
 
+  SequentialCommandGroup autoHandoffCommand2 = new SequentialCommandGroup(
+    new AutoIntakeIndexUntilTrippedCommand(m_intakeSubsystem, m_indexerSubsystem),
+    new AutoInShooterCommand(m_intakeSubsystem, m_indexerSubsystem)
+  );
+
 
   public RobotContainer() {
     m_robotDrive.calibrateGyro();
@@ -74,7 +80,8 @@ public class RobotContainer {
     // named commands configuration
     NamedCommands.registerCommand("Flipout", new SetFlipoutCommand(m_flipoutSubsystem, "out"));
     NamedCommands.registerCommand("Run Intake", autoHandoffCommand);
-    NamedCommands.registerCommand("Intake 0.5", new IntakeForSecsCommand(m_intakeSubsystem, 0.5));
+    //NamedCommands.registerCommand("Intake 0.5", new IntakeForSecsCommand(m_intakeSubsystem, 0.9));
+    NamedCommands.registerCommand("Intake 0.5", autoHandoffCommand2);
     NamedCommands.registerCommand("Spin Up Shoot", new SpinUpShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
     NamedCommands.registerCommand("Spin Up", new SpinUpAutoCommand(m_shootSubsystem));
     NamedCommands.registerCommand("Shoot", new IndexToShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
@@ -154,7 +161,7 @@ public class RobotContainer {
       new SetShoulderCommand(m_shoulderSubsystem, "protected"));
 
 
-      
+
     //handoff
     new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeAxis, 0.5))
       .whileTrue(handoffCommand);
