@@ -271,7 +271,7 @@ public final class Constants {
   }
 
   public static final class VisionConstants {
-    public static final String kCameraName = "Camera_Module_v1";
+    public static final String kCameraName = "limelight";
     public static final Transform3d kRobotToCameraTransform = new Transform3d(Units.inchesToMeters(11.969),
                                                                               Units.inchesToMeters( 5.000),
                                                                               Units.inchesToMeters( 9.321),
