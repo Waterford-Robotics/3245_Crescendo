@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -23,7 +24,7 @@ public final class Constants {
     public static final double kDriveDeadband = 0.075;
 
     //driver controls
-    public static final int setXValue = 4; //Y
+    public static final int kVisionTurnButton = 4; //Y
     public static final int intakeSeqAxis = 3; //right trig
     public static final int spinupButton = 6; //right bump
     public static final int shootButton = 5; //left bump
@@ -72,6 +73,10 @@ public final class Constants {
     public static double flipoutkP = 0.1;
     public static double flipoutkI = 0;
     public static double flipoutkD = 0.05;
+
+    public static final double kDefaultAutomaticTurningP = 0.02;
+    public static final double kDefaultAutomaticTurningI = 0;
+    public static final double kDefaultAutomaticTurningD = 0.00145;
   }
 
   public static class MotorIDConstants {
@@ -273,11 +278,17 @@ public final class Constants {
                                                                               new Rotation3d(0,
                                                                                              Units.degreesToRadians(-30),
                                                                                              0));
-    public static final AprilTagFields kAprilTagField = AprilTagFields.k2024Crescendo;
+    public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
 
     public static final double kFiducialAreaThreshold = 0.02;
     public static final double kFiducialDistanceThreshold = 4;
     public static final double kPoseDistanceThresholdMeters = 1.0;
+  }
+
+  public static final class PreferenceKeys {
+    public static final String kAutomaticTurningP = "VisionTurningP";
+    public static final String kAutomaticTurningI = "VisionTurningI";
+    public static final String kAutomaticTurningD = "VisionTurningD";
   }
 
 }
