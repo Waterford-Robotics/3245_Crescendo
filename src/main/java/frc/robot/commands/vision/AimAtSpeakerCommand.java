@@ -9,8 +9,11 @@ import java.util.Objects;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.PIDConstants;
@@ -36,12 +39,12 @@ public class AimAtSpeakerCommand extends Command {
   protected int m_fiducialId;
 
   /** Creates a new TurnToFiducialAndDriveWithController. */
-  public AimAtSpeakerCommand(DriveSubsystem drivetrain, XboxController controller, int fiducialId) {
+  public AimAtSpeakerCommand(DriveSubsystem drivetrain, XboxController controller) {
     addRequirements(drivetrain);
 
     m_drivetrain = drivetrain;
     m_manualController = controller;
-    m_fiducialId = fiducialId;
+    m_fiducialId = 7;
 
     m_turnController = new PIDController(Preferences.getDouble(PreferenceKeys.kAutomaticTurningP, PIDConstants.kDefaultAutomaticTurningP),
                                          Preferences.getDouble(PreferenceKeys.kAutomaticTurningI, PIDConstants.kDefaultAutomaticTurningI),
@@ -54,12 +57,24 @@ public class AimAtSpeakerCommand extends Command {
     m_turnController.setPID(Preferences.getDouble(PreferenceKeys.kAutomaticTurningP, PIDConstants.kDefaultAutomaticTurningP),
                             Preferences.getDouble(PreferenceKeys.kAutomaticTurningI, PIDConstants.kDefaultAutomaticTurningI),
                             Preferences.getDouble(PreferenceKeys.kAutomaticTurningD, PIDConstants.kDefaultAutomaticTurningD));
+
+    switch (DriverStation.getAlliance().orElse(Alliance.Blue)) {
+      case Red:
+        m_fiducialId = 4;
+        break;
+      case Blue:
+      default:
+        m_fiducialId = 7;
+        break;
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     AngleDistancePair error = getError();
+
+    SmartDashboard.putNumber("Distance to target (meters)", error.distanceToTargetMeters());
 
     m_drivetrain.drive(-MathUtil.applyDeadband(-m_manualController.getLeftY(), ControllerConstants.kDriveDeadband),
                        -MathUtil.applyDeadband(-m_manualController.getLeftX(), ControllerConstants.kDriveDeadband),

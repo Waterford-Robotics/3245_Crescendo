@@ -18,6 +18,7 @@ import frc.robot.commands.SetFlipoutCommand;
 import frc.robot.commands.SetShoulderCommand;
 import frc.robot.commands.SpinUpAutoCommand;
 import frc.robot.commands.SpinUpShootCommand;
+import frc.robot.commands.vision.AimAtSpeakerCommand;
 import frc.robot.commands.vision.TurnToSpeakerAndDriveWithControllerCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -165,7 +166,7 @@ public class RobotContainer {
 
   private void configureBindings() {
     new JoystickButton(m_driverController.getHID(), ControllerConstants.kVisionTurnButton)
-        .whileTrue(new TurnToSpeakerAndDriveWithControllerCommand(m_robotDrive, m_driverController.getHID()));
+        .whileTrue(new AimAtSpeakerCommand(m_robotDrive, m_driverController.getHID()));
 
     //shoulder presets
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderHomeButton).whileTrue(
