@@ -278,6 +278,7 @@ public final class Constants {
                                                                               new Rotation3d(0,
                                                                                              Units.degreesToRadians(-30),
                                                                                              0));
+                                                                                    
     public static final AprilTagFieldLayout kAprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
 
     public static final double kFiducialAreaThreshold = 0.02;

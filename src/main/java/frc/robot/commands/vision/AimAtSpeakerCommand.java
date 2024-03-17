@@ -6,6 +6,7 @@ package frc.robot.commands.vision;
 
 import java.util.Objects;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -36,6 +37,8 @@ public class AimAtSpeakerCommand extends Command {
   private final XboxController m_manualController;
   private final PIDController m_turnController;
 
+  private final AprilTagFieldLayout m_fieldLayout;
+
   protected int m_fiducialId;
 
   /** Creates a new TurnToFiducialAndDriveWithController. */
@@ -49,6 +52,8 @@ public class AimAtSpeakerCommand extends Command {
     m_turnController = new PIDController(Preferences.getDouble(PreferenceKeys.kAutomaticTurningP, PIDConstants.kDefaultAutomaticTurningP),
                                          Preferences.getDouble(PreferenceKeys.kAutomaticTurningI, PIDConstants.kDefaultAutomaticTurningI),
                                          Preferences.getDouble(PreferenceKeys.kAutomaticTurningD, PIDConstants.kDefaultAutomaticTurningD));
+
+    m_fieldLayout = VisionConstants.kAprilTagFieldLayout; // This is to bypass lazy initialization of the variable
   }
 
   // Called when the command is initially scheduled.
@@ -75,7 +80,6 @@ public class AimAtSpeakerCommand extends Command {
     AngleDistancePair error = getError();
 
     SmartDashboard.putNumber("Distance to target (meters)", error.distanceToTargetMeters());
-
     m_drivetrain.drive(-MathUtil.applyDeadband(-m_manualController.getLeftY(), ControllerConstants.kDriveDeadband),
                        -MathUtil.applyDeadband(-m_manualController.getLeftX(), ControllerConstants.kDriveDeadband),
                        m_turnController.calculate(error.angleErrorDegrees()),
@@ -96,7 +100,7 @@ public class AimAtSpeakerCommand extends Command {
 
   private AngleDistancePair getError() {
     Pose2d robotPose = m_drivetrain.getPose();
-    Pose2d targetPose = VisionConstants.kAprilTagFieldLayout.getTagPose(m_fiducialId)
+    Pose2d targetPose = m_fieldLayout.getTagPose(m_fiducialId)
         .orElseThrow(() -> new IllegalArgumentException("The tag you requested (ID " + m_fiducialId + ") is not on the field"))
         .toPose2d();
 
