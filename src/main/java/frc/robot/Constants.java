@@ -121,7 +121,7 @@ public final class Constants {
     public static final double flipOutRunSpeed = -0.9;
 
     public static final double shoulderOpenMaxSpeed = 0.2;
-    public static final double shoulderClosedMaxSpeed = 0.4;
+    public static final double shoulderClosedMaxSpeed = 0.95;
     public static final double shoulderRampRate = 0.4;
     public static final double shoot1MaxVal = -0.75;
     public static final double shoot2MaxVal = .75;

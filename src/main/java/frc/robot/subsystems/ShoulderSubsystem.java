@@ -23,6 +23,8 @@ import frc.robot.Constants.MotorIDConstants;
 import frc.robot.Constants.MotorSpeedsConstants;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.Constants.PositionValueConstants;
+import frc.robot.utils.ShoulderRegression;
+
 
 public class ShoulderSubsystem extends SubsystemBase {
     //init stuff
@@ -96,6 +98,12 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   public void setProtShot(){
     shoulderMaster.setControl(positionDutyCycle.withPosition(PositionValueConstants.shoulderProtShotPos));
+  }
+
+  public void setDistShot(){
+    shoulderMaster.setControl(positionDutyCycle.withPosition(
+      ShoulderRegression.distanceToShoulderCounts(SmartDashboard.getNumber("Distance to target (meters)", 1.252)))
+    );
   }
 
   public void manual(CommandXboxController controller){

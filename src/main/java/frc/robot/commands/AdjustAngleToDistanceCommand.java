@@ -25,7 +25,7 @@ public class AdjustAngleToDistanceCommand extends Command{
         
     @Override
     public void execute() {
-        ShoulderRegression.distanceToShoulderCounts(SmartDashboard.getNumber("Distance to target (meters)", 1.252));
+        m_shoulderSubsystem.setDistShot();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class AdjustAngleToDistanceCommand extends Command{
 
     @Override
     public boolean isFinished(){
-        return true;
+        return false;
     }
 
 }

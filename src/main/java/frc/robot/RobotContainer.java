@@ -175,9 +175,10 @@ public class RobotContainer {
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderAmpButton).whileTrue(
       new SetShoulderCommand(m_shoulderSubsystem, "amp"));
 
-    /*new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderProtButton).whileTrue(
-      new SetShoulderCommand(m_shoulderSubsystem, "protected"));*/
-    new JoystickButton(m_driverController.getHID(), ControllerConstants.setXValue).whileTrue(
+    new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderProtButton).whileTrue(
+      new SetShoulderCommand(m_shoulderSubsystem, "protected"));
+
+    new JoystickButton(m_driverController.getHID(), ControllerConstants.kVisionTurnButton).whileTrue(
       new AdjustAngleToDistanceCommand(m_shoulderSubsystem));
 
 
@@ -202,6 +203,14 @@ public class RobotContainer {
           new InstantCommand(() -> m_intakeSubsystem.stop(), m_intakeSubsystem)
       ));
 
+  }
+
+  public void autonomousInit(){
+    m_robotDrive.setUsingVision(false);
+  }
+
+  public void teleopInit(){
+    m_robotDrive.setUsingVision(true);
   }
 
   public Command getAutonomousCommand() {
