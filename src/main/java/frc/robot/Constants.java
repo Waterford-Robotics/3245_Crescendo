@@ -121,7 +121,7 @@ public final class Constants {
     public static final double flipOutRunSpeed = -0.9;
 
     public static final double shoulderOpenMaxSpeed = 0.2;
-    public static final double shoulderClosedMaxSpeed = 0.95;
+    public static final double shoulderClosedMaxSpeed = 0.4;
     public static final double shoulderRampRate = 0.4;
     public static final double shoot1MaxVal = -0.75;
     public static final double shoot2MaxVal = .75;
@@ -251,6 +251,9 @@ public final class Constants {
     public static final double shoulderHomePos = 0;
     public static final double shoulderAmpShotPos = 0.65; //perfect DO NOT CHANGE
     public static final double shoulderProtShotPos = 0.2;
+    public static final double minShoulderPos = 0;
+    public static final double maxShoulderPos = 0.5;
+    public static final double minDistanceFromSpeaker = 1.252;
 
     public static final double flipoutOutPos = 15.5;
     public static final double flipoutInPos = 2;

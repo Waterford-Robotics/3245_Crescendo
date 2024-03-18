@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.PreferenceKeys;
 import frc.robot.Constants.VisionConstants;
+import frc.robot.commands.AdjustAngleToDistanceCommand;
 import frc.robot.commands.AutoInShooterCommand;
 import frc.robot.commands.AutoIntakeIndexUntilTrippedCommand;
 import frc.robot.commands.InShooterCommand;
@@ -174,8 +175,10 @@ public class RobotContainer {
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderAmpButton).whileTrue(
       new SetShoulderCommand(m_shoulderSubsystem, "amp"));
 
-    new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderProtButton).whileTrue(
-      new SetShoulderCommand(m_shoulderSubsystem, "protected"));
+    /*new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderProtButton).whileTrue(
+      new SetShoulderCommand(m_shoulderSubsystem, "protected"));*/
+    new JoystickButton(m_driverController.getHID(), ControllerConstants.setXValue).whileTrue(
+      new AdjustAngleToDistanceCommand(m_shoulderSubsystem));
 
 
 
