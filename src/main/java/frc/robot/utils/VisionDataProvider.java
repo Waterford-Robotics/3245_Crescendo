@@ -18,7 +18,6 @@ public class VisionDataProvider {
 
   private double m_averageTagAreaThreshold = 0;
   private double m_averageTagDistanceThresholdMeters = Double.POSITIVE_INFINITY;
-  private double m_poseDistanceThresholdMeters = Double.POSITIVE_INFINITY;
   private boolean m_usingFiltering = true;
   
   /**
@@ -89,25 +88,6 @@ public class VisionDataProvider {
   }
 
   /**
-   * Get the maximum distance (in meters) to the previous pose before the estimate is rejected.
-   * @return A value greater than or equal to 0, which is the distance threshold in meters.
-   */
-  public double getPoseDistanceThreshold() {
-    return m_poseDistanceThresholdMeters;
-  }
-
-  /**
-   * Set the maximum distance (in meters) to the previous pose before the estimate is rejected.
-   * @param poseDistanceThresholdMeters A value greater than or equal to 0, which is the distance threshold in meters.
-   */
-  public void setPoseDistanceThreshold(double poseDistanceThresholdMeters) {
-    if (poseDistanceThresholdMeters < 0) {
-      throw new IllegalArgumentException("Pose distance threshold must be at least 0");
-    }
-    m_poseDistanceThresholdMeters = poseDistanceThresholdMeters;
-  }
-
-  /**
    * Return true if the vision data provider is filtering the robot pose; false otherwise.
    */
   public boolean usingFiltering() {
@@ -136,9 +116,7 @@ public class VisionDataProvider {
     if (estimate.pose.getX() < 0.01
         || m_usingFiltering && (
             estimate.avgTagArea < m_averageTagAreaThreshold
-            || estimate.avgTagDist > m_averageTagDistanceThresholdMeters
-            || estimate.pose.getTranslation().getDistance(
-                previousEstimatedRobotPose.getTranslation()) > m_poseDistanceThresholdMeters)) {
+            || estimate.avgTagDist > m_averageTagDistanceThresholdMeters)) {
       return Optional.empty();
     } else {
       return Optional.of(estimate);

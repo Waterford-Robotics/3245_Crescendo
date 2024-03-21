@@ -122,7 +122,6 @@ public class DriveSubsystem extends SubsystemBase {
 
     m_visionDataProvider.setFiducialAreaThreshold(VisionConstants.kFiducialAreaThreshold);
     m_visionDataProvider.setFiducialDistanceThreshold(VisionConstants.kFiducialDistanceThreshold);
-    m_visionDataProvider.setPoseDistanceThreshold(VisionConstants.kPoseDistanceThresholdMeters);
   }
 
   @Override
