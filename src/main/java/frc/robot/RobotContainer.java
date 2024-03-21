@@ -109,38 +109,42 @@ public class RobotContainer {
     //auto options
         m_chooser.addOption("Score 1 wherever", new SpinUpShootCommand(m_shootSubsystem, m_indexerSubsystem, m_intakeSubsystem));
 
-        m_chooser.addOption("score 2 center (amp)", m_robotDrive.getAuto("Score 2 Center"));
-        m_chooser.addOption("score 2 center (middle)", m_robotDrive.getAuto("Score 2 Center Middle Note"));
-        m_chooser.addOption("score 2 center (source)", m_robotDrive.getAuto("Score 2 Center Source Note"));
-        m_chooser.addOption("score 2 wall side (amp)", m_robotDrive.getAuto("Score 2 Wall Side"));
-        m_chooser.addOption("score 2 field side (source)", m_robotDrive.getAuto("Score 2 Field Side"));
+        //m_chooser.addOption("score 2 center (amp)", m_robotDrive.getAuto("Score 2 Center"));
+        //m_chooser.addOption("score 2 center (middle)", m_robotDrive.getAuto("Score 2 Center Middle Note"));
+        //m_chooser.addOption("score 2 center (source)", m_robotDrive.getAuto("Score 2 Center Source Note"));
+        //m_chooser.addOption("score 2 wall side (amp)", m_robotDrive.getAuto("Score 2 Wall Side"));
+        //m_chooser.addOption("score 2 field side (source)", m_robotDrive.getAuto("Score 2 Field Side"));
 
-        m_chooser.addOption("score 3 center (amp, middle)", m_robotDrive.getAuto("Score 3 Center"));
-        m_chooser.addOption("score 3 wall side (amp, middle)", m_robotDrive.getAuto("Score 3 Wall Side"));
-        m_chooser.addOption("score 3 field side (source, middle)", m_robotDrive.getAuto("Score 3 Field Side"));
+        //m_chooser.addOption("score 3 center (amp, middle)", m_robotDrive.getAuto("Score 3 Center"));
+        //m_chooser.addOption("score 3 wall side (amp, middle)", m_robotDrive.getAuto("Score 3 Wall Side"));
+        //m_chooser.addOption("score 3 field side (source, middle)", m_robotDrive.getAuto("Score 3 Field Side"));
 
-        m_chooser.addOption("score 4 center (amp, middle, source)", m_robotDrive.getAuto("Score 4 Center"));
-        m_chooser.addOption("score 4 center (source, middle, amp)", m_robotDrive.getAuto("Score 4 Center Inverted"));
-        m_chooser.addOption("score 4 center start middle note (middle, amp, source)", 
+        m_chooser.addOption("score 4 center NO FLIPOUT (amp, middle, source)", m_robotDrive.getAuto("Score 4 Center"));
+        m_chooser.addOption("score 4 center NO FLIPOUT (source, middle, amp)", m_robotDrive.getAuto("Score 4 Center Inverted"));
+        m_chooser.addOption("score 4 center NO FLIPOUT (middle, amp, source)", 
             m_robotDrive.getAuto("Score 4 Center Start Middle Note"));
         m_chooser.addOption("score 4 center start middle note (middle, source, amp)", 
             m_robotDrive.getAuto("Score 4 Center Start Middle Note Inverted"));
         m_chooser.addOption("score 4 center (amp, middle, source) flipout", m_robotDrive.getAuto("Score 4 Center Flipout"));
 
 
-        m_chooser.addOption("score 4 wall side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Wall Side"));
-        m_chooser.addOption("score 4 field side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Field Side"));
+        m_chooser.addOption("score 4 FLIPOUT (amp, middle, midline 1)", m_robotDrive.getAuto("Score 3 Midline 1 Center Flipout"));
+        m_chooser.addOption("score 4 FLIPOUT (amp, middle, midline 2)", m_robotDrive.getAuto("Score 3 Midline 2 Center Flipout"));
+        m_chooser.addOption("score 4 FLIPOUT ampside 1, 2 midline (subwoof side)", m_robotDrive.getAuto("Score 3 Midline 1, 2 Amp Wall Flipout"));
 
-        m_chooser.addOption("score 5?? (lmao)", m_robotDrive.getAuto("Score 5 Center"));
-        m_chooser.addOption("score 5 flipout, midline amp side", m_robotDrive.getAuto("Score 5 Center Flipout Midline 1"));
-        m_chooser.addOption("score 5 flipout, midline 2nd from amp side",
+        //m_chooser.addOption("score 4 wall side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Wall Side"));
+        //m_chooser.addOption("score 4 field side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Field Side"));
+
+        //m_chooser.addOption("score 5?? NO FLIPOUT (lmao don't pick this one)", m_robotDrive.getAuto("Score 5 Center"));
+        m_chooser.addOption("score 5 FLIPOUT, midline amp side", m_robotDrive.getAuto("Score 5 Center Flipout Midline 1"));
+        m_chooser.addOption("score 5 FLIPOUT, midline 2nd from amp side",
             m_robotDrive.getAuto("Score 5 Center Flipout Midline 2"));
-        m_chooser.addOption("score 5 flipout, midline middle", m_robotDrive.getAuto("Score 5 Center Flipout Midline 3"));
-
-
-        m_chooser.addOption("score 4 (amp, middle, midline 1)", m_robotDrive.getAuto("Score 3 Midline 1 Center Flipout"));
-        m_chooser.addOption("score 4 (amp, middle, midline 2)", m_robotDrive.getAuto("Score 3 Midline 2 Center Flipout"));
-        m_chooser.addOption("score 4 ampside 1, 2 midline (subwoof side)", m_robotDrive.getAuto("Score 3 Midline 1, 2 Amp Wall Flipout"));
+        m_chooser.addOption("score 5 FLIPOUT, midline middle (amp, middle, source)",
+            m_robotDrive.getAuto("Score 5 Center Flipout Midline 3"));
+        m_chooser.addOption("score 5 FLIPOUT, midline middle (middle, amp, source)", 
+            m_robotDrive.getAuto("Score 5 Center Flipout Midline 3 Middle Amp Source"));
+        m_chooser.addOption("score 5 FLIPOUT midline middle (source, middle, amp)", 
+            m_robotDrive.getAuto("Score 5 Center Flipout Midline 3 Inverse"));
 
         m_chooser.addOption("null auto", new WaitCommand(0.05));
 
