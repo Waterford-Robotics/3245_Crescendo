@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7146277524405176,
-      "y": 6.757769768466938
+      "x": 0.6924444618120005,
+      "y": 6.689056341075646
     },
     "rotation": -118.07248693585295
   },
@@ -39,7 +39,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Ring 1 to Speaker"
+            "pathName": "Ring 1 to Speaker 2"
           }
         },
         {

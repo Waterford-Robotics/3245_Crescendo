@@ -12,15 +12,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Flipout"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Spin Up Shoot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Flipout"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Spin Up Shoot"
+                }
+              }
+            ]
           }
         },
         {
@@ -30,7 +37,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center to Ring 1"
+                  "pathName": "Center to Ring 3 Flipout"
                 }
               },
               {
@@ -49,7 +56,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Ring 1 to Speaker 2"
+                  "pathName": "Ring 3 to Speaker Flipout"
                 }
               },
               {
@@ -118,7 +125,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center to Midline 2"
+                  "pathName": "Center to Ring 1"
                 }
               },
               {
@@ -137,7 +144,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Midline 2 to Speaker"
+                  "pathName": "Ring 1 to Speaker 2"
                 }
               },
               {
@@ -153,6 +160,62 @@
           "type": "named",
           "data": {
             "name": "Shoot"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center to Midline 3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake 0.5"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Midline 3 to Speaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Spin Up"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         }
       ]

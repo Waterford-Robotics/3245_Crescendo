@@ -14,7 +14,7 @@ public class ShoulderRegression {
     };
 
     public static double distanceToShoulderCounts(double meters){
-        var command = (0.25/(1-(0.9255 * Math.pow(Math.E, 0.698227*meters)))) + 0.205;
+        var command = -(1.04334/(1+Math.pow(Math.E, 0.84*meters))) + 0.2614;
         if(meters<PositionValueConstants.minDistanceFromSpeaker){
             return 0;
         }

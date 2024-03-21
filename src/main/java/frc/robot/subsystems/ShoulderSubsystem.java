@@ -106,6 +106,16 @@ public class ShoulderSubsystem extends SubsystemBase {
     );
   }
 
+  public void bumpUp(){
+    shoulderMaster.setControl(positionDutyCycle.withPosition(
+      canCoder.getPosition().getValueAsDouble() + 0.1));
+  }
+
+  public void bumpDown(){
+    shoulderMaster.setControl(positionDutyCycle.withPosition(
+      canCoder.getPosition().getValueAsDouble() - 0.001));
+  }
+
   public void manual(CommandXboxController controller){
     shoulderMaster.setControl(voltage.withOutput(12*0.3*controller.getHID().getRawAxis(ControllerConstants.shoulderAxis)));
   }

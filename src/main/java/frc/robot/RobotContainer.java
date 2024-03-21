@@ -10,6 +10,7 @@ import frc.robot.Constants.VisionConstants;
 import frc.robot.commands.AdjustAngleToDistanceCommand;
 import frc.robot.commands.AutoInShooterCommand;
 import frc.robot.commands.AutoIntakeIndexUntilTrippedCommand;
+import frc.robot.commands.BumpShoulderValueCommand;
 import frc.robot.commands.InShooterCommand;
 import frc.robot.commands.IndexToShootCommand;
 import frc.robot.commands.IntakeForSecsCommand;
@@ -181,7 +182,14 @@ public class RobotContainer {
     new JoystickButton(m_driverController.getHID(), ControllerConstants.kVisionTurnButton).whileTrue(
       new AdjustAngleToDistanceCommand(m_shoulderSubsystem));
 
+    //regression testing stuff
+    new JoystickButton(m_operatorController.getHID(), ControllerConstants.bumpUpButton).whileTrue(
+      new BumpShoulderValueCommand(m_shoulderSubsystem, "up")
+    );
 
+    new JoystickButton(m_operatorController.getHID(), ControllerConstants.bumpDownButton).whileTrue(
+      new BumpShoulderValueCommand(m_shoulderSubsystem, "down")
+    );
 
     //handoff
     new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeAxis, 0.5))

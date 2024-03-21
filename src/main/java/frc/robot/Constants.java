@@ -61,6 +61,9 @@ public final class Constants {
     public static final int shoulderHomeButton = 2; //B
     public static final int shoulderAmpButton = 1; //A
     public static final int shoulderProtButton = 3; //X
+
+    public static final int bumpUpButton = 1; //A
+    public static final int bumpDownButton = 2; //B
   }
 
   public static class PIDConstants {
