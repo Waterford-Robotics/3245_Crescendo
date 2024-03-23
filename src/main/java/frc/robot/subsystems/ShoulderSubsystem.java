@@ -89,21 +89,23 @@ public class ShoulderSubsystem extends SubsystemBase {
 
   public void setHome(){
     shoulderMaster.setControl(positionDutyCycle.withPosition(PositionValueConstants.shoulderHomePos));
-
+    SmartDashboard.putBoolean("Shoulder At Amp Height", false);
   }
 
   public void setAmpShot(){
     shoulderMaster.setControl(positionDutyCycle.withPosition(PositionValueConstants.shoulderAmpShotPos));
+    SmartDashboard.putBoolean("Shoulder At Amp Height", true);
   }
 
   public void setProtShot(){
     shoulderMaster.setControl(positionDutyCycle.withPosition(PositionValueConstants.shoulderProtShotPos));
+    SmartDashboard.putBoolean("Shoulder At Amp Height", false);
   }
 
   public void setDistShot(){
     shoulderMaster.setControl(positionDutyCycle.withPosition(
-      ShoulderRegression.distanceToShoulderCounts(SmartDashboard.getNumber("Distance to target (meters)", 1.252)))
-    );
+      ShoulderRegression.distanceToShoulderCounts(SmartDashboard.getNumber("Distance to target (meters)", 1.252))));
+      SmartDashboard.putBoolean("Shoulder At Amp Height", false);
   }
 
   public void bumpUp(){

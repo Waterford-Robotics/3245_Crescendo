@@ -37,7 +37,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center to Ring 3 Flipout"
+                  "pathName": "Center to Ring 3"
                 }
               },
               {
@@ -56,7 +56,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Ring 3 to Speaker Flipout"
+                  "pathName": "Ring 3 to Speaker"
                 }
               },
               {

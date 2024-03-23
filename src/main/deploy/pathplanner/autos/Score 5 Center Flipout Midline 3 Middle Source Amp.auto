@@ -81,7 +81,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center to Ring 1"
+                  "pathName": "Center to Ring 3"
                 }
               },
               {
@@ -100,7 +100,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Ring 1 to Speaker 2"
+                  "pathName": "Ring 3 to Speaker"
                 }
               },
               {
@@ -125,7 +125,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center to Ring 3"
+                  "pathName": "Center to Ring 1"
                 }
               },
               {
@@ -144,7 +144,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Ring 3 to Speaker"
+                  "pathName": "Ring 1 to Speaker 2"
                 }
               },
               {

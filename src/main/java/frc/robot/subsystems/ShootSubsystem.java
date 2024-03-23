@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ControllerConstants;
@@ -31,8 +32,14 @@ public class ShootSubsystem extends SubsystemBase {
   public void periodic() {}
 
   public void spinUp(){
-    shootMotor1.set(-MotorSpeedsConstants.shoot1MaxVal);
-    shootMotor2.set(MotorSpeedsConstants.shoot2MaxVal);
+    if(SmartDashboard.getBoolean("At Amp Height", false)){
+      shootMotor1.set(-MotorSpeedsConstants.shoot1MaxValAmp);
+      shootMotor2.set(-MotorSpeedsConstants.shoot2MaxValAmp);
+    }
+    else{
+      shootMotor1.set(-MotorSpeedsConstants.shoot1MaxVal);
+      shootMotor2.set(MotorSpeedsConstants.shoot2MaxVal);
+    }
   }
 
   public void driveBackward(){
@@ -47,8 +54,15 @@ public class ShootSubsystem extends SubsystemBase {
 
   public void manual(CommandXboxController controller){
     if(controller.getHID().getRawButton(ControllerConstants.spinupButton)){
+       if(SmartDashboard.getBoolean("Shoulder At Amp Height", false)){
+        shootMotor1.set(-MotorSpeedsConstants.shoot1MaxValAmp);
+        shootMotor2.set(MotorSpeedsConstants.shoot2MaxValAmp);
+       }
+       
+       else{
         shootMotor1.set(-MotorSpeedsConstants.shoot1MaxVal);
         shootMotor2.set(MotorSpeedsConstants.shoot2MaxVal);
+       }
     }
     else{
         shootMotor1.set(0);

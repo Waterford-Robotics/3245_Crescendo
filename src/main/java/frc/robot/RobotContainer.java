@@ -56,7 +56,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShoulderSubsystem m_shoulderSubsystem = new ShoulderSubsystem();
   private final LEDSSubsystem m_ledsSubsystem = new LEDSSubsystem();
-  private final IntakeFlipoutSubsystem m_flipoutSubsystem = new IntakeFlipoutSubsystem();
+  //private final IntakeFlipoutSubsystem m_flipoutSubsystem = new IntakeFlipoutSubsystem();
   SendableChooser<Command> autoChooser;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   
@@ -85,7 +85,7 @@ public class RobotContainer {
     m_robotDrive.calibrateGyro();
     m_shoulderSubsystem.resetEncoder();
     // named commands configuration
-    NamedCommands.registerCommand("Flipout", new SetFlipoutCommand(m_flipoutSubsystem, "out"));
+    NamedCommands.registerCommand("Flipout", /*new SetFlipoutCommand(m_flipoutSubsystem, "out")*/ new WaitCommand(0.001));
     NamedCommands.registerCommand("Run Intake", autoHandoffCommand);
     //NamedCommands.registerCommand("Intake 0.5", new IntakeForSecsCommand(m_intakeSubsystem, 0.9));
     NamedCommands.registerCommand("Intake 0.5", autoHandoffCommand2);
@@ -135,7 +135,7 @@ public class RobotContainer {
         //m_chooser.addOption("score 4 wall side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Wall Side"));
         //m_chooser.addOption("score 4 field side (amp, middle, source)", m_robotDrive.getAuto("Score 4 Field Side"));
 
-        //m_chooser.addOption("score 5?? NO FLIPOUT (lmao don't pick this one)", m_robotDrive.getAuto("Score 5 Center"));
+        m_chooser.addOption("score 5?? NO FLIPOUT", m_robotDrive.getAuto("Score 5 Center"));
         m_chooser.addOption("score 5 FLIPOUT, midline amp side", m_robotDrive.getAuto("Score 5 Center Flipout Midline 1"));
         m_chooser.addOption("score 5 FLIPOUT, midline 2nd from amp side",
             m_robotDrive.getAuto("Score 5 Center Flipout Midline 2"));
@@ -143,15 +143,18 @@ public class RobotContainer {
             m_robotDrive.getAuto("Score 5 Center Flipout Midline 3"));
         m_chooser.addOption("score 5 FLIPOUT, midline middle (middle, amp, source)", 
             m_robotDrive.getAuto("Score 5 Center Flipout Midline 3 Middle Amp Source"));
+        m_chooser.addOption("score 5 FLIPOUT midline middle (middle, source, amp)",
+          m_robotDrive.getAuto("Score 5 Center Flipout Midline 3 Middle Source Amp"));
         m_chooser.addOption("score 5 FLIPOUT midline middle (source, middle, amp)", 
             m_robotDrive.getAuto("Score 5 Center Flipout Midline 3 Inverse"));
+      
 
         m_chooser.addOption("null auto", new WaitCommand(0.05));
 
 
 
 
-    SmartDashboard.putData(new InstantCommand(() -> m_robotDrive.resetEstimator(new Pose2d())));
+    /*SmartDashboard.putData(new InstantCommand(() -> m_robotDrive.resetEstimator(new Pose2d())));
     
     // Button for disabling filtering
     SmartDashboard.putData("Disable vision filtering for 1 second",
@@ -165,13 +168,13 @@ public class RobotContainer {
     Preferences.initDouble(PreferenceKeys.kAutomaticTurningP, frc.robot.Constants.PIDConstants.kDefaultAutomaticTurningP);
     Preferences.initDouble(PreferenceKeys.kAutomaticTurningI, frc.robot.Constants.PIDConstants.kDefaultAutomaticTurningI);
     Preferences.initDouble(PreferenceKeys.kAutomaticTurningD, frc.robot.Constants.PIDConstants.kDefaultAutomaticTurningD);
-    
+    */
     configureBindings();
   }
 
   private void configureBindings() {
-    new JoystickButton(m_driverController.getHID(), ControllerConstants.kVisionTurnButton)
-        .whileTrue(new AimAtSpeakerCommand(m_robotDrive, m_driverController.getHID()));
+    /*new JoystickButton(m_driverController.getHID(), ControllerConstants.kVisionTurnButton)
+        .whileTrue(new AimAtSpeakerCommand(m_robotDrive, m_driverController.getHID()));*/
 
     //shoulder presets
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderHomeButton).whileTrue(
@@ -183,7 +186,7 @@ public class RobotContainer {
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shoulderProtButton).whileTrue(
       new SetShoulderCommand(m_shoulderSubsystem, "protected"));
 
-    new JoystickButton(m_driverController.getHID(), ControllerConstants.kVisionTurnButton).whileTrue(
+    /*new JoystickButton(m_driverController.getHID(), ControllerConstants.kVisionTurnButton).whileTrue(
       new AdjustAngleToDistanceCommand(m_shoulderSubsystem));
 
     //regression testing stuff
@@ -194,15 +197,15 @@ public class RobotContainer {
     new JoystickButton(m_operatorController.getHID(), ControllerConstants.bumpDownButton).whileTrue(
       new BumpShoulderValueCommand(m_shoulderSubsystem, "down")
     );
-
+*/
     //handoff
     new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeAxis, 0.5))
       .whileTrue(handoffCommand);
 
     //flipout
-    new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeFlipoutAxis, 0.5))
+    /*new Trigger(m_driverController.axisGreaterThan(ControllerConstants.intakeFlipoutAxis, 0.5))
       .toggleOnTrue(Commands.startEnd(m_flipoutSubsystem::setOut, m_flipoutSubsystem::setIn,
-         m_flipoutSubsystem));
+         m_flipoutSubsystem));*/
 
     new JoystickButton(m_driverController.getHID(), ControllerConstants.shootButton)
       .whileTrue(
@@ -222,7 +225,7 @@ public class RobotContainer {
   }
 
   public void teleopInit(){
-    m_robotDrive.setUsingVision(true);
+    m_robotDrive.setUsingVision(false);
   }
 
   public Command getAutonomousCommand() {
